@@ -22,6 +22,49 @@ Get-Command -Name Get-*
 Lists all commands starting with “Get”  
 Shows command type and source module
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-Help
+
+Displays built-in help documentation for PowerShell commands.
+
+Get-Help Get-Service -Examples
+
+Get-Help Update-Help
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-Process
+
+Displays all currently running processes on the system.
+
+Why This Command Matters Useful for: Monitoring system performance  Identifying high CPU or memory usage
+
+Detailed Explanation A process is any running application or background service  
+PowerShell displays processes as objects, not plain text  This allows advanced filtering, sorting, and automation
+
+Common Parameters 
+-Name → View a specific process  
+-Id → View a process by ID
+
+Example:
+Get-Process | Sort-Object CPU -Descending
+
+Displays running processes sorted by CPU usage  Helps identify performance bottlenecks
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Stop-Process
+
+
+Useful for: Ending frozen or unresponsive programs  
+Managing processes during troubleshooting
+
+
 
 
 
