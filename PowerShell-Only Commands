@@ -64,7 +64,17 @@ Stop-Process
 Useful for: Ending frozen or unresponsive programs  
 Managing processes during troubleshooting
 
+Stops a running process. Why This Command Matters Useful for: Ending frozen or unresponsive programs  
+Managing processes during troubleshooting
 
+Stop-Process -Name <process_name>
+
+
+Stop-Process -Name notepad
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
