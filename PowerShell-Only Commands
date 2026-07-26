@@ -76,5 +76,121 @@ Stop-Process -Name notepad
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Get-Service
+
+Displays all Windows services and their current status.
+
+Useful for: 
+Checking whether services are running or stopped  
+Diagnosing system or application issues  Managing services via scripts
+
+Detailed Explanation A service runs in the background without user interaction Many Windows features depend on services
+
+Get-Service | Where-Object Status -eq Running
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Start-Service
+
+Starts a stopped Windows service.
+
+Useful for: Starting required services after troubleshooting  Automating service startup in scripts  Recovering services that stopped unexpectedly
+
+Detailed Explanation Windows services run in the background  Some applications depend on services to function  This command avoids opening Services.msc manually
+
+Start-Service -Name <ServiceName>
+
+Start-Service -Name Spooler
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Stop-Service
+
+Stops a running Windows service.
+
+Stop-Service -Name <ServiceName>
+
+Stop-Service -Name Spooler
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Restart-Service
+
+Stops and then starts a service in one command.
+
+Detailed Explanation Combines Stop-Service and Start-Service
+
+Restart-Service -Name <ServiceName>
+
+Restart-Service -Name Spooler
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-ExecutionPolicy
+
+Displays the current PowerShell script execution policy.
+
+Useful for: Understanding script security restrictions  Troubleshooting script execution issues  Preparing systems for automation
+
+Policies include Restricted, RemoteSigned, and Unrestricted
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Set-ExecutionPolicy
+
+Changes PowerShell’s script execution policy.
+
+Useful for: Enabling script execution  Running administrative automation  Developing PowerShell scripts
+
+Set-ExecutionPolicy <PolicyName>
+
+Set-ExecutionPolicy RemoteSigned
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-EventLog
+
+Retrieves entries from Windows event logs.
+
+Useful for: Troubleshooting system errors  Investigating crashes and failures  Reviewing security and application events
+
+Get-EventLog -LogName <LogName>
+
+Get-EventLog -LogName System -Newest 10
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Invoke-WebRequest
+
+Retrieves web content from URLs.
+
+Useful for: Downloading files  Testing web connectivity  Working with APIs
+
+Invoke-WebRequest https://example.com
+
+Use -OutFile to save downloads.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Test-Connection
+
+Tests network connectivity using ICMP (PowerShell version of ping).
+
+Test-Connection <hostname>
+
+Test-Connection google.com
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-NetIPConfiguration
+
+Displays detailed network configuration information.
+
+Get-NetIPConfiguration
 
 
