@@ -19,3 +19,11 @@ https://learn.microsoft.com/en-us/compliance/anz/e8-overview
 https://owasp.org
 
 https://www.doi.gov/cloud/portfolio/CSPs
+
+
+
+----------------------------------------
+
+https://www.ncsc.gov.uk/collection/device-security-guidance    /    https://github.com/ukncsc/Device-Security-Guidance-Configuration-Packs
+
+
