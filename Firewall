@@ -79,6 +79,26 @@ HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy
 
 cd HKLM:\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy
 
+reg query "HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy"
+
 Get-ChildItem
+
+Get-ChildItem | Select-Object Name
+
+Get-ChildItem -Name
+
+ls -Name
+
+
+*****************************************
+
+Get-ItemProperty .\StandardProfile
+
+ls .\StandardProfile
+
+Get-NetFirewallProfile -Name Private
+
+
+*****************************************
 
 
