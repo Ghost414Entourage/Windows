@@ -51,6 +51,7 @@ Set-NetConnectionProfile -Name "PetShadow" -NetworkCategory Private
 
 -----------------------------------------------------------------------------------------------------
 
+Press Win + R, type wf.msc
 
 
 
@@ -69,5 +70,15 @@ Go to Settings > Privacy & Security > Windows Security > Firewall & network prot
 
 -----------------------------------------------------------------------------------------------------
 
+Registry Editor (GUI)
+
+HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy
+
+
+-----------------------------------------------------------------------------------------------------
+
+cd HKLM:\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy
+
+Get-ChildItem
 
 
