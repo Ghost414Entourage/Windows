@@ -134,5 +134,12 @@ inbound services will be blocked regardless of rules. Fix this with:
 Set-NetConnectionProfile -InterfaceAlias "Ethernet" -NetworkCategory DomainAuthenticated
 
 
+Set Wi-Fi to Private:
+Set-NetConnectionProfile -InterfaceAlias "Wi-Fi" -NetworkCategory Private
+
+Set Wi-Fi to Public:
+Set-NetConnectionProfile -InterfaceAlias "Wi-Fi" -NetworkCategory Public
+
+
 
 
