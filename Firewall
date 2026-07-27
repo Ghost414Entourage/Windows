@@ -104,6 +104,30 @@ Get-NetFirewallProfile -Name Private
 cd .\FirewallRules
 
 
+-----------------------------------------------------------------------------------------------------
+
+This displays the operational mode for each profile (Domain, Private, Public): 
+whether inbound and outbound connections are allowed by default, whether the firewall is on or off, and whether stateful inspection is enabled.
+
+netsh advfirewall show allprofiles
+
+
+netsh advfirewall set allprofiles state on
+
+
+Check the active profile for the interface experiencing the issue:
+
+netsh advfirewall show currentprofile
+
+Get-NetConnectionProfile | Select Name, InterfaceAlias, NetworkCategory
+
+
+
+If the profile is misclassified (for example, a corporate domain network stuck in Public), 
+inbound services will be blocked regardless of rules. Fix this with:
+
+Set-NetConnectionProfile -InterfaceAlias "Ethernet" -NetworkCategory DomainAuthenticated
+
 
 
 
