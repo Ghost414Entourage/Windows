@@ -166,5 +166,17 @@ Double-clicking any policy (like "Windows Defender Firewall: Protect all network
 
 Win + R, type rsop.msc
 
+rsop.msc acts as a scanner—it checks your system and shows only the policies that are actively enforced on your computer right now.
+
+
+-----------------------------------------------------------------------------------------------------
+
+gpresult /r
+
+gpresult /h C:\GPOReport.html
+- Win + R, type C:\GPOReport.html
+
+
+
 
 
