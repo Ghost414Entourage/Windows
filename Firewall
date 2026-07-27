@@ -6,6 +6,9 @@ https://learn.microsoft.com/en-us/windows/security/operating-system-security/net
 Windows Firewall uses the Base Filtering Engine (BFE) service, which interacts with the network stack. 
 Rules are stored in the registry under HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess\Parameters\FirewallPolicy.
 
+Managing profiles effectively requires understanding how to view, change, and enforce them. 
+Open Settings > Network & Internet > Status > Properties (for the active connection) to see the current network profile.
+
 -----------------------------------------------------------------------------------------------------
 
 (Shows the firewall profile settings)
