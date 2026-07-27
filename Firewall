@@ -141,5 +141,8 @@ Set Wi-Fi to Public:
 Set-NetConnectionProfile -InterfaceAlias "Wi-Fi" -NetworkCategory Public
 
 
+-----------------------------------------------------------------------------------------------------
 
+Press Win + R to open the Run dialog
 
+gpedit.msc
