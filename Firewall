@@ -177,6 +177,16 @@ gpresult /h C:\GPOReport.html
 - Win + R, type C:\GPOReport.html
 
 
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" -Name "NC_ShowSharedAccessUI" -Value 0 -Type DWord
+
+gpupdate /force
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections"
+
+
+
+-----------------------------------------------------------------------------------------------------
+
 
 
 
