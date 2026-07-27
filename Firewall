@@ -190,6 +190,9 @@ How to Revert It:
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" -Name "NC_ShowSharedAccessUI" -Value 1 -Type DWord
 gpupdate /force
 
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Network Connections" -Name "NC_ShowSharedAccessUI"
+gpupdate /force
+
 
 -----------------------------------------------------------------------------------------------------
 
