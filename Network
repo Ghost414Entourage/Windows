@@ -158,7 +158,7 @@ LIST OF COMMANDS FOR IPv6
 
 [[reassemblyoutoforderlimit=]<integer>]
 
-
+Get-NetTCPConnection and Get-NetUDPEndpoint
 
 
 
