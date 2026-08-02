@@ -210,6 +210,9 @@ Public profile :
 The strictest profile, automatically applied to unknown networks such as coffee shop Wi-Fi, hotel hotspots, or any connection you mark as “No” when prompted about discoverability. 
 Public profile blocks nearly all unsolicited inbound traffic by default and restricts outbound traffic more aggressively in hardened configurations. This is the safest default for untrusted environments.
 
+Get-NetTCPConnection
+
+Get-NetUDPEndpoint
 
 
 -----------------------------------------------------------------------------------------------------
