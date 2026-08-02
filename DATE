@@ -1,0 +1,13 @@
+Get-Date
+
+Set-Date -Date "2026-07-24"
+
+Set-Date -Date "2026-07-24 12:00:00"
+
+
+Get-TimeZone
+
+Get-TimeZone -ListAvailable
+
+Set-TimeZone -Id "Central Standard Time"
+
