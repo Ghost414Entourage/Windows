@@ -196,6 +196,22 @@ gpupdate /force
 
 -----------------------------------------------------------------------------------------------------
 
+Domain profile : 
+Applies when the computer is connected to a corporate Active Directory domain and can authenticate to a domain controller. 
+This profile is typically the most permissive of the three because the network is considered trusted. 
+Rules here often allow file and printer sharing, remote management tools like PowerShell remoting, and other domain-specific services.
 
+Private profile : 
+Used for home or small office networks where you have declared the network as “trusted” (for example, when Windows prompts 
+“Do you want to allow your PC to be discoverable?” and you select Yes). Private profile rules strike a balance: they permit some discovery and sharing features (such as network discovery, file sharing) 
+while still blocking unsolicited inbound connections from unknown sources.
+
+Public profile : 
+The strictest profile, automatically applied to unknown networks such as coffee shop Wi-Fi, hotel hotspots, or any connection you mark as “No” when prompted about discoverability. 
+Public profile blocks nearly all unsolicited inbound traffic by default and restricts outbound traffic more aggressively in hardened configurations. This is the safest default for untrusted environments.
+
+
+
+-----------------------------------------------------------------------------------------------------
 
 
