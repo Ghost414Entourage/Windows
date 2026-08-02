@@ -1,0 +1,109 @@
+Win + I Open Settings Opens the main system settings panel 
+
+Win + X Power User Menu Opens advanced system access menu 
+
+Win + A Quick Settings Opens network, sound, and battery controls 
+
+Win + L Lock Device Immediately locks the workstation 
+
+Win + E File Explorer Opens file management window 
+
+Win + R Run Dialog Opens command execution dialog 
+
+Win + S Search Opens system search interface
+
+Win + D Show Desktop Minimizes all open windows 
+
+Alt + Tab Switch Applications Cycles through open applications 
+
+Ctrl + Shift + Esc Task Manager Opens performance and process monitor 
+
+Shortcut Function Description 
+
+Win + Left Arrow Snap Left Aligns window to left side 
+
+Win + Right Arrow Snap Right Aligns window to right side 
+
+Win + Up Arrow Maximize Expands window to full screen 
+
+Win + Down Arrow Minimize/Restore Reduces window size
+
+Win + Tab Task View Displays all open desktops and windows 
+
+Win + Ctrl + D New Desktop Creates a new virtual desktop 
+
+Win + Ctrl + Left/Right Switch Desktop Moves between virtual desktops 
+
+Win + Ctrl + F4 Close Desktop Closes current virtual desktop
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+
+msconfig System Configuration Manage startup and boot options 
+
+services.msc Services View and control background services 
+
+taskmgr Task Manager Monitor performance and processes control 
+
+Control Panel Open legacy control interface 
+
+regedit Registry Editor Edit system registry settings 
+
+devmgmt.msc Device Manager Manage hardware devices 
+
+diskmgmt.msc Disk Management Configure storage partitions
+
+eventvwr.msc Event Viewer View system logs and diagnostics
+
+perfmon Performance Monitor Analyze system performance metrics 
+
+cleanmgr Disk Cleanup Remove temporary system files
+
+------------------------------------------------------------------------------------------------------------------
+
+Desktop 1 Communication Email and messaging applications 
+
+Desktop 2 Work Tasks Documents and productivity tools 
+
+Desktop 3 Research Browser sessions and reference material 
+
+Desktop 4 Media Streaming and entertainment apps
+
+To open Task View: Win + Tab  
+To create a new desktop: Win + Ctrl + D
+To switch desktops: Win + Ctrl + Left / Right Arrow
+
+------------------------------------------------------------------------------------------------------------------
+
+Task Manager Ctrl + Shift + Esc Monitor CPU, RAM, and disk usage 
+
+Resource Monitor resmon Detailed resource tracking 
+
+Performance Monitor perfmon Advanced performance analysis
+
+Event Viewer eventvwr.msc System event diagnostics 
+
+Reliability Monitor Control Panel Track system stability history
+
+Storage Settings Settings → System → Storage Monitor disk usage
+
+Storage Sense Storage Settings Automatic temporary file cleanup
+
+Disk Cleanup cleanmgr Remove unnecessary system files
+
+Optimize Drives dfrgui Maintain disk efficiency
+
+Check Disk chkdsk Scan and repair disk errors
+
+------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
