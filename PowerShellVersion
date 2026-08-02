@@ -18,6 +18,16 @@ Start-Process pwsh -Verb RunAs
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+$PSVersionTable.PSVersion
+
+winget install --id Microsoft.PowerShell --source winget
+
+winget list --id Microsoft.PowerShell --upgrade-available
+
+winget upgrade --id Microsoft.PowerShell --source winget
+
+$PSVersionTable
+
 
 
 
