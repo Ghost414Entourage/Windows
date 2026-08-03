@@ -1,3 +1,8 @@
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/shutdown
+
+-------------------------------------------------------------------------------------------------------------
+
+
 ShutDown /S and press Enter. The system will perform an orderly shutdown after 30 seconds.
 
 ShutDown /S /M \\RemoteComputer  If you want to shut down a remote system.
