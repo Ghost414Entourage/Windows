@@ -1,0 +1,14 @@
+Get-ExecutionPolicy
+
+
+Get-ExecutionPolicy -List
+
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+
+# Restricted     -> Blocks ALL scripts (Windows default) 
+# AllSigned       -> Only runs digitally signed scripts 
+# RemoteSigned    -> Local scripts OK; downloaded scripts need a signature 
+# Unrestricted    -> Runs any script (DO NOT use in production) 
+# Bypass          -> No restrictions (only for automated CI/CD pipelines)
