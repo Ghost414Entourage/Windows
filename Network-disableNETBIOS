@@ -27,6 +27,18 @@ ipconfig /all
 
 wmic nicconfig where TcpipNetbiosOptions=0 call SetTcpipNetbios 2
 
+Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "TcpipNetbiosOptions = 0" | Invoke-CimMethod -MethodName SetTcpipNetbios -Arguments @{TcpipNetbiosOptions = 2}
+
+Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "IPEnabled = True" | Invoke-CimMethod -MethodName SetTcpipNetbios -Arguments @{TcpipNetbiosOptions = 2}
+
+Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "IPEnabled = True" | Select-Object Description, TcpipNetbiosOptions
+
+0: Default (Use NetBIOS setting from DHCP server)
+
+1: Enable NetBIOS over TCP/IP
+
+2: Disabled NetBIOS over TCP/IP
+
 
 If you want to disable any protocol on the network – here is an example template:
 
