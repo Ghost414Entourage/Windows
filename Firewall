@@ -217,4 +217,9 @@ Get-NetUDPEndpoint
 
 -----------------------------------------------------------------------------------------------------
 
+Get-NetFirewallRule | Where-Object { $_.Profile -like "*Domain*" }
+
+
+
+
 
