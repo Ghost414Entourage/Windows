@@ -2,3 +2,6 @@ winget install --id Microsoft.VisualStudioCode --source winget
 
 code --install-extension ms-vscode.PowerShell
 
+code "$env:APPDATA\Code\User\settings.json"
+
+
