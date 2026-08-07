@@ -221,6 +221,8 @@ Get-NetFirewallRule | Where-Object { $_.Profile -like "*Domain*" }
 
 Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction
 
+netsh advfirewall show allprofiles
+
 
 -----------------------------------------------------------------------------------------------------
 
