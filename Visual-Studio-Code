@@ -1,0 +1,4 @@
+winget install --id Microsoft.VisualStudioCode --source winget
+
+code --install-extension ms-vscode.PowerShell
+
