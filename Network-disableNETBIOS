@@ -62,9 +62,20 @@ Set-Service -Name "lmhosts" -StartupType Disabled
 Stop-Service -Name "lmhosts" -Force
 
 
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" -Name "EnableMulticast" -Value 0 -PropertyType DWord -Force
 
 
+New-NetFirewallRule -DisplayName "Block NetBIOS UDP Inbound" -Direction Inbound -Protocol UDP -LocalPort 137,138 -Action Block
+New-NetFirewallRule -DisplayName "Block NetBIOS UDP Outbound" -Direction Outbound -Protocol UDP -LocalPort 137,138 -Action Block
+New-NetFirewallRule -DisplayName "Block NetBIOS TCP Inbound" -Direction Inbound -Protocol TCP -LocalPort 139 -Action Block
+New-NetFirewallRule -DisplayName "Block NetBIOS TCP Outbound" -Direction Outbound -Protocol TCP -LocalPort 139 -Action Block
 
+
+Get-NetFirewallRule -DisplayName "Block NetBIOS*" | Select-Object DisplayName, Direction, Profile, Action
+Get-NetTCPConnection -LocalPort 139 -ErrorAction SilentlyContinue
+
+
+Get-NetTCPConnection, Get-NetUDPEndpoint | Where-Object { $_.LocalPort -eq 137 -or $_.LocalPort -eq 138 }
 
 
 
