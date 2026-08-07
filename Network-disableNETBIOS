@@ -39,6 +39,14 @@ Get-CimInstance -ClassName Win32_NetworkAdapterConfiguration -Filter "IPEnabled 
 
 2: Disabled NetBIOS over TCP/IP
 
+Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces\Tcpip_*' | Select-Object PSChildName, NetbiosOptions
+
+Get-ChildItem -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces' | ForEach-Object { Set-ItemProperty -Path $_.PSPath -Name NetbiosOptions -Value 2 }
+
+Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces\Tcpip_*' | Select-Object PSChildName, NetbiosOptions
+
+Restart-NetAdapter -Name "*"
+
 
 If you want to disable any protocol on the network – here is an example template:
 
