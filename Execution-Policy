@@ -12,3 +12,7 @@ Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 # RemoteSigned    -> Local scripts OK; downloaded scripts need a signature 
 # Unrestricted    -> Runs any script (DO NOT use in production) 
 # Bypass          -> No restrictions (only for automated CI/CD pipelines)
+
+
+Get-ExecutionPolicy -Scope CurrentUser
+
