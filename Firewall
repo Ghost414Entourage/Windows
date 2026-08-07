@@ -219,6 +219,12 @@ Get-NetUDPEndpoint
 
 Get-NetFirewallRule | Where-Object { $_.Profile -like "*Domain*" }
 
+Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction
+
+
+-----------------------------------------------------------------------------------------------------
+
+
 
 
 
