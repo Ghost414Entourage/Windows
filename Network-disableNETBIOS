@@ -23,6 +23,15 @@ Classic command showing full network configuration
 ipconfig /all
 
 
+
+
+
+
+
+
+
+
+
 (Disables NetBIOS over TCP)
 
 wmic nicconfig where TcpipNetbiosOptions=0 call SetTcpipNetbios 2
@@ -46,6 +55,20 @@ Get-ChildItem -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\In
 Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters\Interfaces\Tcpip_*' | Select-Object PSChildName, NetbiosOptions
 
 Restart-NetAdapter -Name "*"
+
+Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters' -Name "NodeType" -Value 2 -Type DWord
+
+Set-Service -Name "lmhosts" -StartupType Disabled
+Stop-Service -Name "lmhosts" -Force
+
+
+
+
+
+
+
+
+
 
 
 If you want to disable any protocol on the network – here is an example template:
