@@ -4,4 +4,33 @@ code --install-extension ms-vscode.PowerShell
 
 code "$env:APPDATA\Code\User\settings.json"
 
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+$settingsPath = "$env:APPDATA\Code\User\settings.json"
+
+# Create file/folder if it doesn't exist
+if (-not (Test-Path $settingsPath)) {
+    New-Item -ItemType File -Path $settingsPath -Force | Out-Null
+    "{}" | Set-Content $settingsPath
+}
+
+# Read existing JSON or initialize
+$json = Get-Content $settingsPath -Raw | ConvertFrom-Json
+
+# Add/over-write settings
+$json | Add-Member -NotePropertyName "terminal.integrated.defaultProfile.windows" -NotePropertyValue "PowerShell" -Force
+$json | Add-Member -NotePropertyName "powershell.integratedConsole.showOnStartup" -NotePropertyValue $true -Force
+$json | Add-Member -NotePropertyName "editor.formatOnSave" -NotePropertyValue $true -Force
+$json | Add-Member -NotePropertyName "powershell.codeFormatting.preset" -NotePropertyValue "OTBS" -Force
+
+# Save updated settings back to file
+$json | ConvertTo-Json -Depth 12 | Set-Content $settingsPath
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
 
