@@ -75,8 +75,7 @@ Get-NetFirewallRule -DisplayName "Block NetBIOS*" | Select-Object DisplayName, D
 Get-NetTCPConnection -LocalPort 139 -ErrorAction SilentlyContinue
 
 
-Get-NetTCPConnection, Get-NetUDPEndpoint | Where-Object { $_.LocalPort -eq 137 -or $_.LocalPort -eq 138 }
-
+$(Get-NetTCPConnection; Get-NetUDPEndpoint) | Where-Object { $_.LocalPort -in 137, 138, 139 }
 
 
 
