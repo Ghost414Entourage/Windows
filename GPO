@@ -1,7 +1,21 @@
+Windows Firewall GPO
+
 $GPOName = "06-Windows-Firewall" New-GPO -Name $GPOName New-GPLink -Name $GPOName -Target "OU=Servers,DC=company,DC=local" -LinkEnabled Yes
 
 $GPOName = "06-Windows-Firewall"; New-GPO -Name $GPOName; New-GPLink -Name $GPOName -Target "OU=Servers,DC=company,DC=local" -LinkEnabled Yes
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Enable Windows Firewall for all profiles
+
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\DomainProfile" -ValueName "EnableFirewall" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile" -ValueName "EnableFirewall" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\PublicProfile" -ValueName "EnableFirewall" -Type DWord -Value 1
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
