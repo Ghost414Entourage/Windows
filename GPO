@@ -66,6 +66,8 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\*" | S
 
 Get-NetFirewallProfile | Select-Object Name, Enabled
 
+gpupdate /force
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
