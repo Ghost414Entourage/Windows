@@ -71,5 +71,16 @@ gpupdate /force
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Default deny inbound
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\DomainProfile" -ValueName "DefaultInboundAction" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\PrivateProfile" -ValueName "DefaultInboundAction" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\PublicProfile" -ValueName "DefaultInboundAction" -Type DWord -Value 1
+
+
+**********************************************************************************************
+
 
 
