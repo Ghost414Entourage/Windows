@@ -1,0 +1,7 @@
+$GPOName = "06-Windows-Firewall" New-GPO -Name $GPOName New-GPLink -Name $GPOName -Target "OU=Servers,DC=company,DC=local" -LinkEnabled Yes
+
+$GPOName = "06-Windows-Firewall"; New-GPO -Name $GPOName; New-GPLink -Name $GPOName -Target "OU=Servers,DC=company,DC=local" -LinkEnabled Yes
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
