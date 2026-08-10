@@ -168,6 +168,32 @@ gpupdate /force
 
 Get-Item -Path "C:\WINDOWS\System32\LogFiles\Firewall\pfirewall.log"
 
+**********************************************************************************************
+
+if (-not (Test-Path "C:\Windows\System32\LogFiles\Firewall")) {
+    New-Item -Path "C:\Windows\System32\LogFiles\Firewall" -ItemType Directory -Force | Out-Null
+}
+
+
+# Toggle firewall off and back on
+Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled False
+Set-NetFirewallProfile -Profile Domain, Private, Public -Enabled True
+
+
+Restart-Service -Name mpssvc -Force
+
+**********************************************************************************************
+
+Set-NetFirewallProfile -Profile Domain, Private, Public `
+    -LogFileName "%SystemRoot%\System32\LogFiles\Firewall\pfirewall.log" `
+    -LogMaxSizeKilobytes 16384 `
+    -LogAllowed True `
+    -LogBlocked True
+
+
+Get-Item -Path "C:\Windows\System32\LogFiles\Firewall\pfirewall.log"
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
