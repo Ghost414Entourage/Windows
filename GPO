@@ -118,4 +118,51 @@ Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\Window
 
 **********************************************************************************************
 
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging")) { New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -Force | Out-Null }
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -Name "LogFilePath" -Value "%SystemRoot%\System32\LogFiles\Firewall\pfirewall.log" -Type ExpandString
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -Name "LogFileSize" -Value 16384 -Type DWord
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -Name "LogDroppedPackets" -Value 1 -Type DWord
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -Name "LogSuccessfulConnections" -Value 1 -Type DWord
+
+
+
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile\Logging")) { New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile\Logging" -Force | Out-Null }
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile\Logging" -Name "LogFilePath" -Value "%SystemRoot%\System32\LogFiles\Firewall\pfirewall.log" -Type ExpandString
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile\Logging" -Name "LogFileSize" -Value 16384 -Type DWord
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile\Logging" -Name "LogDroppedPackets" -Value 1 -Type DWord
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\StandardProfile\Logging" -Name "LogSuccessfulConnections" -Value 1 -Type DWord
+
+
+
+
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging")) { New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" -Force | Out-Null }
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" -Name "LogFilePath" -Value "%SystemRoot%\System32\LogFiles\Firewall\pfirewall.log" -Type ExpandString
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" -Name "LogFileSize" -Value 16384 -Type DWord
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" -Name "LogDroppedPackets" -Value 1 -Type DWord
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging" -Name "LogSuccessfulConnections" -Value 1 -Type DWord
+
+
+
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging")) { New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -Force | Out-Null }
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -Name "LogFilePath" -Value "%SystemRoot%\System32\LogFiles\Firewall\pfirewall.log" -Type ExpandString
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -Name "LogFileSize" -Value 16384 -Type DWord
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -Name "LogDroppedPackets" -Value 1 -Type DWord
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -Name "LogSuccessfulConnections" -Value 1 -Type DWord
+
+
+
+
+Get-ChildItem -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\*" -Recurse | Where-Object { $_.PSChildName -eq "Logging" } | ForEach-Object { Get-ItemProperty $_.PSPath }
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
