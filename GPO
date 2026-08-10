@@ -106,3 +106,16 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\*" | S
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Enable logging
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -ValueName "LogFilePath" -Type String -Value "%SystemRoot%\System32\LogFiles\Firewall\pfirewall.log"
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -ValueName "LogFileSize" -Type DWord -Value 16384  # 16MB
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -ValueName "LogDroppedPackets" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging" -ValueName "LogSuccessfulConnections" -Type DWord -Value 1
+
+**********************************************************************************************
+
+
