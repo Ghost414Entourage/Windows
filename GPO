@@ -157,11 +157,16 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\Public
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -Name "LogSuccessfulConnections" -Value 1 -Type DWord
 
 
+**********************************************************************************************
 
 
 Get-ChildItem -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\*" -Recurse | Where-Object { $_.PSChildName -eq "Logging" } | ForEach-Object { Get-ItemProperty $_.PSPath }
 
+**********************************************************************************************
 
+gpupdate /force
+
+Get-Item -Path "C:\WINDOWS\System32\LogFiles\Firewall\pfirewall.log"
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
