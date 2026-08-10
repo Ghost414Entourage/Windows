@@ -193,6 +193,14 @@ Set-NetFirewallProfile -Profile Domain, Private, Public `
 
 Get-Item -Path "C:\Windows\System32\LogFiles\Firewall\pfirewall.log"
 
+**********************************************************************************************
+
+
+Get-Content -Path "C:\Windows\System32\LogFiles\Firewall\pfirewall.log" -Wait -Tail 20
+
+
+Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" -Recurse -Force -ErrorAction SilentlyContinue
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
