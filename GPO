@@ -220,3 +220,19 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-
 **********************************************************************************************
 
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" | Select-Object DisableRealtimeMonitoring
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+"HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring" = 0  # Enable
+
+**********************************************************************************************
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableBehaviorMonitoring" -Value 0 -Type DWord
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
