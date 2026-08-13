@@ -1,0 +1,157 @@
+systeminfo
+
+Displays detailed configuration information about the computer, including the operating system, hardware, memory, and installed updates.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+ipconfig
+
+Displays the IP configuration information for all network adapters on the system.
+
+ipconfig /all 
+
+ipconfig /release
+
+ipconfig /renew 
+
+ipconfig /flushdns
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+hostname
+
+
+The computer name (hostname) is used to identify a device on a network.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+tasklist
+
+Lists all currently running processes on the system, including system and user applications.
+
+
+tasklist /svc: Displays the services hosted in each process.
+
+tasklist /fi "memusage gt 50000": Filters processes consuming more than 50 MB of memory.
+
+tasklist /fi "imagename eq notepad.exe": Displays only processes with a specific name.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+taskkill
+
+Terminates a running process by name or Process ID (PID).
+
+taskkill /im <processname> [/f] [/t] Parameters: /im <processname> – Specifies the process name (e.g., notepad.exe)  /f – Forces termination of the process  /t – Terminates the process and any child proce
+
+
+taskkill /pid 4321 /f: Terminate a process using its PID.
+
+taskkill /im chrome.exe /t /f: Terminate Google Chrome and all its child processes forcefully.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+driverquery
+
+Displays a list of all installed device drivers along with detailed information about each driver.
+
+driverquery /v /fo <format> Parameters: /v – Displays detailed (verbose) information about each driver  /fo <format> – Specifies the output format: TABLE, LIST, or CSV
+
+driverquery /v: displays detailed information including memory usage and module type.
+
+driverquery /fo csv: outputs driver information in CSV format for easy import into spreadsheets. driverquery /fo list: outputs each driver’s information in a readable list format.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+wmic
+
+Accesses Windows Management Instrumentation (WMI) to retrieve detailed system information, including OS, hardware, and configuration data.
+
+wmic os get <property>
+
+Common Properties: 
+Caption – Displays the operating system name  
+Version – Displays the OS version 
+LastBootUpTime – Displays the last system boot time
+FreePhysicalMemory – Displays available RAM
+
+wmic os get version:displays the Windows version.
+
+wmic os get lastbootuptime:Shows when the system was last restarted.
+
+wmic cpu get name:Displays the processor name.
+
+wmic memorychip get capacity:Displays installed RAM modules and their sizes.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+chkdsk
+
+Checks a disk for errors and displays a status report.
+
+chkdsk <drive>: [/f] [/r] Parameters: <drive>: – Specifies the drive letter to check (e.g., C:)  /f – Fixes errors found on the disk  /r – Locates bad sectors and recovers readable information
+
+chkdsk C: /f: Checks the drive and fixes errors automatically.
+
+chkdsk C: /r: Checks the drive for bad sectors and recovers readable data.
+
+chkdsk D: /f /r: Performs a full scan with fixes on a different drive (D: in this example).
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+diskpart
+
+Manages disks, partitions, and volumes interactively through a command-line interface.
+
+Once launched, you enter an interactive session to run commands like: list disk – Displays all connected disks  select disk <number>, Selects a specific disk for operations  create partition primary , Creates a new partition
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+ver
+
+Displays the current version of the Windows operating system.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+taskmgr
+
+Opens the Task Manager interface, allowing you to monitor running processes, applications, and system performance.
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+whoami
+
+Displays the username of the currently logged-in user.
+
+whoami /all
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+set
+
+set <variable>[=<value>]
+
+set PATH
+
+Displays all directories in PATH separated by semicolons  
+Used by programs and scripts to locate executables
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+perfmon
+
+Opens the Performance Monitor utility to monitor system resources in real-time.
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+tasklist /svc
+
+Displays all services hosted in each running process.
+
+
+
+
