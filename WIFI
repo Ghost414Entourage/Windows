@@ -6,13 +6,17 @@ Show Wireless Networks:
 
 netsh wlan show networks
 
+*****************************************************************
 
 Display Network Interfaces:
 
 netsh interface show interface
 
+*****************************************************************
 
+Show saved wireless profiles:
 
+netsh wlan show profiles
 
 
 
