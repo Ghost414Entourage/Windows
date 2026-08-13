@@ -1,2 +1,18 @@
 Press Win + R, type ncpa.cpl, and press Enter
 
+-----------------------------------------------------------------------------------
+
+Show Wireless Networks:
+
+netsh wlan show networks
+
+
+Display Network Interfaces:
+
+netsh interface show interface
+
+
+
+
+
+
