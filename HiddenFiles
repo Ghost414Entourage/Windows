@@ -1,0 +1,38 @@
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Hidden /t REG_DWORD /d 1 /f
+
+
+--------------------------------------------------------------------------------------------------------------
+
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Hidden /t REG_DWORD /d 2 /f
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v Hidden
+
+
+0x1 (1) = Hidden files are SHOWN
+
+0x2 (2) = Hidden files are HIDDEN
+
+--------------------------------------------------------------------------------------------------------------------
+
+Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name Hidden | Select-Object -ExpandProperty Hidden
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+reg query "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowSuperHidden
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" -Name ShowSuperHidden | Select-Object -ExpandProperty ShowSuperHidden
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowSuperHidden /t REG_DWORD /d 1 /f
+
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+reg add "HKCU\Software\Microsoft\Windows\CurrentVersion\Explorer\Advanced" /v ShowSuperHidden /t REG_DWORD /d 0 /f
