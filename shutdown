@@ -13,3 +13,22 @@ ShutDown /R  shutdown and restart
 
 ShutDown /G  restore the Windows applications that were open at the time of the shutdown.
 
+
+
+----------------------------------------------------------------------------------------------------------------
+
+Shutdown 
+Shuts down, restarts, or logs off a computer. Syntax shutdown 
+
+[parameters] 
+Params 
+/s Shut down 
+/r Restart 
+/l Log off
+/t  s> <seconds> Delay before action
+/a Abort shutdown
+
+shutdown /r /t 60     # Restart after 60 seconds
+
+----------------------------------------------------------------------------------------------------------------
+
