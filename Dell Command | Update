@@ -71,9 +71,23 @@ winget list --id supportassist
 winget list Dell
 winget search dell
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+cd $home\Downloads
 
+Get-ChildItem *SupportAssist*
 
+Get-ChildItem *SupportAssist* | Select-Object Name, @{N="FileVersion"; E={$_.VersionInfo.FileVersion}}, @{N="ProductVersion"; E={$_.VersionInfo.ProductVersion}}
+
+Get-ChildItem *SupportAssist* | ForEach-Object { $_.VersionInfo } | Select-Object FileName, FileVersion, ProductVersion, FileDescription
+
+Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object Name, Domain, PartOfDomain, Workgroup
+
+(Get-CimInstance -ClassName Win32_OperatingSystem).Caption
+
+.\SupportAssistinstaller.exe
+
+Remove-Item *SupportAssist*.exe
 
 
 
