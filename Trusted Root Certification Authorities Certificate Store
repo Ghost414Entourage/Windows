@@ -4,5 +4,8 @@ https://learn.microsoft.com/en-us/windows-hardware/drivers/install/trusted-root-
 
 certmgr.msc
 
+certutil -store Root
+
+
 ************************************************************************************************************************************
 
