@@ -63,7 +63,7 @@ winget search supportassist --source msstore
 
 winget install --id XPDCCXDN26VNBT --source msstore
 
-
+winget list --id supportassist
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
