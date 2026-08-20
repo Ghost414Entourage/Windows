@@ -159,3 +159,14 @@ Get-ComputerInfo | Select-Object WindowsProductName, OsVersion, CsProcessors
 Get-CimInstance
 
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+winget search "Desktop Runtime"
+
+dotnet --list-runtimes
+
+winget install Microsoft.DotNet.DesktopRuntime.10
+
+
+
+
