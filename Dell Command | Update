@@ -67,11 +67,6 @@ winget install --id XPDCCXDN26VNBT --source msstore
 
 
 
-------------------------------------------------------------------------------------------------------------------------------------------------------
-
-winget show --id Dell.SupportAssist
-
-winget show --id Dell.CommandUpdate.Universal
 
 
 
