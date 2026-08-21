@@ -2,6 +2,8 @@ https://learn.microsoft.com/en-us/windows/security/operating-system-security/net
 
 https://learn.microsoft.com/en-us/powershell/module/netsecurity/?view=windowsserver2025-ps
 
+https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/netsh-advfirewall?tabs=consecadd%2Cfirewalladd%2Cmainmodeadd%2Cmonitordelete
+
 -----------------------------------------------------------------------------------------------------
 
 Windows Firewall uses the Base Filtering Engine (BFE) service, which interacts with the network stack. 
