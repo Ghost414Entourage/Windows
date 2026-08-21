@@ -105,7 +105,7 @@ Shows current Microsoft Defender settings, to verify that changes were saved
 
 Get-MpPreference
 
-
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Opens Windows Defender / Windows Security settings / App & Browser Control → Exploit Protection settings
 
