@@ -241,11 +241,29 @@ netsh advfirewall reset
 
 netsh advfirewall export "C:\firewall_backup.wfw"
 
-Remove-NetFirewallRule -Profile Private
+netsh advfirewall export "%USERPROFILE%\Desktop\firewall_backup.wfw"
+
+netsh advfirewall export "%USERPROFILE%\Documents\firewall_backup.wfw"
+
+
+
+Get-NetFirewallRule | Where-Object { $_.Profile -match "Private" } | Remove-NetFirewallRule
 
 netsh advfirewall firewall delete rule name=all profile=private
 
+
+
+
+
+Get-NetFirewallRule | Where-Object { $_.Profile -match "Private" }
+
+netsh advfirewall firewall show rule name=all profile=private
+
+
+
+
 netsh advfirewall set privateprofile firewallpolicy blockinbound,blockoutbound
+
 
 
 
