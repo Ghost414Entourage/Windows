@@ -228,37 +228,9 @@ netsh advfirewall show allprofiles
 -----------------------------------------------------------------------------------------------------
 
 
-Get-NetFirewallRule
-
-
-Retrieves Windows Defender Firewall rules from the local computer. You can filter by name, display name, group, direction, action, profile, or enabled state.
-
-
-Get-NetFirewallRule [-Name <String[]>][Params]
-
--Name Firewall rule name (system identifier)
-
--DisplayName Friendly display name
-
--Direction Inbound or Outbound 
-
--Enabled Enabled or Disabled
-
--Action Allow or Block
-
--Profile Domain, Private, Public
-
--PolicyStore Source policy store (e.g. ActiveStore)
+Get-NetFirewallProfile -Name Public | Get-NetFirewallRule
 
 
 
-example:
-
-Get-NetFirewallRule -Direction Inbound -Enabled True
-
-
-
-
------------------------------------------------------------------------------------------------------
 
 
