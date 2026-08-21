@@ -234,6 +234,20 @@ Get-NetFirewallProfile -Name Public | Get-NetFirewallRule
 
 netsh advfirewall firewall show rule name=all profile=public dir=in
 
+-----------------------------------------------------------------------------------------------------
+
+netsh advfirewall reset
+
+
+netsh advfirewall export "C:\firewall_backup.wfw"
+
+Remove-NetFirewallRule -Profile Private
+
+netsh advfirewall firewall delete rule name=all profile=private
+
+netsh advfirewall set privateprofile firewallpolicy blockinbound,blockoutbound
+
+
 
 
 
