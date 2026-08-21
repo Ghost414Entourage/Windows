@@ -75,6 +75,32 @@ Get-MpPreference
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+(Opens Windows Security / Microsoft Defender settings)
+
+Start ms-settings:windowsdefender
+
+
+(Opens general Windows privacy settings)
+
+Start ms-settings:privacy-general
+
+
+Change the SmartScreenEnabled value to: Warn (Enabled) Off (Disabled)
+Press Win + R, type regedit. Go to:
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
+
+
+
+
+
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Opens Windows Defender / Windows Security settings / App & Browser Control → Exploit Protection settings
 
 Start ms-settings:windowsdefender
