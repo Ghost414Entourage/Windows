@@ -74,7 +74,7 @@ Add-MpPreference -ControlledFolderAccessAllowedApplications "C:\Program Files\yo
 Get-MpPreference
 
 
-
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 Enables Controlled Folder Access in audit mode, That is, the system only records what would have been blocked, but does not actually block anything yet)
