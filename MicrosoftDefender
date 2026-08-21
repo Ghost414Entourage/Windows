@@ -47,6 +47,7 @@ Update-MpSignature
 
 Get-MpPreference
 
+-----------------------------------------------------------------------------------------------------------------------
 
 (Enables Controlled Folder Access in audit mode.
 
