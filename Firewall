@@ -236,6 +236,8 @@ netsh advfirewall firewall show rule name=all profile=public dir=in
 
 -----------------------------------------------------------------------------------------------------
 
+Win + R, type wf.msc, and hit Enter.
+
 netsh advfirewall reset
 
 
