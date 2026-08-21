@@ -232,6 +232,8 @@ netsh advfirewall show allprofiles
 
 Get-NetFirewallProfile -Name Public | Get-NetFirewallRule
 
+netsh advfirewall firewall show rule name=all profile=public dir=in
+
 
 
 
