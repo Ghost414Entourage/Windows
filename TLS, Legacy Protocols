@@ -2,3 +2,33 @@ Click Start → type: regedit:
 
 HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols
 
+Shows registry entries related to protocols SCHANNEL, i.e., TLS/SSL handling in Windows
+
+In general, for security: 
+SSL 2.0 / SSL 3.0 → disabled,  
+TLS 1.0 / TLS 1.1 → preferably disabled, if legacy programs are not required,  
+TLS 1.2 / TLS 1.3 → enabled.
+
+Disable SSL 2.0 / SSL 3.0 / TLS 1.0 / TLS 1.1
+Enabled = 0 
+DisabledByDefault = 1
+
+Enabling TLS 1.2 / TLS 1.3
+
+Enabled 1
+DisabledByDefault 0
+
+----------------------------------------------------------------------------------------------------------------------
+
+SSL 2.0 Disable Obsolete
+
+SSL 3.0 Disable Obsolete
+
+TLS 1.0 Disable if no legacy dependency Test first
+
+TLS 1.1 Disable if no legacy dependency Test first
+
+TLS 1.2 Enable Widely supported
+
+TLS 1.3 Enable where supported Depends on Windows/app supported
+
