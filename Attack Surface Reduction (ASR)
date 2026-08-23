@@ -1,0 +1,25 @@
+Adds a specific ASR rule in audit mode. That is: it does not block anything; it only records what would have been blocked if the rule were active.
+
+Add-MpPreference -AttackSurfaceReductionRules_Ids <Rule_GUID> -AttackSurfaceReductionRules_Actions AuditMode
+
+
+*************************************************************************************************************
+
+(Adds/enables a specific ASR rule in active mode) That is: it actually blocks behavior considered risky.
+
+Add-MpPreference -AttackSurfaceReductionRules_Ids <Rule_GUID> -AttackSurfaceReductionRules_Actions Enabled
+
+*************************************************************************************************************
+
+Shows the current Microsoft Defender settings, including, among others:
+
+Get-MpPreference
+
+you can check which ASR rules are added and whether they are in mode: 
+0 = Disabled 
+1 = Enabled 
+2 = AuditMode 
+6 = Warn
+
+<Rule_GUID> is the ID of a specific rule, e.g., a rule blocking suspicious script or process launches from Office.
+
