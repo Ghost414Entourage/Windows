@@ -1,0 +1,4 @@
+Click Start → type: regedit:
+
+HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols
+
