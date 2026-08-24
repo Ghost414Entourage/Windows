@@ -1,0 +1,153 @@
+(Opens Windows network settings)
+
+Start ms-settings:network
+
+--------------------------------------------------------------
+
+(Shows detailed network configuration)
+
+ipconfig /all
+
+--------------------------------------------------------------
+
+(Checks DNS resolution for the domain microsoft.com, meaning which IP addresses are returned by DNS)
+
+Resolve-DnsName microsoft.com
+
+--------------------------------------------------------------
+
+From the Sysinternals Suite, the most useful tool for monitoring traffic/network is:
+
+TCPView - https://learn.microsoft.com/en-us/sysinternals/downloads/tcpview
+
+(This tool can be used to check whether you are still using the default DNS on UDP port 53)
+
+---------------------------------------------------------------
+
+The following 2 commands add a DNS-over-HTTPS configuration in Windows 11 for a specific DNS server.
+
+netsh dns add encryption server=1.1.1.1 dohtemplate=https://cloudflare-dns.com/ dns-query autoupgrade=yes udpfallback=no
+
+netsh dns add encryption server=1.0.0.1 dohtemplate=https://cloudflare-dns.com/ dns-query autoupgrade=yes udpfallback=no
+
+---------------------------------------------------------------
+
+How to revert DoH via PowerShell
+
+netsh dns delete encryption server=1.1.1.1
+
+netsh dns delete encryption server=1.0.0.1
+
+---------------------------------------------------------------
+
+Restoring regular DNS
+
+Get-NetAdapter | Where-Object Status -eq "Up" | ForEach-Object { Set-dnsClientServerAddress -InterfaceIndex $_.InterfaceIndex -ResetServerAddresses }
+
+---------------------------------------------------------------
+
+Alternative method through the system registry for Windows 10:
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters
+
+---------------------------------------------------------------
+
+You need to register Quad9 or Cloudflare directly in the system's DoH database.
+
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters\
+
+DohWellKnownServers(If the subfolder DohWellKnownServers does not exist, right-click the Parameters folder, select New -> Key and name it DohWellKnownServers). 
+Right-click the DohWellKnownServers folder, select New -> Key and create a subfolder named after the chosen server 
+(e.g., Quad9 or Cloudflare). Enter the newly created subfolder and create two string values (right-click -> New -> String Value)
+
+For Quad9: create a string value named Template and set its value to:
+
+https://dns.quad9.net/dns-query
+
+
+Also add a string value named ServerAddress and set its value to: 9.9.9.9
+
+
+***********************************************************************************
+
+For Cloudflare: create a string value named Template and set its value to: 
+
+https://cloudflare-dns.com/dns-query
+
+Also add a string value named ServerAddress and set its value to: 1.1.1.1
+
+(If the DNSClient folder does not exist inside Windows NT, right-click Windows NT, add New -> Key and create it). 
+Inside the DNSClient folder, right-click in the right pane, select New -> DWORD (32-bit) Value. Name it DoHPolicy  
+and enter the value 3 (meaning no consent for unencrypted queries).
+
+HKEY_LOCAL_MACHINE\Software\Policies\Microsoft\Windows NT\DNSClient
+
+***********************************************************************************
+
+To set the DNS server address on the network adapter, go to the network adapter settings  
+(Control Panel -> Network and Internet -> Network and Sharing Center) and set the DNS server address entered earlier in the registry 
+(9.9.9.9 for Quad9 or 1.1.1.1 for Cloudflare) as the Preferred DNS server.
+
+How to check whether DoH is in use: 
+ipconfig
+
+---------------------------------------------------------------
+
+LLMNR = Link-Local Multicast Name Resolution.
+
+It works like this: when a computer cannot find a name in DNS, it asks the local network: “Does anyone know the address of ‘printer’, ‘server’, or ‘WPAD’?”
+
+Problem: a malicious computer on the same network may respond first and impersonate the searched name.
+
+Disabling LLMNR:
+
+Open regedit.exe
+
+HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient
+
+Inside the folder DNSClient right-click in the right pane, select New -> DWORD (32-bit) Value. Name it
+
+EnableMulticast
+
+and set the value to 0 (disabled) 1 = enabled Then restart the computer.
+
+---------------------------------------------------------------
+
+WPAD = Web Proxy Auto-Discovery.
+
+Used for automatic proxy detection on the network. The computer may search for, e.g.:
+
+wpad
+wpad.domain.local
+
+Problem: someone on the network may impersonate WPAD and provide a fake proxy through which some traffic will pass.
+
+Disabling WPAD:
+
+Open: regedit.exe
+
+HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings\WinHttp
+
+Inside the WinHttp folder, right-click in the right pane, select New:
+
+DWORD (32-bit) Value. Name:
+
+DisableWpad
+
+and set its value to 1 (value 0 enables it)
+
+HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Internet Settings
+
+Inside the folder Internet Settings right-click in the right pane, select New: DWORD (32-bit) Value. Name it
+
+AutoDetect
+
+and set the value to 0 (value 1 enables it)
+
+NOTE: Changes to DNS / LLMNR / WPAD may affect:
+
+Active Directory, older NAS devices, network printers, VPN solutions, corporate environments.
+
+
+
+
