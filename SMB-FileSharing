@@ -31,6 +31,9 @@ Set-SmbServerConfiguration -EnableSMB1Protocol $false -Confirm:$false
 Get-SmbShare
 
 
+Get-SmbServerConfiguration | Select-Object EnableSMB1Protocol, EnableSMB2Protocol
+
+
 
 
 
