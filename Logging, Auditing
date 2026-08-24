@@ -1,0 +1,29 @@
+Opens Event Viewer in Windows. There you can manually browse system logs, errors, warnings, logins, PowerShell activity, etc.
+
+eventvwr.msc
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Shows the last 50 events from the System log. These include driver errors, restarts, service issues, disk issues, and network problems
+
+Get-WinEvent -LogName System -MaxEvents 50
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Shows the last 50 security events, e.g. user logins, failed logins, and permission changes. Often requires running PowerShell as administrator.
+
+Get-WinEvent -LogName Security -MaxEvents 50
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Shows the last 50 events related to PowerShell. You can check whether any scripts/commands were run in PowerShell
+
+Get-WinEvent -LogName "Microsoft-Windows-PowerShell/Operational" -MaxEvents 50
+
+---------------------------------------------------------------------------------------------------------------------------------
+
+Shows the last 50 events from Windows Defender, e.g. threat detections, scans, blocks, and protection updates.
+
+Get-WinEvent -ProviderName "Microsoft-Windows-Windows Defender" -MaxEvents 50
+
+
