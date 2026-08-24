@@ -1,0 +1,38 @@
+(Shows the PowerShell script execution policy for various scopes, e.g., user, computer, process. That is, it checks the current security settings for scripts)
+
+Get-ExecutionPolicy -List
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(Sets the policy for the entire computer.
+
+Set-ExecutionPolicy RemoteSigned -Scope LocalMachine
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(Shows the last 20 events from the PowerShell log. There you can see, e.g., executed commands, errors, PowerShell activity)
+
+Get-WinEvent -LogName "Microsoft-Windows-PowerShell/Operational" -MaxEvents 20
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+(causes Windows to record PowerShell activity in this log)
+
+wevtutil sl Microsoft-Windows-PowerShell/Operational /e:true
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-Service List of services
+
+Get-ScheduledTask Scheduled tasks
+
+Get-Process Active processes
+
+Get-NetTCPConnection Active network connections
+
+Get-WinEvent System events
+
+whoami /groups User permissions
+
+auditpol /get /category:* Audit settings
+
