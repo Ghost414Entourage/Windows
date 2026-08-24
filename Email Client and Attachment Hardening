@@ -1,0 +1,28 @@
+(Opens Default apps settings in Windows)
+
+Start ms-settings:defaultapps
+
+----------------------------------------------------------------------------------------------------------
+
+(Opens automatic file download settings)
+
+Start ms-settings:privacy-automaticfiledownloads
+
+----------------------------------------------------------------------------------------------------------
+
+(Can check whether file extensions are hidden)
+
+control.exe folders
+
+----------------------------------------------------------------------------------------------------------
+
+.exe, .scr, .bat, .cmd high do not run from email
+
+.js, .vbs, .ps1 high block / do not open
+
+.docm, .xlsm high be careful with macros
+
+.zip, .rar, .7z medium/high check the source
+
+.pdf medium open only in an up-to-date PDF reader
+
