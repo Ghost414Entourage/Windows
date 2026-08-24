@@ -1,0 +1,37 @@
+(Opens Task Scheduler)
+
+taskschd.msc
+
+--------------------------------------------------------
+
+(Opens Windows privacy settings)
+
+Start ms-settings:privacy
+
+--------------------------------------------------------
+
+(Shows Windows scheduled system tasks, e.g., updates, diagnostics, maintenance, telemetry)
+
+Get-ScheduledTask | Where-Object {$_.TaskPath -like "\Microsoft\Windows\*"}
+
+--------------------------------------------------------
+
+(Checks the status of DiagTrack, meaning Connected User Experiences and Telemetry)
+
+Get-Service DiagTrack
+
+--------------------------------------------------------
+
+(Stops the DiagTrack service)
+
+Stop-Service DiagTrack
+
+--------------------------------------------------------
+
+(Disables automatic startup of DiagTrack on system boot)
+
+Set-Service DiagTrack -StartupType Disabled
+
+
+
+
