@@ -1,0 +1,54 @@
+(Opens Remote Desktop settings in Windows)
+
+Start ms-settings:remotedesktop
+
+--------------------------------------------------------------------------------------------------------
+
+(Checks the status of the WinRM service, i.e., Windows Remote Management)
+
+Get-Service WinRM
+
+--------------------------------------------------------------------------------------------------------
+
+(Stops the WinRM service)
+
+Stop-Service WinRM
+
+--------------------------------------------------------------------------------------------------------
+
+(Disables automatic startup of WinRM at system boot)
+
+Set-Service WinRM -StartupType Disabled
+
+--------------------------------------------------------------------------------------------------------
+
+(Shows whether WinRM has active listeners, i.e., configurations listening for remote connections) (if the service is disabled, you will not be able to check for listeners.)
+
+winrm enumerate winrm/config/listener
+
+--------------------------------------------------------------------------------------------------------
+
+click Start, type regedit Navigate to the following branch:
+Find: PortNumber (decimal value) and change it to another, e.g., 48221
+
+HKLM\System\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp
+
+--------------------------------------------------------------------------------------------------------
+
+Start → Settings → System → Remote Desktop:
+
+Check the option "Require devices to use Network Level Authentication to connect"
+
+Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication
+
+Result 1 = NLA enabled.
+
+Enabling via PowerShell:
+
+Set-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp" -Name UserAuthentication -Value 1
+
+--------------------------------------------------------------------------------------------------------
+
+How to disable the Administrator account in PowerShell:
+
+net user Administrator /active:no
