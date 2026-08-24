@@ -1,0 +1,22 @@
+Shows the status of Microsoft Defender, e.g., whether protection is enabled, when the last update occurred, whether real-time protection is working.
+
+Get-MpComputerStatus
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Shows the status of Windows Firewall for profiles: domain, private, and public. You can check whether the firewall is enabled.
+
+Get-NetFirewallProfile
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Shows the BitLocker status, meaning disk encryption. It tells you whether the drive is encrypted, the encryption percentage, and whether protection is active
+
+manage-bde -status
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+
+Shows the last 10 events from PowerShell logs, e.g., command or script executions.
+
+Get-WinEvent -LogName "Microsoft-Windows-PowerShell/Operational" -MaxEvents 10
+
