@@ -1,0 +1,17 @@
+Enable account lockout after failed logins:
+
+net localgroup Administrators
+
+Press Start: type: secpol.msc
+
+Go to Account Policies: Account Lockout Policy
+Example recommended setting:
+
+Account lockout threshold → 5
+
+Account lockout duration → 30 minutes
+
+Reset account lockout counter after → 30 minutes
+
+---------------------------------------------------------------------------------------------------------------------------
+
