@@ -262,7 +262,9 @@ Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProf
 
 
 
-# Configure Windows Defender settings
+# Configure Windows Defender settings:
+
+# Real-time protection
 
 "HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableRealtimeMonitoring" = 0  # Enable
 
@@ -291,6 +293,26 @@ if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Tim
 
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableBehaviorMonitoring" -Value 0 -Type DWord
 
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" | Select-Object DisableRealtimeMonitoring, DisableBehaviorMonitoring
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+"HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableIOAVProtection" = 0  # Enable
+
+**********************************************************************************************
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableIOAVProtection" -Value 0 -Type DWord
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" | Select-Object DisableRealtimeMonitoring, DisableBehaviorMonitoring, DisableIOAVProtection
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
