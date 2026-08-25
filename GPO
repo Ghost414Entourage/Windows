@@ -408,4 +408,25 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spyne
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Scan settings
+
+"HKLM\Software\Policies\Microsoft\Windows Defender\Scan\CheckForSignaturesBeforeRunningScan" = 1
+
+**********************************************************************************************
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" -Name "CheckForSignaturesBeforeRunningScan" -Value 1 -Type DWord
+
+**********************************************************************************************
+
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" | Select-Object CheckForSignaturesBeforeRunningScan
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 
