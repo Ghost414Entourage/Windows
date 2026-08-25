@@ -353,3 +353,31 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Cloud protection
+
+
+"HKLM\Software\Policies\Microsoft\Windows Defender\Spynet\SpynetReporting" = 2  # Advanced membership
+
+**********************************************************************************************
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Name "SpynetReporting" -Value 2 -Type DWord
+
+
+
+Value breakdown for SpynetReporting:
+0 = Disabled (No cloud protection)
+1 = Basic membership (Sends basic threat data)
+2 = Advanced membership (Enabled - full cloud protection telemetry)
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" | Select-Object SpynetReporting
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
