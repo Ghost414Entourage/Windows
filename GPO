@@ -204,6 +204,64 @@ Remove-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProf
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Configure Windows Defender settings
 
 "HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableRealtimeMonitoring" = 0  # Enable
