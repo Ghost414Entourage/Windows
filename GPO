@@ -381,3 +381,31 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spyne
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+"HKLM\Software\Policies\Microsoft\Windows Defender\Spynet\SubmitSamplesConsent" = 1  # Send safe samples
+
+**********************************************************************************************
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" -Name "SubmitSamplesConsent" -Value 1 -Type DWord
+
+
+
+
+alue breakdown for SubmitSamplesConsent:
+1 = Send safe samples automatically (Enabled - Default safe behavior)
+2 = Never send samples
+3 = Ask before sending safe samples
+4 = Send all samples automatically (including potential PII)
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Spynet" | Select-Object SpynetReporting, SubmitSamplesConsent
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
