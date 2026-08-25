@@ -316,3 +316,23 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+"HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection" = 0  # Enable
+
+**********************************************************************************************
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableOnAccessProtection" -Value 0 -Type DWord
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Real-Time Protection" | 
+    Select-Object DisableRealtimeMonitoring, DisableBehaviorMonitoring, DisableIOAVProtection, DisableOnAccessProtection
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
