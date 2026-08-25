@@ -428,5 +428,22 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan"
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+"HKLM\Software\Policies\Microsoft\Windows Defender\Scan\DisableHeuristics" = 0  # Enable heuristics
 
+**********************************************************************************************
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" -Name "DisableHeuristics" -Value 0 -Type DWord
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan" | 
+    Select-Object CheckForSignaturesBeforeRunningScan, DisableHeuristics
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
 
