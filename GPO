@@ -447,3 +447,69 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Scan"
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+# Update settings
+
+"HKLM\Software\Policies\Microsoft\Windows Defender\Signature Updates\SignatureUpdateInterval" = 4  # Every 4 hours
+
+**********************************************************************************************
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates" -Name "SignatureUpdateInterval" -Value 4 -Type DWord
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Signature Updates" | Select-Object SignatureUpdateInterval
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+foreach ($Setting in $DefenderSettings.Keys) { 
+    $Value = $DefenderSettings[$Setting] 
+    $KeyPath = Split-Path $Setting 
+    $ValueName = Split-Path $Setting -Leaf 
+
+    Set-GPRegistryValue -Name $GPOName `
+        -Key $KeyPath `
+        -ValueName $ValueName `
+        -Type DWord `
+        -Value $Value
+}
+
+**********************************************************************************************
+
+$GPOName = "Windows Defender Baseline Policy"
+
+$DefenderSettings = [ordered]@{
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableRealtimeMonitoring"      = 0
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableBehaviorMonitoring"      = 0
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableIOAVProtection"          = 0
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableOnAccessProtection"      = 0
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Real-Time Protection\DisableScanOnRealtimeEnable"  = 0
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Spynet\SpynetReporting"                             = 2
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Spynet\SubmitSamplesConsent"                         = 1
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Scan\CheckForSignaturesBeforeRunningScan"          = 1
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Scan\DisableHeuristics"                             = 0
+    "HKLM\Software\Policies\Microsoft\Windows Defender\Signature Updates\SignatureUpdateInterval"           = 4
+}
+
+foreach ($Setting in $DefenderSettings.Keys) { 
+    $Value = $DefenderSettings[$Setting] 
+    $KeyPath = Split-Path $Setting 
+    $ValueName = Split-Path $Setting -Leaf 
+
+    Set-GPRegistryValue -Name $GPOName `
+        -Key $KeyPath `
+        -ValueName $ValueName `
+        -Type DWord `
+        -Value $Value
+}
+
+**********************************************************************************************
+
+
+
+
+
