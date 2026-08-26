@@ -1666,3 +1666,15 @@ Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "MinimumPIN
 
 
 
+
+
+
+secedit.exe
+
+
+
+
+
+
+
+
