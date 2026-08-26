@@ -1439,3 +1439,145 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\SrpV2\Msi" `
 
 
 
+
+
+
+
+
+
+
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+BitLocker Encryption GPO
+
+
+
+
+# Require BitLocker on OS drives
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "UseAdvancedStartup" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "EnableBDEWithNoTPM" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "UseTPM" -Type DWord -Value 2
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "UseTPMPIN" -Type DWord -Value 2
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "UseTPMKey" -Type DWord -Value 2
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "UseTPMKeyPIN" -Type DWord -Value 2
+
+
+# Configure encryption method (XTS-AES 256)
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "EncryptionMethodWithXtsOs" -Type DWord -Value 7  # XTS-AES 256
+
+
+
+# Store recovery information in AD
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "OSRequireActiveDirectoryBackup" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "OSActiveDirectoryBackup" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "OSActiveDirectoryInfoToStore" -Type DWord -Value 1
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "OSHideRecoveryPage" -Type DWord -Value 1
+
+
+
+# Minimum PIN length
+
+Set-GPRegistryValue -Name $GPOName -Key "HKLM\Software\Policies\Microsoft\FVE" -ValueName "MinimumPIN" -Type DWord -Value 6
+
+
+
+
+**********************************************************************************************
+
+
+# 1. Define the complete Group Policy configuration block
+$LgpoBlockText = @"
+Computer
+Software\Policies\Microsoft\FVE
+UseAdvancedStartup
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\FVE
+EnableBDEWithNoTPM
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\FVE
+UseTPM
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\FVE
+UseTPMPIN
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\FVE
+UseTPMKey
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\FVE
+UseTPMKeyPIN
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\FVE
+EncryptionMethodWithXtsOs
+DWORD:7
+
+Computer
+Software\Policies\Microsoft\FVE
+OSRequireActiveDirectoryBackup
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\FVE
+OSActiveDirectoryBackup
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\FVE
+OSActiveDirectoryInfoToStore
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\FVE
+OSHideRecoveryPage
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\FVE
+MinimumPIN
+DWORD:6
+"@
+
+# 2. Save definitions to a temporary text file
+$TempTxt = "$env:TEMP\bitlocker_hardening_policy.txt"
+$LgpoBlockText | Out-File -FilePath $TempTxt -Encoding ascii
+
+# 3. Import settings into Local Group Policy via LGPO.exe
+& "C:\Tools\LGPO\LGPO.exe" /t $TempTxt
+
+# 4. Force immediate policy update
+gpupdate /force
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
