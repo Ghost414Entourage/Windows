@@ -950,3 +950,61 @@ gpupdate /force
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Security Options GPO
+
+
+# Network security
+
+
+$LsaPath = "HKLM:\System\CurrentControlSet\Control\Lsa"
+
+# Ensure the key path exists
+if (-not (Test-Path $LsaPath)) { 
+    New-Item -Path $LsaPath -Force | Out-Null 
+}
+
+# Apply LSA Hardening Settings
+Set-ItemProperty -Path $LsaPath -Name "LmCompatibilityLevel" -Value 5 -Type DWord
+Set-ItemProperty -Path $LsaPath -Name "NoLMHash" -Value 1 -Type DWord
+Set-ItemProperty -Path $LsaPath -Name "RestrictAnonymous" -Value 1 -Type DWord
+Set-ItemProperty -Path $LsaPath -Name "RestrictAnonymousSAM" -Value 1 -Type DWord
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" | 
+    Select-Object LmCompatibilityLevel, NoLMHash, RestrictAnonymous, RestrictAnonymousSAM
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Interactive logon
+
+
+
