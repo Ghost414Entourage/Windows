@@ -1291,6 +1291,10 @@ gpupdate /force
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+AppLocker Application Whitelisting
+
+
+
 
 # Define target AppLocker registry paths
 $SrpRoot   = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\SrpV2"
