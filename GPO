@@ -1275,3 +1275,70 @@ gpupdate /force
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Define target AppLocker registry paths
+$SrpRoot   = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\SrpV2"
+$ExePath   = "$SrpRoot\Exe"
+$DllPath   = "$SrpRoot\Dll"
+$ScriptPath= "$SrpRoot\Script"
+$MsiPath   = "$SrpRoot\Msi"
+
+# 1. Ensure registry keys exist and enable enforcement flags
+foreach ($path in @($ExePath, $DllPath, $ScriptPath, $MsiPath)) {
+    if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }
+}
+
+# Enable AppLocker Master Enforcement (SrpV2 Enabled = 1)
+Set-ItemProperty -Path $SrpRoot -Name "Enabled" -Value 1 -Type DWord
+
+# Enable collection enforcement modes (1 = Enabled, 2 = AuditOnly)
+Set-ItemProperty -Path $ExePath    -Name "EnforcementMode" -Value 1 -Type DWord
+Set-ItemProperty -Path $DllPath    -Name "EnforcementMode" -Value 2 -Type DWord
+Set-ItemProperty -Path $ScriptPath -Name "EnforcementMode" -Value 1 -Type DWord
+Set-ItemProperty -Path $MsiPath    -Name "EnforcementMode" -Value 1 -Type DWord
+
+# 2. Write individual Rule XML strings directly into Registry GUID Values
+
+# Exe Rules
+Set-ItemProperty -Path $ExePath -Name "a9e18c21-ff8f-43cf-b9fc-db40eed693ba" -Type String -Value '<FilePathRule Id="a9e18c21-ff8f-43cf-b9fc-db40eed693ba" Name="Allow Administrators" Description="" UserOrGroupSid="S-1-5-32-544" Action="Allow"><Conditions><FilePathCondition Path="*" /></Conditions></FilePathRule>'
+Set-ItemProperty -Path $ExePath -Name "921cc481-6e17-4653-8f75-050b80acca20" -Type String -Value '<FilePathRule Id="921cc481-6e17-4653-8f75-050b80acca20" Name="Allow Program Files" Description="" UserOrGroupSid="S-1-1-0" Action="Allow"><Conditions><FilePathCondition Path="%PROGRAMFILES%\*" /></Conditions></FilePathRule>'
+Set-ItemProperty -Path $ExePath -Name "a61c8b2c-a319-4cd0-9690-d2177cad7b51" -Type String -Value '<FilePathRule Id="a61c8b2c-a319-4cd0-9690-d2177cad7b51" Name="Allow Program Files x86" Description="" UserOrGroupSid="S-1-1-0" Action="Allow"><Conditions><FilePathCondition Path="%PROGRAMFILES(X86)%\*" /></Conditions></FilePathRule>'
+Set-ItemProperty -Path $ExePath -Name "fd686d83-a829-4351-8ff4-27d0fbc1c03b" -Type String -Value '<FilePathRule Id="fd686d83-a829-4351-8ff4-27d0fbc1c03b" Name="Allow Windows" Description="" UserOrGroupSid="S-1-1-0" Action="Allow"><Conditions><FilePathCondition Path="%WINDIR%\*" /></Conditions></FilePathRule>'
+Set-ItemProperty -Path $ExePath -Name "e9c0e4a0-45a4-4f3e-a2e2-4eaaf4cbae9f" -Type String -Value '<FilePathRule Id="e9c0e4a0-45a4-4f3e-a2e2-4eaaf4cbae9f" Name="Deny Everything Else" Description="" UserOrGroupSid="S-1-1-0" Action="Deny"><Conditions><FilePathCondition Path="*" /></Conditions></FilePathRule>'
+
+# Dll Rule
+Set-ItemProperty -Path $DllPath -Name "8a4d9e51-bb5e-4e90-9aa9-e4e9b1e6d6a7" -Type String -Value '<FilePathRule Id="8a4d9e51-bb5e-4e90-9aa9-e4e9b1e6d6a7" Name="Allow All DLLs (Audit)" Description="" UserOrGroupSid="S-1-1-0" Action="Allow"><Conditions><FilePathCondition Path="*" /></Conditions></FilePathRule>'
+
+# Script Rules
+Set-ItemProperty -Path $ScriptPath -Name "06dce67b-934c-454f-a263-2515c8796a5d" -Type String -Value '<FilePathRule Id="06dce67b-934c-454f-a263-2515c8796a5d" Name="Allow Scripts from Program Files" Description="" UserOrGroupSid="S-1-1-0" Action="Allow"><Conditions><FilePathCondition Path="%PROGRAMFILES%\*" /></Conditions></FilePathRule>'
+Set-ItemProperty -Path $ScriptPath -Name "9420c496-046d-45ab-bd0e-455b2649e41e" -Type String -Value '<FilePathRule Id="9420c496-046d-45ab-bd0e-455b2649e41e" Name="Allow Scripts from Windows" Description="" UserOrGroupSid="S-1-1-0" Action="Allow"><Conditions><FilePathCondition Path="%WINDIR%\*" /></Conditions></FilePathRule>'
+
+# Msi Rule
+Set-ItemProperty -Path $MsiPath -Name "b7af4042-7cd8-4a08-8dc3-c0eadf3d6f58" -Type String -Value '<FilePublisherRule Id="b7af4042-7cd8-4a08-8dc3-c0eadf3d6f58" Name="Allow Signed MSI" Description="" UserOrGroupSid="S-1-1-0" Action="Allow"><Conditions><FilePublisherCondition PublisherName="*" ProductName="*" BinaryName="*"><BinaryVersionRange LowSection="*" HighSection="*" /></FilePublisherCondition></Conditions></FilePublisherRule>'
+
+# 3. Start Application Identity Service & Refresh Policy
+Set-Service -Name "AppIDSvc" -StartupType Automatic
+Start-Service -Name "AppIDSvc" -ErrorAction SilentlyContinue
+gpupdate /force
+
+
+
+
+
+
