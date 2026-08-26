@@ -1006,5 +1006,272 @@ Get-ItemProperty -Path "HKLM:\System\CurrentControlSet\Control\Lsa" |
 
 # Interactive logon
 
+"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\DontDisplayLastUserName" = 1  # Don't display last username
+
+"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\InactivityTimeoutSecs" = 900  # 15 minute timeout
+
+"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\CachedLogonsCount" = 2  # Cache only 2 logons
+
+"HKLM\Software\Microsoft\Windows NT\CurrentVersion\Winlogon\ScRemoveOption" = 1  # Lock workstation on smart card removal
+
+
+
+**********************************************************************************************
+
+
+# Define target key paths
+$SystemPolicyPath = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System"
+$WinlogonPath     = "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon"
+
+# Ensure registry keys exist
+foreach ($path in @($SystemPolicyPath, $WinlogonPath)) {
+    if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }
+}
+
+# 1. Hide last logged-in user on sign-in screen
+Set-ItemProperty -Path $SystemPolicyPath -Name "DontDisplayLastUserName" -Value 1 -Type DWord
+
+# 2. Set screen/session inactivity lock timeout to 15 minutes (900 seconds)
+Set-ItemProperty -Path $SystemPolicyPath -Name "InactivityTimeoutSecs" -Value 900 -Type DWord
+
+# 3. Restrict cached domain credentials stored locally to 2 accounts
+Set-ItemProperty -Path $WinlogonPath -Name "CachedLogonsCount" -Value "2" -Type String
+
+# 4. Lock computer when Smart Card is removed (1 = Lock Workstation, 2 = Force Logoff)
+Set-ItemProperty -Path $WinlogonPath -Name "ScRemoveOption" -Value "1" -Type String
+
+
+**********************************************************************************************
+
+
+Get-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" | 
+    Select-Object DontDisplayLastUserName, InactivityTimeoutSecs
+
+Get-ItemProperty -Path "HKLM:\Software\Microsoft\Windows NT\CurrentVersion\Winlogon" | 
+    Select-Object CachedLogonsCount, ScRemoveOption
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# User Account Control
+
+
+
+"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\ConsentPromptBehaviorAdmin" = 2  # Prompt for consent
+
+"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\EnableLUA" = 1  # Enable UAC
+
+"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\FilterAdministratorToken" = 1
+
+"HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\System\EnableVirtualization" = 1
+
+
+**********************************************************************************************
+
+
+$SystemPolicyPath = "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System"
+
+# Ensure registry key path exists
+if (-not (Test-Path $SystemPolicyPath)) { 
+    New-Item -Path $SystemPolicyPath -Force | Out-Null 
+}
+
+# 1. Prompt for consent on secure desktop for administrators
+Set-ItemProperty -Path $SystemPolicyPath -Name "ConsentPromptBehaviorAdmin" -Value 2 -Type DWord
+
+# 2. Enable User Account Control (LUA)
+Set-ItemProperty -Path $SystemPolicyPath -Name "EnableLUA" -Value 1 -Type DWord
+
+# 3. Apply UAC to the Built-in Administrator account
+Set-ItemProperty -Path $SystemPolicyPath -Name "FilterAdministratorToken" -Value 1 -Type DWord
+
+# 4. Enable UAC file and registry write virtualization for 32-bit legacy apps
+Set-ItemProperty -Path $SystemPolicyPath -Name "EnableVirtualization" -Value 1 -Type DWord
+
+
+**********************************************************************************************
+
+
+Get-ItemProperty -Path "HKLM:\Software\Microsoft\Windows\CurrentVersion\Policies\System" | 
+    Select-Object ConsentPromptBehaviorAdmin, EnableLUA, FilterAdministratorToken, EnableVirtualization
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Network access
+
+"HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\RestrictNullSessAccess" = 1
+
+"HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters\NullSessionPipes" = ""
+
+"HKLM\System\CurrentControlSet\Services\LanmanServer\Parameters\NullSessionShares" = ""
+
+
+**********************************************************************************************
+
+
+$LanmanServerPath = "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters"
+
+# Ensure registry key path exists
+if (-not (Test-Path $LanmanServerPath)) { 
+    New-Item -Path $LanmanServerPath -Force | Out-Null 
+}
+
+# 1. Restrict anonymous/null session access to named pipes and shares
+Set-ItemProperty -Path $LanmanServerPath -Name "RestrictNullSessAccess" -Value 1 -Type DWord
+
+# 2. Clear allowed Null Session Pipes (MultiString)
+Set-ItemProperty -Path $LanmanServerPath -Name "NullSessionPipes" -Value @() -Type MultiString
+
+# 3. Clear allowed Null Session Shares (MultiString)
+Set-ItemProperty -Path $LanmanServerPath -Name "NullSessionShares" -Value @() -Type MultiString
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# SMB settings
+
+"HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\SMB1" = 0  # Disable SMBv1
+
+"HKLM\System\CurrentControlSet\Services\LanManServer\Parameters\RequireSecuritySignature" = 1  # Require SMB signing
+
+
+**********************************************************************************************
+
+
+$LanmanServerPath = "HKLM:\System\CurrentControlSet\Services\LanManServer\Parameters"
+
+# Ensure registry key path exists
+if (-not (Test-Path $LanmanServerPath)) { 
+    New-Item -Path $LanmanServerPath -Force | Out-Null 
+}
+
+# 1. Completely disable the vulnerable SMBv1 protocol on the server side
+Set-ItemProperty -Path $LanmanServerPath -Name "SMB1" -Value 0 -Type DWord
+
+# 2. Require SMB digital signatures (signing) for all incoming SMB connections
+Set-ItemProperty -Path $LanmanServerPath -Name "RequireSecuritySignature" -Value 1 -Type DWord
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# 1. Define the complete Group Policy configuration block
+$LgpoBlockText = @"
+Computer
+System\CurrentControlSet\Control\Lsa
+LmCompatibilityLevel
+DWORD:5
+
+Computer
+System\CurrentControlSet\Control\Lsa
+NoLMHash
+DWORD:1
+
+Computer
+System\CurrentControlSet\Control\Lsa
+RestrictAnonymous
+DWORD:1
+
+Computer
+System\CurrentControlSet\Control\Lsa
+RestrictAnonymousSAM
+DWORD:1
+
+Computer
+Software\Microsoft\Windows\CurrentVersion\Policies\System
+DontDisplayLastUserName
+DWORD:1
+
+Computer
+Software\Microsoft\Windows\CurrentVersion\Policies\System
+InactivityTimeoutSecs
+DWORD:900
+
+Computer
+Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+CachedLogonsCount
+String:2
+
+Computer
+Software\Microsoft\Windows NT\CurrentVersion\Winlogon
+ScRemoveOption
+String:1
+
+Computer
+Software\Microsoft\Windows\CurrentVersion\Policies\System
+ConsentPromptBehaviorAdmin
+DWORD:2
+
+Computer
+Software\Microsoft\Windows\CurrentVersion\Policies\System
+EnableLUA
+DWORD:1
+
+Computer
+Software\Microsoft\Windows\CurrentVersion\Policies\System
+FilterAdministratorToken
+DWORD:1
+
+Computer
+Software\Microsoft\Windows\CurrentVersion\Policies\System
+EnableVirtualization
+DWORD:1
+
+Computer
+System\CurrentControlSet\Services\LanManServer\Parameters
+RestrictNullSessAccess
+DWORD:1
+
+Computer
+System\CurrentControlSet\Services\LanManServer\Parameters
+NullSessionPipes
+MULTISZ:
+
+Computer
+System\CurrentControlSet\Services\LanManServer\Parameters
+NullSessionShares
+MULTISZ:
+
+Computer
+System\CurrentControlSet\Services\LanManServer\Parameters
+SMB1
+DWORD:0
+
+Computer
+System\CurrentControlSet\Services\LanManServer\Parameters
+RequireSecuritySignature
+DWORD:1
+"@
+
+# 2. Save definitions to a temporary text file
+$TempTxt = "$env:TEMP\system_hardening_policy.txt"
+$LgpoBlockText | Out-File -FilePath $TempTxt -Encoding ascii
+
+# 3. Import settings into Local Group Policy via LGPO.exe
+& "C:\Tools\LGPO\LGPO.exe" /t $TempTxt
+
+# 4. Force immediate policy update
+gpupdate /force
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
