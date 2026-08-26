@@ -35,3 +35,9 @@ https://www.ncsc.gov.uk/collection/device-security-guidance    /    https://gith
 ----------------------------------------
 
 https://learn.microsoft.com/en-us/windows/security/operating-system-security/device-management/windows-security-configuration-framework/security-compliance-toolkit-10
+
+----------------------------------------
+
+https://github.com/techservicesillinois/SecOps-Powershell-CISDSC
+
+https://github.com/microsoft/powerstig
