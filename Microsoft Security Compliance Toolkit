@@ -22,3 +22,10 @@ Get-ChildItem -Path "C:\Tools\*" -Recurse -Include *.exe | Select-Object Name, D
 gpupdate /force
 
 ---------------------------------------------------------------------------------------------
+
+gpresult /h "$env:USERPROFILE\Desktop\GPOReport.html"
+
+gpresult /r
+
+gpresult /v
+
