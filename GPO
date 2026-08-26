@@ -511,7 +511,441 @@ foreach ($Setting in $DefenderSettings.Keys) {
 
 
 
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# 1. Define the 10 Windows Defender Local Group Policy settings
+$LgpoText = @"
+Computer
+Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+DisableRealtimeMonitoring
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+DisableBehaviorMonitoring
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+DisableIOAVProtection
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+DisableOnAccessProtection
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Real-Time Protection
+DisableScanOnRealtimeEnable
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Spynet
+SpynetReporting
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Spynet
+SubmitSamplesConsent
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Scan
+CheckForSignaturesBeforeRunningScan
+DWORD:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Scan
+DisableHeuristics
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Signature Updates
+SignatureUpdateInterval
+DWORD:4
+"@
+
+# 2. Save the policy definitions to a temporary file
+$TempTxt = "$env:TEMP\defender_policy.txt"
+$LgpoText | Out-File -FilePath $TempTxt -Encoding ascii
+
+# 3. Import settings into Local Group Policy database (registry.pol)
+& "C:\Tools\LGPO\LGPO.exe" /t $TempTxt
+
+# 4. Refresh local Group Policy immediately
+gpupdate /force
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Configure Attack Surface Reduction (ASR) rules
+
+# Block executable content from email and webmail
+
+if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules")) { 
+    New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" -Force | Out-Null 
+}
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" -Name "BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550" -Value 1 -Type DWord
+
+
+**********************************************************************************************
+
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550"
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Block all Office applications from creating child processes
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "D4F940AB-401B-4EFC-AADC-AD5F3C50688A" -Value 1 -Type DWord
+
+
+**********************************************************************************************
+
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "D4F940AB-401B-4EFC-AADC-AD5F3C50688A"
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Block Office applications from creating executable content
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "3B576869-A4EC-4529-8536-B80A7769E899" -Value 1 -Type DWord
+
+
+
+**********************************************************************************************
+
+
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "3B576869-A4EC-4529-8536-B80A7769E899"
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Block Office applications from injecting code into other processes
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84" -Value 1 -Type DWord
+
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84"
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Block JavaScript or VBScript from launching downloaded executable content
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "D3E037E1-3EB8-44C8-A917-57927947596D" -Value 1 -Type DWord
+
+
+
+**********************************************************************************************
+
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "D3E037E1-3EB8-44C8-A917-57927947596D"
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Block execution of potentially obfuscated scripts
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "5BEB7EFE-FD9A-4556-801D-275E5FFC04CC" -Value 1 -Type DWord
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "5BEB7EFE-FD9A-4556-801D-275E5FFC04CC"
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Block Win32 API calls from Office macros
+
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B" -Value 1 -Type DWord
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B"
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Block credential stealing from Windows local security authority subsystem
+
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "9E6C4E1F-7D60-472F-BA1A-A39EF669E4B2" -Value 1 -Type DWord
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "9E6C4E1F-7D60-472F-BA1A-A39EF669E4B2"
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Block process creations originating from PSExec and WMI commands
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "D1E49AAC-8F56-4280-B9BA-993A6D77406C" -Value 1 -Type DWord
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "D1E49AAC-8F56-4280-B9BA-993A6D77406C"
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Block untrusted and unsigned processes that run from USB
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "B2B3F03D-6A65-4F7B-A9C7-1C7EF74A9BA4" -Value 1 -Type DWord
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "B2B3F03D-6A65-4F7B-A9C7-1C7EF74A9BA4"
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Block Adobe Reader from creating child processes
+
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "7674BA52-37EB-4A4F-A9A1-F0F9A1619A2C" -Value 1 -Type DWord
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "7674BA52-37EB-4A4F-A9A1-F0F9A1619A2C"
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Block persistence through WMI event subscription
+
+$AsrPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules"
+
+if (-not (Test-Path $AsrPath)) { 
+    New-Item -Path $AsrPath -Force | Out-Null 
+}
+
+Set-ItemProperty -Path $AsrPath -Name "E6DB77E5-3DF2-4CF1-B95A-636979351E5B" -Value 1 -Type DWord
+
+
+**********************************************************************************************
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules" | 
+    Select-Object "E6DB77E5-3DF2-4CF1-B95A-636979351E5B"
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# 1. Define the 12 ASR Rules in LGPO format (1 = Block)
+$LgpoAsrText = @"
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+BE9BA2D9-53EA-4CDC-84E5-9B1EEEE46550
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+D4F940AB-401B-4EFC-AADC-AD5F3C50688A
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+3B576869-A4EC-4529-8536-B80A7769E899
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+75668C1F-73B5-4CF0-BB93-3ECF5CB7CC84
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+D3E037E1-3EB8-44C8-A917-57927947596D
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+5BEB7EFE-FD9A-4556-801D-275E5FFC04CC
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+92E97FA1-2EDF-4476-BDD6-9DD0B4DDDC7B
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+9E6C4E1F-7D60-472F-BA1A-A39EF669E4B2
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+D1E49AAC-8F56-4280-B9BA-993A6D77406C
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+B2B3F03D-6A65-4F7B-A9C7-1C7EF74A9BA4
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+7674BA52-37EB-4A4F-A9A1-F0F9A1619A2C
+String:1
+
+Computer
+Software\Policies\Microsoft\Windows Defender\Windows Defender Exploit Guard\ASR Rules
+E6DB77E5-3DF2-4CF1-B95A-636979351E5B
+String:1
+"@
+
+# 2. Save definitions to a temporary text file
+$TempTxt = "$env:TEMP\asr_policy.txt"
+$LgpoAsrText | Out-File -FilePath $TempTxt -Encoding ascii
+
+# 3. Import settings into Local Group Policy via LGPO.exe
+& "C:\Tools\LGPO\LGPO.exe" /t $TempTxt
+
+# 4. Force immediate policy update
+gpupdate /force
+
+
+
+
+
+
+
 
 
 
