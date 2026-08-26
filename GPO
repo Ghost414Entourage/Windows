@@ -1575,6 +1575,91 @@ gpupdate /force
 
 
 
+
+
+**********************************************************************************************
+
+
+# Ensure target Registry key exists
+$FvePath = "HKLM:\Software\Policies\Microsoft\FVE"
+if (-not (Test-Path $FvePath)) { New-Item -Path $FvePath -Force | Out-Null }
+
+# Apply all BitLocker Hardening Policies
+Set-ItemProperty -Path $FvePath -Name "UseAdvancedStartup"            -Value 1 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "EnableBDEWithNoTPM"            -Value 1 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "UseTPM"                        -Value 2 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "UseTPMPIN"                     -Value 2 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "UseTPMKey"                    -Value 2 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "UseTPMKeyPIN"                 -Value 2 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "EncryptionMethodWithXtsOs"      -Value 7 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "OSRequireActiveDirectoryBackup" -Value 1 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "OSActiveDirectoryBackup"        -Value 1 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "OSActiveDirectoryInfoToStore"  -Value 1 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "OSHideRecoveryPage"            -Value 1 -Type DWord
+Set-ItemProperty -Path $FvePath -Name "MinimumPIN"                    -Value 6 -Type DWord
+
+# Force immediate policy update
+gpupdate /force
+
+
+
+
+**********************************************************************************************
+
+
+1. Enable Advanced Startup Options
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "UseAdvancedStartup" -Value 1 -Type DWord
+
+
+2. Enable BitLocker Without Compatible TPM
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "EnableBDEWithNoTPM" -Value 1 -Type DWord
+
+
+3. Allow TPM
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "UseTPM" -Value 2 -Type DWord
+
+
+4. Allow TPM Startup PIN
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "UseTPMPIN" -Value 2 -Type DWord
+
+5. Allow TPM Startup Key
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "UseTPMKey" -Value 2 -Type DWord
+
+6. Allow TPM Startup Key and PIN
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "UseTPMKeyPIN" -Value 2 -Type DWord
+
+7. Set Encryption Method to XTS-AES 256-bit
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "EncryptionMethodWithXtsOs" -Value 7 -Type DWord
+
+8. Require Active Directory Backup for OS Drives
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "OSRequireActiveDirectoryBackup" -Value 1 -Type DWord
+
+9. Active Directory Backup Enabled
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "OSActiveDirectoryBackup" -Value 1 -Type DWord
+
+10. Store Recovery Passwords and Key Packages in AD
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "OSActiveDirectoryInfoToStore" -Value 1 -Type DWord
+
+11. Hide Recovery Options in BitLocker Setup Wizard
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "OSHideRecoveryPage" -Value 1 -Type DWord
+
+12. Set Minimum Startup PIN Length to 6
+
+Set-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\FVE" -Name "MinimumPIN" -Value 6 -Type DWord
+
+
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
