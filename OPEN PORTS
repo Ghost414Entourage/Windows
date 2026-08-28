@@ -4,3 +4,9 @@ Get-NetUDPEndpoint | Select-Object OwningProcess, LocalAddress, LocalPort, @{N='
 
 ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Get-NetTCPConnection -State Listen | Select-Object OwningProcess, LocalAddress, LocalPort, @{N='ProcessName'; E={(Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue).ProcessName}} | Format-Table -AutoSize -Wrap
+
+Get-NetUDPEndpoint | Select-Object OwningProcess, LocalAddress, LocalPort, @{N='ProcessName'; E={(Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue).ProcessName}} | Format-Table -AutoSize -Wrap
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
