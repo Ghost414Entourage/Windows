@@ -1,0 +1,22 @@
+[System.GC]::Collect() 
+
+
+----------------------------------------------------------------------------------------------------------------------------
+
+Get-DnsClientCache
+
+ipconfig /displaydns
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+ipconfig/flushdns
+
+dnscmd /clearcache
+
+Clear-DnsServerCache
+
+Clear-DnsClientCache
+
+cleanmgr /sagerun:1
+
+
