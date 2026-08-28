@@ -86,7 +86,33 @@ Import-Module PowerSTIG -Force; Get-Stig -List | Where-Object { $_.Technology -e
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Update-Module -Name PowerSTIG -Force
 
+Get-Stig -List | Where-Object { $_.Technology -eq 'WindowsClient' }
 
+(Get-Command Get-Stig).Parameters.Keys
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$ModulePath = (Get-Module -ListAvailable PowerSTIG | Sort-Object Version -Descending | Select-Object -First 1).ModuleBase
+$TargetPath = "$ModulePath\StigData\Archive\WindowsClient\11"
+
+# Create path & extract zip
+New-Item -ItemType Directory -Path $TargetPath -Force
+Expand-Archive -Path "$env:USERPROFILE\Downloads\U_MS_Windows_11_V2R9_STIG.zip" -DestinationPath $TargetPath -Force
+
+# Copy XML to Processed folder
+Get-ChildItem -Path $TargetPath -Recurse -Filter "*.xml" | Copy-Item -Destination "$ModulePath\StigData\Processed\WindowsClient-11-2.9.xml" -Force
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-Stig -ListAvailable | Where-Object { $_.Technology -eq 'WindowsClient' }
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$m = (Get-Module -ListAvailable PowerSTIG | Sort-Object Version -Descending | Select-Object -First 1).ModuleBase; $t = "$m\StigData\Archive\WindowsClient\11"; New-Item -ItemType Directory -Path $t -Force | Out-Null; Expand-Archive -Path "$env:USERPROFILE\Downloads\U_MS_Windows_11_V2R9_STIG.zip" -DestinationPath $t -Force; Get-ChildItem -Path $t -Recurse -Filter "*.xml" | Copy-Item -Destination "$m\StigData\Processed\WindowsClient-11-2.9.xml" -Force; Import-Module PowerSTIG -Force
+
+Get-Stig -ListAvailable | Where-Object { $_.Technology -eq 'WindowsClient' }
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
