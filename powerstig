@@ -4,5 +4,7 @@ Install-Module -Name PowerSTIG -Scope CurrentUser -Force
 
 Get-InstalledModule -Name PowerSTIG -AllVersions
 
+Get-Module -Name PowerSTIG -ListAvailable
+
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
