@@ -116,3 +116,10 @@ Get-Stig -ListAvailable | Where-Object { $_.Technology -eq 'WindowsClient' }
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Install-Module -Name PowerSTIG -Force -SkipPublisherCheck
+
+Install-Module -Name PowerSTIG -Scope CurrentUser -Force
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
