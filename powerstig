@@ -14,7 +14,22 @@ Get-Stig -ListAvailable
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
-Get-ChildItem -Path "$((Get-Module PowerSTIG -ListAvailable | Select-Object -First 1).ModuleBase)\StigData\Archive\*\*.xml" -Recurse | ForEach-Object { $xml = [xml](Get-Content $_.FullName); [PSCustomObject]@{ FileName = $_.Name; BenchmarkID = $xml.Benchmark.id; Version = $xml.Benchmark.version; Release = ($xml.Benchmark.plain_text | Where-Object { $_.id -eq 'release-info' }).'#text'; BenchmarkDate = $xml.Benchmark.status.date } } | Format-Table -AutoSize
+$stigPath = Join-Path (Get-Module PowerSTIG -ListAvailable).ModuleBase "StigData\Archive"
 
+Get-ChildItem -Path $stigPath -Filter "*.xml" -Recurse | ForEach-Object {
+    [xml]$xml = Get-Content $_.FullName
+    $benchmark = $xml.Benchmark
+    
+    # Extract release info from plain-text node
+    $releaseInfo = ($benchmark.'plain-text' | Where-Object { $_.id -eq 'release-info' }).'#text'
+    
+    [PSCustomObject]@{
+        Technology   = $_.Directory.Name
+        STIG_Title   = $benchmark.title
+        Version      = $benchmark.version
+        Release_Info = $releaseInfo
+        FileName     = $_.Name
+    }
+} | Out-GridView
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
