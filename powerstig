@@ -6,6 +6,8 @@ Get-InstalledModule -Name PowerSTIG -AllVersions
 
 Get-Module -Name PowerSTIG -ListAvailable
 
+Import-Module PowerSTIG
+
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
 # View available technologies and versions built into PowerSTIG
