@@ -59,5 +59,19 @@ Update-Module -Name PowerSTIG -Force
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
 
+$ModulePath = (Get-Module -ListAvailable PowerSTIG).ModuleBase
+
+Get-ChildItem -Path "$ModulePath\StigData\Processed" -Filter "*.xml" | 
+    Where-Object { $_.Name -notlike "*.org.default.xml" } | 
+    Select-Object @{Name='Technology'; Expression={ $_.BaseName -replace '-\d+(\.\d+)+$', '' }},
+                  @{Name='Baseline File'; Expression={$_.Name}},
+                  @{Name='STIG Release Date'; Expression={$_.LastWriteTime}} | 
+    Format-Table -AutoSize
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
