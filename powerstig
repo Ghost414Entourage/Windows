@@ -125,7 +125,8 @@ $m = (Get-Module -ListAvailable PowerSTIG | Sort-Object Version -Descending | Se
 
 Install-Module -Name PowerSTIG -Force -SkipPublisherCheck; $m = (Get-Module -ListAvailable PowerSTIG | Sort-Object Version -Descending | Select-Object -First 1).ModuleBase; $t = "$m\StigData\Archive\WindowsClient\11"; New-Item -ItemType Directory -Path $t -Force | Out-Null; Expand-Archive -Path "$env:USERPROFILE\Downloads\U_MS_Windows_11_V2R9_STIG.zip" -DestinationPath $t -Force; Get-ChildItem -Path $t -Recurse -Filter "*.xml" | Copy-Item -Destination "$m\StigData\Processed\WindowsClient-11-2.9.xml" -Force
 
-Configuration ApplyWin11Stig { Import-DscResource -ModuleName PowerSTIG; Node 'localhost' { WindowsClient Win11V2R9 { StigVersion = '2.9'; OsVersion = '11' } } }; ApplyWin11Stig
+Install-Module -Name PSDscResources, AuditPolicyDsc, SecurityPolicyDsc -Force -SkipPublisherCheck; Import-Module PowerSTIG -Force
+
 
 
 
