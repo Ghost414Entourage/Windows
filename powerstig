@@ -44,3 +44,14 @@ Get-ChildItem -Path "$ModulePath\StigData\Processed" -Recurse -File |
     Out-GridView
 
 ----------------------------------------------------------------------------------------------------------------------------------------------
+
+$ModulePath = (Get-Module -ListAvailable PowerSTIG).ModuleBase
+
+Get-ChildItem -Path "$ModulePath\StigData\Processed" -Recurse -File | 
+    Select-Object @{Name='Technology'; Expression={$_.Directory.Name}},
+                  @{Name='Baseline File'; Expression={$_.Name}},
+                  @{Name='STIG Release Date'; Expression={$_.LastWriteTime}} | 
+    Format-Table -AutoSize
+
+----------------------------------------------------------------------------------------------------------------------------------------------
+
