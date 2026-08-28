@@ -110,8 +110,6 @@ Get-Stig -ListAvailable | Where-Object { $_.Technology -eq 'WindowsClient' }
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-$m = (Get-Module -ListAvailable PowerSTIG | Sort-Object Version -Descending | Select-Object -First 1).ModuleBase; $t = "$m\StigData\Archive\WindowsClient\11"; New-Item -ItemType Directory -Path $t -Force | Out-Null; Expand-Archive -Path "$env:USERPROFILE\Downloads\U_MS_Windows_11_V2R9_STIG.zip" -DestinationPath $t -Force; Get-ChildItem -Path $t -Recurse -Filter "*.xml" | Copy-Item -Destination "$m\StigData\Processed\WindowsClient-11-2.9.xml" -Force; Import-Module PowerSTIG -Force
-
 Get-Stig -ListAvailable | Where-Object { $_.Technology -eq 'WindowsClient' }
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -119,6 +117,9 @@ Get-Stig -ListAvailable | Where-Object { $_.Technology -eq 'WindowsClient' }
 Install-Module -Name PowerSTIG -Force -SkipPublisherCheck
 
 Install-Module -Name PowerSTIG -Scope CurrentUser -Force
+
+$m = (Get-Module -ListAvailable PowerSTIG | Sort-Object Version -Descending | Select-Object -First 1).ModuleBase; $t = "$m\StigData\Archive\WindowsClient\11"; New-Item -ItemType Directory -Path $t -Force | Out-Null; Expand-Archive -Path "$env:USERPROFILE\Downloads\U_MS_Windows_11_V2R9_STIG.zip" -DestinationPath $t -Force; Get-ChildItem -Path $t -Recurse -Filter "*.xml" | Copy-Item -Destination "$m\StigData\Processed\WindowsClient-11-2.9.xml" -Force; Import-Module PowerSTIG -Force
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
