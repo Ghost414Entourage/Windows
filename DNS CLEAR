@@ -19,6 +19,9 @@ Clear-DnsClientCache
 
 cleanmgr /sagerun:1
 
+Get-Variable | Where-Object { $_.Options -notmatch "ReadOnly|Constant" } | Remove-Variable -ErrorAction SilentlyContinue
+
+
 --------------------------------------------------------------------------------------------------------------------------------
 
 Clear-Host
