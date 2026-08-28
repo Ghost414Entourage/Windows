@@ -127,7 +127,17 @@ Install-Module -Name PowerSTIG -Force -SkipPublisherCheck; $m = (Get-Module -Lis
 
 Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force; Import-Module PowerSTIG -Force
 
-Install-Module -Name PSDscResources, AuditPolicyDsc, SecurityPolicyDsc -Force -SkipPublisherCheck; Import-Module PowerSTIG -Force
+Get-ChildItem "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\StigData\Processed\WindowsClient-11*.xml"
+
+Expand-Archive -Path "C:\Users\computer\Downloads\U_MS_Windows_11_V2R9_STIG.zip" -DestinationPath "C:\Users\computer\Downloads\Win11_V2R9" -Force; Get-ChildItem -Path "C:\Users\computer\Downloads\Win11_V2R9" -Recurse | Select-Object Name, FullName
+
+
+Copy-Item -Path "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\StigData\Processed\WindowsClient-11-2.7.org.default.xml" -Destination "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\StigData\Processed\WindowsClient-11-2.9.org.default.xml"
+
+Get-ChildItem "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\StigData\Processed\WindowsClient-11-2.9*.xml"
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
