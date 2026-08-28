@@ -19,4 +19,25 @@ Show saved wireless profiles:
 netsh wlan show profiles
 
 
+-------------------------------------------------------------------------------------
+
+$netShare = New-Object -ComObject HNetCfg.HNetShare
+
+$netShare.EnumEveryConnection | ForEach-Object {
+    $props = $netShare.NetConnectionProps($_)
+    $config = $netShare.INetSharingConfigurationForINetConnection($_)
+    
+    [PSCustomObject]@{
+        "Adapter Name"            = $props.Name
+        "Device Name"             = $props.DeviceName
+        "Status"                  = $props.Status
+        "Sharing Enabled"         = $config.SharingEnabled
+        "Sharing Connection Type" = if ($config.SharingEnabled) { $config.SharingConnectionType } else { "N/A" }
+        "Open Connection Control" = $config.InternetOpenConnectionControl
+    }
+} | Format-Table -AutoSize
+
+-------------------------------------------------------------------------------------
+
+Get-NetAdapter | Format-List -Property *
 
