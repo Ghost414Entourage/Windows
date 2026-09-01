@@ -270,5 +270,12 @@ netsh advfirewall set privateprofile firewallpolicy blockinbound,blockoutbound
 
 
 
+-----------------------------------------------------------------------------------------------------
+
+
+%systemroot%\system32\LogFiles\Firewall\pfirewall.log)
+
+-----------------------------------------------------------------------------------------------------
+
 
 
