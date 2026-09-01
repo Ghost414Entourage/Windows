@@ -314,6 +314,13 @@ Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultInboundAction, Defa
 
 -----------------------------------------------------------------------------------------------------
 
+Set-NetFirewallProfile -Profile Domain,Private,Public -LogFileName "%systemroot%\system32\logfiles\firewall\pfirewall.log" -LogBlocked True -LogAllowed True -LogFileSize 4096
+
+Set-NetFirewallProfile -Profile Domain,Private,Public -LogFileName "$env:SystemRoot\System32\LogFiles\Firewall\pfirewall.log" -LogBlocked True -LogAllowed True -LogFileSize 4096
+
+-----------------------------------------------------------------------------------------------------
+
+
 
 
 
