@@ -310,7 +310,9 @@ gpupdate /force and check rsop.msc or gpresult /h report.html
 
 -----------------------------------------------------------------------------------------------------
 
+Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction
 
+-----------------------------------------------------------------------------------------------------
 
 
 
