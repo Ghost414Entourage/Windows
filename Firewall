@@ -302,6 +302,15 @@ Set-NetConnectionProfile -InterfaceAlias "Ethernet" -NetworkCategory DomainAuthe
 
 -----------------------------------------------------------------------------------------------------
 
+Get-NetFirewallRule | Where-Object { $ .Enabled -eq $true -and $ .Direction -eq "Inbound" } | Format-Table DisplayName, Action, Profile, Direction -AutoSize
+
+Get-NetFirewallRule -Direction Inbound | Where-Object { $_.LocalPort -contains "3389" }
+
+-----------------------------------------------------------------------------------------------------
+
+
+
+
 
 
 
