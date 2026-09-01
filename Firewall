@@ -277,5 +277,18 @@ netsh advfirewall set privateprofile firewallpolicy blockinbound,blockoutbound
 
 -----------------------------------------------------------------------------------------------------
 
+Domain profile applies when the computer is authenticated to an Active Directory
+
+Private profile is intended for trusted networks
+
+Public profile is the strictest
+
+-----------------------------------------------------------------------------------------------------
+
+Get-NetConnectionProfile
+
+Set-NetConnectionProfile -InterfaceAlias "Wi-Fi" -NetworkCategory Private
+
+
 
 
