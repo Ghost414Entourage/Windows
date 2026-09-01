@@ -289,6 +289,19 @@ Get-NetConnectionProfile
 
 Set-NetConnectionProfile -InterfaceAlias "Wi-Fi" -NetworkCategory Private
 
+netsh advfirewall show allprofiles
+
+netsh advfirewall set allprofiles state on
+
+netsh advfirewall show currentprofile
+
+Get-NetConnectionProfile | Select Name, InterfaceAlias, NetworkCategory
+
+Set-NetConnectionProfile -InterfaceAlias "Ethernet" -NetworkCategory DomainAuthenticated
+
+
+-----------------------------------------------------------------------------------------------------
+
 
 
 
