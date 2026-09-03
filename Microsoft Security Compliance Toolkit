@@ -83,6 +83,47 @@ Test-Path "C:\Users\computer\Downloads\LGPO.exe"
 
 ---------------------------------------------------------------------------------------------
 
+Test-Path "C:\Users\computer\Downloads\LGPO.exe"
+
+---------------------------------------------------------------------------------------------
+
+Get-ChildItem -Path "C:\Tools\LGPO" -Recurse -Filter "LGPO.exe" | Select-Object -ExpandProperty FullName
+
+---------------------------------------------------------------------------------------------
+
+Set-Location "C:\Users\computer\Downloads\STIG_GPOs\DoD Windows 11 v2r8\GPOs"
+
+---------------------------------------------------------------------------------------------
+
+C:\Tools\LGPO\LGPO_30\LGPO.exe /g ".\{0C3EA263-9ED1-4BA6-B589-B135F0800D65}"
+
+---------------------------------------------------------------------------------------------
+
+C:\Tools\LGPO\LGPO_30\LGPO.exe /g ".\{E4D1C087-DEED-4F34-A584-C860A1E9BD35}"
+
+---------------------------------------------------------------------------------------------
+
+gpupdate /force
+
+---------------------------------------------------------------------------------------------
+
+Restart-Computer -Force
+
+---------------------------------------------------------------------------------------------
+
+gpedit.msc
+
+---------------------------------------------------------------------------------------------
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" | Select-Object LegalNoticeCaption, LegalNoticeText
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "LegalNoticeCaption" -Value ""
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "LegalNoticeText" -Value ""
+
+
+---------------------------------------------------------------------------------------------
+
 
 
 
