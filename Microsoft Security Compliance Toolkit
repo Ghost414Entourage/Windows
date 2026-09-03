@@ -33,3 +33,56 @@ gpresult /r
 
 gpresult /v
 
+
+---------------------------------------------------------------------------------------------
+
+
+Set-Location "$env:USERPROFILE\Downloads"
+Get-ChildItem
+
+
+cd ~\Downloads
+dir
+
+---------------------------------------------------------------------------------------------
+
+Expand-Archive -Path ".\U_STIG_GPO_Package_July_2026.zip" -DestinationPath ".\STIG_GPOs"
+
+
+Get-ChildItem -Path ".\STIG_GPOs" -Recurse -Directory -Filter "*Windows 11*"
+
+---------------------------------------------------------------------------------------------
+
+Get-ChildItem -Path ".\STIG_GPOs" -Recurse -Directory | Where-Object { $_.Name -like "*Win*11*" -or $_.Name -like "*GPO*" }
+
+
+---------------------------------------------------------------------------------------------
+
+Get-ChildItem -Path ".\STIG_GPOs" -Recurse | Select-Object -ExpandProperty FullName
+
+tree .\STIG_GPOs /F
+
+---------------------------------------------------------------------------------------------
+
+Set-Location ".\STIG_GPOs"
+Get-ChildItem
+
+Set-Location ".\DoD Windows 11 v2r8"
+Get-ChildItem
+
+---------------------------------------------------------------------------------------------
+
+Set-Location ".\GPOs"
+Get-ChildItem
+
+---------------------------------------------------------------------------------------------
+
+Set-Location "C:\Users\computer\Downloads\STIG_GPOs\DoD Windows 11 v2r8\GPOs"
+
+Test-Path "C:\Users\computer\Downloads\LGPO.exe"
+
+---------------------------------------------------------------------------------------------
+
+
+
+
