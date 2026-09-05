@@ -35,7 +35,31 @@ Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bthserv" `
 
 Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 
+Register-PSRepository -Default -InstallationPolicy Trusted
+
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+Register-PSRepository -Default -ErrorAction SilentlyContinue
+Set-PSRepository -Name PSGallery -SourceLocation "https://www.powershellgallery.com/api/v2" -InstallationPolicy Trusted
+
+
+
 Install-Module -Name PolicyFileEditor -Scope AllUsers -Force
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+
+Import-Module PolicyFileEditor
+
+
+Get-Command -Module PolicyFileEditor
+
+
+Install-Module -Name PowerShellGet -Force -AllowClobber
+
+
+
+
 
 Import-Module PolicyFileEditor
 
