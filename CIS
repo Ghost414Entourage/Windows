@@ -77,6 +77,17 @@ Set-PolicyFileEntry -Path $RegPolPath `
 gpupdate /force
 
 
+Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Bluetooth" -Name "AllowBluetooth"
+
+
+
+Remove-PolicyFileEntry -Path $RegPolPath `
+                       -Key "Software\Policies\Microsoft\Windows\Bluetooth" `
+                       -ValueName "AllowBluetooth"
+
+gpupdate /force
+
+
 ********************************************************************************************************
 
 
