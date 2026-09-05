@@ -91,6 +91,45 @@ gpupdate /force
 ********************************************************************************************************
 
 
+
+Get-ChildItem -Path "C:\Tools" -Filter "LGPO.exe" -Recurse | Copy-Item -Destination "C:\Windows\System32\" -Force
+
+
+Get-Command LGPO.exe
+
+
+"Computer`nSOFTWARE\Policies\Microsoft\Windows\Bluetooth`nAllowBluetooth`nDWORD:0" | Out-File "$env:TEMP\bt.txt" -Encoding ASCII; LGPO.exe /t "$env:TEMP\bt.txt"; Remove-Item "$env:TEMP\bt.txt"
+
+
+or
+
+
+
+cmd /c "(echo Computer & echo SOFTWARE\Policies\Microsoft\Windows\Bluetooth & echo AllowBluetooth & echo DWORD:0) > %TEMP%\bt.txt & LGPO.exe /t %TEMP%\bt.txt & del %TEMP%\bt.txt"
+
+
+
+gpupdate /force
+
+
+
+Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Bluetooth" -Name "AllowBluetooth"
+
+
+
+"Computer`nSOFTWARE\Policies\Microsoft\Windows\Bluetooth`nAllowBluetooth`nDELETE" | Out-File "$env:TEMP\bt.txt" -Encoding ASCII; LGPO.exe /t "$env:TEMP\bt.txt"; Remove-Item "$env:TEMP\bt.txt"; gpupdate /force
+
+
+
+
+
+
+
+
+
+
+
+
 Import-Module GroupPolicy
 
 # Configures the Local GPO for the Bluetooth policy
