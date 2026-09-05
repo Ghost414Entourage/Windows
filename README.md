@@ -41,3 +41,11 @@ https://learn.microsoft.com/en-us/windows/security/operating-system-security/dev
 https://github.com/techservicesillinois/SecOps-Powershell-CISDSC
 
 https://github.com/microsoft/powerstig
+
+
+----------------------------------------
+
+https://github.com/mitre/cis-bench
+
+https://github.com/scipag/HardeningKitty
+
