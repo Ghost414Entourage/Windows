@@ -49,3 +49,4 @@ https://github.com/mitre/cis-bench
 
 https://github.com/scipag/HardeningKitty
 
+https://github.com/orgs/ansible-lockdown/repositories
