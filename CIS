@@ -7,4 +7,58 @@ Get-Service -Name BTAGService | Select-Object Name, Status, StartType
 
 (Get-Service -Name BTAGService).StartType
 
+Set-Service -Name BTAGService -StartupType Disabled
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Ensure 'Bluetooth Support Service (bthserv)' is set to 'Disabled'
+
+# Directly disables bthserv in the active system registry
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bthserv" `
+                 -Name "Start" `
+                 -Value 4 `
+                 -Type DWord
+
+# Verify the live registry state
+Get-ItemPropertyValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bthserv" -Name "Start"
+
+
+
+********************************************************************************************************
+
+
+Import-Module PolicyFileEditor
+
+# Path to the Machine Policy file read by gpedit.msc
+$RegPolPath = "$env:windir\System32\GroupPolicy\Machine\registry.pol"
+
+# Write the Bluetooth restriction directly into registry.pol
+Set-PolicyFileEntry -Path $RegPolPath `
+                    -Key "Software\Policies\Microsoft\Windows\Bluetooth" `
+                    -ValueName "AllowBluetooth" `
+                    -Type DWord `
+                    -Data 0
+
+# Refresh Group Policy to push the registry.pol change into the live Registry & Settings UI
+gpupdate /force
+
+
+********************************************************************************************************
+
+
+Import-Module GroupPolicy
+
+# Configures the Local GPO for the Bluetooth policy
+Set-GPRegistryValue -Name "Local Group Policy" `
+                    -Key "HKLM\SOFTWARE\Policies\Microsoft\Windows\Bluetooth" `
+                    -ValueName "AllowBluetooth" `
+                    -Type DWord `
+                    -Value 0
+
+# Refresh Group Policy to update the UI and system state
+gpupdate /force
+
+
+
+
+
