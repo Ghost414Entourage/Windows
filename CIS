@@ -1,0 +1,10 @@
+Ensure 'Bluetooth Audio Gateway Service (BTAGService)' is set to 'Disabled'
+
+# Disables BTAGService directly via Registry (Start = 4 means Disabled)
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\BTAGService" -Name "Start" -Value 4
+
+Get-Service -Name BTAGService | Select-Object Name, Status, StartType
+
+(Get-Service -Name BTAGService).StartType
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
