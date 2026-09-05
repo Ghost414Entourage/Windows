@@ -122,7 +122,13 @@ Get-ItemPropertyValue -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\Bluetooth
 
 
 
-
+Here is how the file moved through your machine during your setup:
+C:\Users\computer\Downloads\LGPO.zip
+You downloaded the ZIP file into your Downloads folder.
+C:\Tools\LGPO\
+You ran Expand-Archive, which unzipped the contents into C:\Tools (creating a nested subfolder inside C:\Tools).
+C:\Windows\System32\LGPO.exe
+The Get-ChildItem  | Copy-Item command searched inside C:\Tools, found LGPO.exe hidden in that extracted subfolder, and copied it directly into C:\Windows\System32.
 
 
 
