@@ -24,6 +24,11 @@ Get-ItemPropertyValue -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bthserv" -N
 
 
 
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bthserv" `
+                 -Name "Start" `
+                 -Value 3 `
+                 -Type DWord
+
 ********************************************************************************************************
 
 
