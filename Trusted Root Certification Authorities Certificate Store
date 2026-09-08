@@ -1,5 +1,9 @@
 https://learn.microsoft.com/en-us/windows-hardware/drivers/install/trusted-root-certification-authorities-certificate-store
 
+https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certificate-trust
+
+
+
 ---------------------------------------------------------------------------------------------------------------------------------------
 
 certmgr.msc
@@ -8,4 +12,21 @@ certutil -store Root
 
 
 ************************************************************************************************************************************
+
+cd "$env:USERPROFILE\Downloads"
+
+CertUtil -generateSSTFromWU RootStore.sst
+
+Get-ChildItem -Filter "RootStore.sst"
+
+Get-ChildItem -Path Cert:\LocalMachine\Root | Select-Object Subject, Thumbprint, NotAfter
+
+(Get-ChildItem -Path Cert:\LocalMachine\Root).Count
+
+Import-Certificate -FilePath "C:\Users\computer\Downloads\RootStore.sst" -CertStoreLocation Cert:\LocalMachine\Root
+
+
+************************************************************************************************************************************
+
+certlm.msc
 
