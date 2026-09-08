@@ -30,3 +30,23 @@ Import-Certificate -FilePath "C:\Users\computer\Downloads\RootStore.sst" -CertSt
 
 certlm.msc
 
+************************************************************************************************************************************
+
+Remove-Item -Path "$env:USERPROFILE\Downloads\*" -Recurse -Force
+
+# 1. Download the Trusted Roots store
+CertUtil -generateSSTFromWU RootStore.sst
+
+# 2. Download the Untrusted/Disallowed store directly from Microsoft's CTL endpoint
+Invoke-WebRequest -Uri "http://ctldl.windowsupdate.com/msdownload/update/v3/static/trustedr/en/disallowedcert.sst" -OutFile "disallowedcert.sst"
+
+
+# Import trusted root certificates
+Import-Certificate -FilePath "C:\Users\computer\Downloads\RootStore.sst" -CertStoreLocation Cert:\LocalMachine\Root
+
+# Import untrusted/revoked certificates to enforce blocks
+Import-Certificate -FilePath "C:\Users\computer\Downloads\disallowedcert.sst" -CertStoreLocation Cert:\LocalMachine\Disallowed
+
+(Get-ChildItem -Path Cert:\LocalMachine\Disallowed).Count
+
+
