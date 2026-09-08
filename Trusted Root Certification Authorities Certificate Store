@@ -55,3 +55,9 @@ Get-Childitem cert:\LocalMachine\root |format-list
 Get-ChildItem cert:\LocalMachine\root|Where {$_.NotAfter -lt  (Get-Date).AddDays(60)}|select NotAfter, Subject
 
 Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\SystemCertificates\AuthRoot' -Name DisableRootAutoUpdate
+
+************************************************************************************************************************************
+
+certutil -generateSSTFromWU roots.sst
+
+certutil -addstore -f root roots.sst
