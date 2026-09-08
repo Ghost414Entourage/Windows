@@ -10,6 +10,7 @@ certmgr.msc
 
 certutil -store Root
 
+certlm.msc
 
 ************************************************************************************************************************************
 
@@ -28,9 +29,6 @@ Import-Certificate -FilePath "C:\Users\computer\Downloads\RootStore.sst" -CertSt
 
 ************************************************************************************************************************************
 
-certlm.msc
-
-************************************************************************************************************************************
 
 Remove-Item -Path "$env:USERPROFILE\Downloads\*" -Recurse -Force
 
@@ -49,4 +47,8 @@ Import-Certificate -FilePath "C:\Users\computer\Downloads\disallowedcert.sst" -C
 
 (Get-ChildItem -Path Cert:\LocalMachine\Disallowed).Count
 
+************************************************************************************************************************************
+
+
+Get-Childitem cert:\LocalMachine\root |format-list
 
