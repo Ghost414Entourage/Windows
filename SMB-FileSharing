@@ -35,6 +35,16 @@ Get-SmbServerConfiguration | Select-Object EnableSMB1Protocol, EnableSMB2Protoco
 
 
 
+-------------------------------------------------------------------------------------------------------------------------------------
+
+Get-WindowsOptionalFeature -Online -FeatureName SMB1Protocol | Select-Object State
+
+Disable-WindowsOptionalFeature -Online -FeatureName SMB1Protocol -NoRestart
+
+Set-SmbServerConfiguration -AuditSmb1Access $true -Force
+
+Get-WinEvent -LogName 'Microsoft-Windows-SMBServer/Audit' -MaxEvents 50 -EA SilentlyContinue
+
 
 
 
