@@ -1,0 +1,9 @@
+https://learn.microsoft.com/en-us/windows/advanced-settings/sudo/
+
+
+start ms-settings:developers
+
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo" -Name "Enabled" -Value 3
+
+
