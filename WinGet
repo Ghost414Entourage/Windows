@@ -8,3 +8,7 @@ https://github.com/microsoft/winget-cli
 
 
 winget --version
+
+winget source list
+
+winget --info 
