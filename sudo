@@ -10,4 +10,4 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo" -N
 
 reg add "HKLM\Software\Microsoft\Windows\CurrentVersion\Sudo" /v "Enabled" /t REG_DWORD /d 3 /f
 
-
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Sudo" -Name "Enabled"
