@@ -12,3 +12,10 @@ winget --version
 winget source list
 
 winget --info 
+
+winget source update
+
+winget source reset --force 
+
+winget install --id XP8C9QZMS2PC1T --source msstore --force 
+
