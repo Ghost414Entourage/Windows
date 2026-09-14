@@ -142,3 +142,60 @@ Get-ChildItem "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\StigD
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
+
+Install-Module -Name PowerStig -Force -SkipPublisherCheck -Scope CurrentUser
+
+Get-Module -Name PowerStig -ListAvailable
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+
+Import-Module -Name PowerSTIG -Verbose
+
+((Get-Command Get-Stig).ParameterSets | Where-Object Name -eq '__Technology').Parameters | Select-Object Name, IsMandatory
+
+((Get-Command Get-Stig).ParameterSets | Where-Object Name -eq 'All').Parameters | Select-Object Name, IsMandatory
+
+Get-Stig -ListAvailable
+
+Get-Stig -ListAvailable | Where-Object Technology -eq 'WindowsClient'
+
+
