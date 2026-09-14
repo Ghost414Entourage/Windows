@@ -170,7 +170,6 @@ Get-ChildItem "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\StigD
 
 
 
-[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
 
 
@@ -178,7 +177,7 @@ Get-ChildItem "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\StigD
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+[Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 
@@ -197,5 +196,11 @@ Import-Module -Name PowerSTIG -Verbose
 Get-Stig -ListAvailable
 
 Get-Stig -ListAvailable | Where-Object Technology -eq 'WindowsClient'
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+New-Item -Path 'C:\StigMOF' -ItemType Directory -Force
+
 
 
