@@ -202,5 +202,93 @@ Get-Stig -ListAvailable | Where-Object Technology -eq 'WindowsClient'
 
 New-Item -Path 'C:\StigMOF' -ItemType Directory -Force
 
+New-Item -Path 'C:\StigMOF\GenerateStigMof.ps1' -ItemType File -Force
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$modules = @(
+    'PSDscResources',
+    'GPRegistryPolicyDsc',
+    'AuditPolicyDsc',
+    'SecurityPolicyDsc',
+    'ComputerManagementDsc',
+    'WindowsDefenderDsc',
+    'AuditSystemDsc',
+    'AccessControlDsc',
+    'CertificateDsc'
+)
+
+foreach ($mod in $modules) {
+    Install-Module -Name $mod -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@'
+Configuration Win11Baseline {
+    Import-DscResource -ModuleName PowerSTIG
+
+    Node 'localhost' {
+        WindowsClient 'Win11STIG' {
+            StigVersion = '2.7'
+        }
+    }
+}
+
+Win11Baseline -OutputPath 'C:\StigMOF'
+'@ | Set-Content -Path 'C:\StigMOF\GenerateStigMof.ps1' -Encoding UTF8
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+& 'C:\StigMOF\GenerateStigMof.ps1'
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@'
+Configuration Win11Baseline {
+    Import-DscResource -ModuleName PowerSTIG
+
+    Node 'localhost' {
+        WindowsClient 'Win11STIG' {
+            OsVersion   = '11'
+            StigVersion = '2.7'
+        }
+    }
+}
+
+Win11Baseline -OutputPath 'C:\StigMOF'
+'@ | Set-Content -Path 'C:\StigMOF\GenerateStigMof.ps1' -Encoding UTF8
+
+& 'C:\StigMOF\GenerateStigMof.ps1'
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$duplicateModules = @(
+    'PSDscResources',
+    'GPRegistryPolicyDsc',
+    'AuditPolicyDsc',
+    'SecurityPolicyDsc',
+    'ComputerManagementDsc',
+    'WindowsDefenderDsc',
+    'AuditSystemDsc',
+    'AccessControlDsc',
+    'CertificateDsc'
+)
+
+foreach ($mod in $duplicateModules) {
+    $userPath = "C:\Users\computer\Documents\WindowsPowerShell\Modules\$mod"
+    if (Test-Path $userPath) {
+        Remove-Item -Path $userPath -Recurse -Force
+    }
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+& 'C:\StigMOF\GenerateStigMof.ps1'
+
+
 
 
