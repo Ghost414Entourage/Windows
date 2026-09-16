@@ -206,9 +206,36 @@ New-Item -Path 'C:\StigMOF\GenerateStigMof.ps1' -ItemType File -Force
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Import-Module -Name PowerSTIG, PSDesiredStateConfiguration -Verbose
-
 Install-Module -Name 'PSDscResources', 'GPRegistryPolicyDsc', 'AuditPolicyDsc', 'SecurityPolicyDsc', 'ComputerManagementDsc', 'WindowsDefenderDsc', 'AuditSystemDsc', 'AccessControlDsc', 'CertificateDsc' -Force -SkipPublisherCheck -Scope CurrentUser
 
+Import-Module -Name PowerSTIG, PSDesiredStateConfiguration -Verbose
+
+
 --------------------------------------------------------------------------------------------------------------------------------------------------------
+
+@'
+Configuration Win11Baseline {
+    Import-DscResource -ModuleName PowerSTIG
+    
+    Node localhost {
+        Stig WindowsClient {
+            StigVersion       = '2.7'
+            TechnologyVersion = '11'
+        }
+    }
+}
+
+Win11Baseline -OutputPath 'C:\StigMOF'
+'@ | Set-Content -Path 'C:\StigMOF\GenerateStigMof.ps1'
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-Content -Path 'C:\StigMOF\GenerateStigMof.ps1'
+
+
+. 'C:\StigMOF\GenerateStigMof.ps1'
+
+
 
