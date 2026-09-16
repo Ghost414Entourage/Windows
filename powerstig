@@ -177,6 +177,8 @@ Get-ChildItem "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\StigD
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+
 [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12
 
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
@@ -184,8 +186,6 @@ Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 Install-Module -Name PowerStig -Force -SkipPublisherCheck -Scope CurrentUser
 
 Get-Module -Name PowerStig -ListAvailable
-
-Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
 
 Import-Module -Name PowerSTIG -Verbose
 
@@ -209,6 +209,30 @@ New-Item -Path 'C:\StigMOF\GenerateStigMof.ps1' -ItemType File -Force
 Install-Module -Name 'PSDscResources', 'GPRegistryPolicyDsc', 'AuditPolicyDsc', 'SecurityPolicyDsc', 'ComputerManagementDsc', 'WindowsDefenderDsc', 'AuditSystemDsc', 'AccessControlDsc', 'CertificateDsc' -Force -SkipPublisherCheck -Scope CurrentUser
 
 Import-Module -Name PowerSTIG, PSDesiredStateConfiguration -Verbose
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$dependencies = @(
+    'cAccessControl',
+    'AuditPolicyDsc',
+    'SecurityPolicyDsc',
+    'ComputerManagementDsc',
+    'GPORegistryPolicyDsc'
+)
+
+foreach ($module in $dependencies) {
+    Install-Module -Name $module -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
+}
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+$env:PSModulePath += ";C:\Program Files\WindowsPowerShell\Modules\PowerSTIG"
+
+
+Import-Module PowerSTIG -Force
+Get-DscResource -Module PowerSTIG
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -236,6 +260,35 @@ Get-Content -Path 'C:\StigMOF\GenerateStigMof.ps1'
 
 
 . 'C:\StigMOF\GenerateStigMof.ps1'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
