@@ -1,0 +1,11 @@
+Press Win + R, type optionalfeatures
+
+
+In the Windows Features window, locate Internet Information Services
+
+
+Expand Internet Information Services > Web Management Tools
+
+
+Press Win + R, type inetmgr
+
