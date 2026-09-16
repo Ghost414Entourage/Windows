@@ -354,6 +354,27 @@ Get-Content -Path 'C:\StigMOF\GenerateStigMof.ps1'
 
 
 
+===========================================================================================================================================================================================================================================================================================
+
+Remove-Module -Name PowerSTIG -Force -ErrorAction SilentlyContinue
+Uninstall-Module -Name PowerSTIG -Scope CurrentUser
+
+Remove-Item -Path "C:\Users\computer\Documents\WindowsPowerShell\Modules\PowerSTIG" -Recurse -Force
+
+Import-Module -Name "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\PowerSTIG.psd1" -Force
+
+Remove-Module -Name PowerSTIG -Force -ErrorAction SilentlyContinue
+
+Uninstall-Module -Name PowerSTIG -AllVersions -Force -ErrorAction SilentlyContinue
+
+Remove-Item -Path "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG" -Recurse -Force -ErrorAction SilentlyContinue
+
+Get-Module -Name PowerSTIG -ListAvailable
+
+
+
+
+
 
 
 
