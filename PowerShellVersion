@@ -9,6 +9,7 @@ choco install powershell-core -y
 
 pwsh --version
 
+winget install Microsoft.WindowsTerminal
 
 winget install --id Microsoft.WindowsTerminal --source winget
 
