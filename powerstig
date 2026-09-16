@@ -238,20 +238,101 @@ Get-DscResource -Module PowerSTIG
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+Import-Module PowerSTIG -Force
+
+Configuration Win11StigConfig {
+    Import-DscResource -ModuleName PowerSTIG
+
+    Node 'localhost' {
+        WindowsClient Win11Baseline {
+            StigVersion = '2.7'
+            OsVersion   = '11'
+        }
+    }
+}
+
+New-Item -Path 'C:\StigMOF' -ItemType Directory -Force | Out-Null
+Win11StigConfig -OutputPath 'C:\StigMOF'
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Get-ChildItem -Path 'C:\StigMOF'
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+winrm quickconfig -quiet
+
+Test-WSMan -ComputerName localhost
+
+Enable-PSRemoting -SkipNetworkProfileCheck -Force
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+Install-Module -Name PSDscResources -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$coreModules = @(
+    'GPRegistryPolicyDsc',
+    'AuditPolicyDsc',
+    'SecurityPolicyDsc',
+    'ComputerManagementDsc',
+    'WindowsDefenderDsc'
+)
+
+foreach ($module in $coreModules) {
+    Install-Module -Name $module -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
+}
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+$remainingModules = @(
+    'AuditSystemDsc',
+    'UserAccessControlDsc',
+    'CertificateDsc',
+    'NetworkSwitchDsc'
+)
+
+foreach ($module in $remainingModules) {
+    Install-Module -Name $module -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
+}
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+Get-ExecutionPolicy -List
+
+Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+# Automatically installs all dependency modules declared by PowerSTIG
+(Get-Module -ListAvailable PowerSTIG).RequiredModules | ForEach-Object {
+    Install-Module -Name $_.Name -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
+}
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$result = Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
+$result.ResourcesNotInDesiredState | Select-Object ResourceName, ResourceId
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+$audit = Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
+$audit.ResourcesNotInDesiredState | Select-Object ResourceName, ResourceId | Format-Table -AutoSize
+
+
+Start-DscConfiguration -Path 'C:\StigMOF' -Wait -Verbose -Force
 
 
 
