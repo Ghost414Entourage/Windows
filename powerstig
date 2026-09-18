@@ -427,6 +427,14 @@ Get-Module -Name PowerSTIG -ListAvailable
 
 
 
+# Clears the legal notice title and message text
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "legalnoticetext" -Value ""
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "legalcaption" -Value ""
+
+# Refreshes Group Policy
+gpupdate /force
+
+
 
 
 
