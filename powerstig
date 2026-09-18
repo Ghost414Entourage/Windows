@@ -203,8 +203,6 @@ Get-Command Get-Stig -Syntax
 
 New-Item -Path 'C:\StigMOF' -ItemType Directory -Force
 
-New-Item -Path 'C:\StigMOF\GenerateStigMof.ps1' -ItemType File -Force
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Install-Module -Name 'PSDscResources', 'GPRegistryPolicyDsc', 'AuditPolicyDsc', 'SecurityPolicyDsc', 'ComputerManagementDsc', 'WindowsDefenderDsc', 'AuditSystemDsc', 'AccessControlDsc', 'CertificateDsc' -Force -SkipPublisherCheck -Scope CurrentUser
