@@ -1,8 +1,0 @@
-function Set-HardeningItem { [CmdletBinding(SupportsShouldProcess=$true)] param($Path, $Name, $Value, $Type = 'DWord') $current = (Get-ItemProperty -Path $Path -Name $Name -EA SilentlyContinue).$Name; if ($current -eq $Value) { Write-Verbose "OK: $Path\$Name already $Value"; return } if ($PSCmdlet.ShouldProcess("$Path\$Name", "set to $Value (currently: $current)")) { if (-not (Test-Path $Path)) { New-Item -Path $Path -Force | Out-Null } New-ItemProperty -Path $Path -Name $Name -Value $Value -PropertyType $Type -Force | Out-Null } }
-
-
-Get-Command Set-HardeningItem
-
--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
