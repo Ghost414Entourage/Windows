@@ -355,12 +355,16 @@ $audit = Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
 
+Install-Module PowerSTIG -Scope CurrentUser
 
-
+(Get-Module PowerStig -ListAvailable).RequiredModules | % {
+   $PSItem | Install-Module -Force
+}
 
 
 
