@@ -308,6 +308,7 @@ Start-DscConfiguration -Path 'C:\StigMOF' -Wait -Verbose -Force
 
 Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 
+
 $audit = Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 $audit.ResourcesNotInDesiredState | Select-Object ResourceName, ResourceId | Format-Table -AutoSize
 
@@ -321,81 +322,75 @@ $audit.ResourcesNotInDesiredState | Select-Object ResourceName, ResourceId | For
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@'
-Configuration Win11Baseline {
-    Import-DscResource -ModuleName PowerSTIG
-    
-    Node localhost {
-        Stig WindowsClient {
-            StigVersion       = '2.7'
-            TechnologyVersion = '11'
-        }
-    }
-}
-
-Win11Baseline -OutputPath 'C:\StigMOF'
-'@ | Set-Content -Path 'C:\StigMOF\GenerateStigMof.ps1'
-
-
-
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-Get-Content -Path 'C:\StigMOF\GenerateStigMof.ps1'
+gpupdate /force
+
+Remove-DscConfigurationDocument -Stage Current, Pending, Previous -Verbose
+
+Start-DscConfiguration -Path 'C:\StigMOF' -Wait -Verbose -Force
+
+$test = Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
+$test.ResourcesNotInDesiredState | Select-Object ResourceName, ResourceId | Format-Table -AutoSize
+
+Stop-Service -Name "seclogon" -Force
+Set-Service -Name "seclogon" -StartupType Disabled
+
+Remove-DscConfigurationDocument -Stage Current, Pending, Previous -Verbose
+gpupdate /force
+
+Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 
 
-. 'C:\StigMOF\GenerateStigMof.ps1'
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
