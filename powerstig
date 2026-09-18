@@ -309,8 +309,7 @@ Start-DscConfiguration -Path 'C:\StigMOF' -Wait -Verbose -Force
 Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 
 
-$audit = Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
-$audit.ResourcesNotInDesiredState | Select-Object ResourceName, ResourceId | Format-Table -AutoSize
+$audit.ResourcesInDesiredState | Select-Object ResourceName, ResourceId | Format-Table -AutoSize
 
 
 
