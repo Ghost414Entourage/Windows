@@ -287,35 +287,6 @@ Install-Module -Name PSDscResources -Scope AllUsers -Force -SkipPublisherCheck -
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
-$coreModules = @(
-    'GPRegistryPolicyDsc',
-    'AuditPolicyDsc',
-    'SecurityPolicyDsc',
-    'ComputerManagementDsc',
-    'WindowsDefenderDsc'
-)
-
-foreach ($module in $coreModules) {
-    Install-Module -Name $module -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
-}
-
-
---------------------------------------------------------------------------------------------------------------------------------------------------------
-
-
-$remainingModules = @(
-    'AuditSystemDsc',
-    'UserAccessControlDsc',
-    'CertificateDsc',
-    'NetworkSwitchDsc'
-)
-
-foreach ($module in $remainingModules) {
-    Install-Module -Name $module -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
-}
-
-
---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
 
