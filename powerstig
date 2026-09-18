@@ -335,9 +335,6 @@ $test.ResourcesNotInDesiredState | Select-Object ResourceName, ResourceId | Form
 Stop-Service -Name "seclogon" -Force
 Set-Service -Name "seclogon" -StartupType Disabled
 
-Remove-DscConfigurationDocument -Stage Current, Pending, Previous -Verbose
-gpupdate /force
-
 Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 
 
