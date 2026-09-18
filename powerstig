@@ -225,6 +225,14 @@ foreach ($module in $dependencies) {
     Install-Module -Name $module -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
 }
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Automatically installs all dependency modules declared by PowerSTIG
+(Get-Module -ListAvailable PowerSTIG).RequiredModules | ForEach-Object {
+    Install-Module -Name $_.Name -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
+}
+
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -315,12 +323,6 @@ Get-ExecutionPolicy -List
 
 Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 
---------------------------------------------------------------------------------------------------------------------------------------------------------
-
-# Automatically installs all dependency modules declared by PowerSTIG
-(Get-Module -ListAvailable PowerSTIG).RequiredModules | ForEach-Object {
-    Install-Module -Name $_.Name -Scope AllUsers -Force -SkipPublisherCheck -AllowClobber
-}
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
