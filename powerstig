@@ -341,11 +341,17 @@ Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 
 
 
+--------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
+$audit = Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 
-
+[PSCustomObject]@{
+    TotalMOFRules      = (Get-Content 'C:\StigMOF\localhost.mof' | Where-Object { $_ -match 'instance of ' }).Count
+    RulesAppliedPassed = $audit.ResourcesInDesiredState.Count
+    RulesFailed        = $audit.ResourcesNotInDesiredState.Count
+} | Format-List
 
 
 
@@ -417,22 +423,6 @@ Uninstall-Module -Name PowerSTIG -AllVersions -Force -ErrorAction SilentlyContin
 Remove-Item -Path "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG" -Recurse -Force -ErrorAction SilentlyContinue
 
 Get-Module -Name PowerSTIG -ListAvailable
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
