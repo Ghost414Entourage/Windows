@@ -337,7 +337,7 @@ Set-Service -Name "seclogon" -StartupType Disabled
 
 Test-DscConfiguration -ReferenceConfiguration 'C:\StigMOF\localhost.mof'
 
-
+(Get-Content -Path 'C:\StigMOF\localhost.mof' | Where-Object { $_ -match 'instance of ' }).Count
 
 
 
