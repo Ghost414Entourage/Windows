@@ -197,6 +197,7 @@ Get-Stig -ListAvailable
 
 Get-Stig -ListAvailable | Where-Object Technology -eq 'WindowsClient'
 
+Get-Command Get-Stig -Syntax
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
