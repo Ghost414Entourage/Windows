@@ -20,6 +20,29 @@ Remove-Item *.zip -Confirm
 
 Move-Item -Path ".\LGPO" -Destination ".\PolicyAnalyzer\LGPO" -Force
 
+(Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion").DisplayVersion
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+cd ".\Windows 11 v25H2 Security Baseline"
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+
+cd ".\Windows 11 v25H2 Security Baseline"
+
+cd .\Scripts
+
+Get-ChildItem .\Tools
+
+Get-ChildItem -Path "C:\Users\computer\Downloads" -Filter "LGPO.exe" -Recurse -ErrorAction SilentlyContinue
+
+Copy-Item "C:\Users\computer\Downloads\PolicyAnalyzer\LGPO\LGPO_30\LGPO.exe" -Destination ".\Tools\"
+
+Get-ChildItem .\Tools
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+.\Baseline-LocalInstall.ps1
 
 
 
