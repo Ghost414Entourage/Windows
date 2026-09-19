@@ -16,6 +16,104 @@ Set-Service -Name BTAGService -StartupType Disabled
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+Ensure 'Bluetooth Support Service (bthserv)' is set to 'Disabled'
+
+HKLM\SYSTEM\CurrentControlSet\Services\bthserv:Start
+
+Set-Service -Name bthserv -StartupType Disabled
+
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bthserv" -Name "Start" -Value 4
+
+Get-Service -Name bthserv | Select-Object Name, DisplayName, Status, StartType
+
+(Get-Service -Name bthserv).StartType
+
+(Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\bthserv").Start
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Ensure 'Bluetooth Support Service (bthserv)' is set to 'Disabled'
 
 # Directly disables bthserv in the active system registry
