@@ -1,0 +1,23 @@
+cd $env:USERPROFILE\Downloads
+
+cd ~\Downloads
+
+Get-ChildItem
+
+dir
+
+Expand-Archive -Path "LGPO.zip" -DestinationPath ".\LGPO"
+
+Get-ChildItem *.zip | ForEach-Object { Expand-Archive -Path $_.FullName -DestinationPath ".\$($_.BaseName)" }
+
+
+Remove-Item *.zip
+
+Remove-Item *.zip -Confirm
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
