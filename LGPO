@@ -69,3 +69,36 @@ gpupdate /force
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Expand-Archive -Path ".\U_MS_Windows_11_V2R9_STIG.zip" -DestinationPath ".\STIG_Win11_Docs" -Force
+Expand-Archive -Path ".\U_STIG_GPO_Package_July_2026.zip" -DestinationPath ".\STIG_GPOs" -Force
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Remove-Item -Path ".\*.zip" -Force
+
+Get-ChildItem
+
+Copy-Item -Path ".\ADMX Templates\*" -Destination "C:\Windows\PolicyDefinitions" -Recurse -Force
+
+$LGPO = "C:\Users\computer\Downloads\PolicyAnalyzer\LGPO\LGPO_30\LGPO.exe"
+
+cd 'STIG_GPOs'
+
+cd 'DoD Windows 11 v2r8'
+
+& "C:\Users\computer\Downloads\PolicyAnalyzer\LGPO\LGPO_30\LGPO.exe" /g "C:\Users\computer\Downloads\STIG_GPOs\DoD Windows 11 v2r8\GPOs" /v
+
+
+or 
+
+
+& "C:\Users\computer\Downloads\PolicyAnalyzer\LGPO\LGPO_30\LGPO.exe" /g ".\{0C3EA263-9ED1-4BA6-B589-B135F0800D65}" /v
+
+& "C:\Users\computer\Downloads\PolicyAnalyzer\LGPO\LGPO_30\LGPO.exe" /g ".\{E4D1C087-DEED-4F34-A584-C860A1E9BD35}" /v
+
+gpupdate /force
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
