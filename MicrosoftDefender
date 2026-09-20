@@ -154,6 +154,11 @@ That is, you can check which ASR rules are added and whether they are in mode:
 The safest approach is to first set rules to AuditMode, check that nothing important would be blocked, and only then change to Enabled.
 
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+MsMpEng.exe
+
 
 
 
