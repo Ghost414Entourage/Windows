@@ -1,0 +1,10 @@
+winget search --id Python.Python
+
+winget install Python.Python.3.12 --exact --source winget
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+python --version
+
+python.exe -m pip install --upgrade pip
+
