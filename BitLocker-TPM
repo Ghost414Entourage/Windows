@@ -57,11 +57,55 @@ foreach ($Protector in $Volume.KeyProtector) {
 }
 
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-PhysicalDisk | Select FriendlyName, MediaType, BusType, OperationalStatus, HealthStatus
+
+
+Enable-BitLocker -MountPoint "C:" -EncryptionMethod XtsAes256 -UsedSpaceOnly
+
+
+manage-bde -autounlock -enable D:
+
+
+manage-bde -protectors -get C:
+
+manage-bde -protectors -get D:
+
+manage-bde -protectors -get E:
+
+
+manage-bde -protectors -add D: -Password 
+
+manage-bde -protectors -add E: -TPMAndPIN
+
+
+Get-BitLockerVolume | Where-Object {$_.VolumeStatus -eq "FullyEncrypted"} | Select MountPoint, EncryptionMethod, AutoUnlockEnabled
+
+
+Get-BitLockerVolume | Where-Object {$_.VolumeType -eq "Data" -and $_.VolumeStatus -eq "FullyDecrypted"} | ForEach-Object { Enable-BitLockerAutoUnlock -MountPoint $_.MountPoint }
+
+
+manage-bde -protectors -delete $vol: -type RecoveryPassword
+
+manage-bde -protectors -add $vol: -RecoveryPassword
+
+
+manage-bde -protectors -disable D:
+
+manage-bde -protectors -add C: -Network
+
+Get-BitLockerVolume  |  Select-Object  MountPoint ,  VolumeStatus ,  EncryptionMethod ,  AutoUnlockEnabled ,  ProtectionStatus ,  KeyProtector
+
+vssadmin list shadows /for=C:
+
+Get-ComputerRestorePoint
+
+Checkpoint-Computer -Description "Before driver update" -RestorePointType "MODIFY_SETTINGS"
 
 
 
-
-
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
