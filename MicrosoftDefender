@@ -157,7 +157,23 @@ The safest approach is to first set rules to AuditMode, check that nothing impor
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-MsMpEng.exe
+Get-MpPreference | Select-Object AttackSurfaceReductionRules_Ids, AttackSurfaceReductionRules_Actions
+
+
+Set-MpPreference -AttackSurfaceReductionRules_Ids <GUID> -AttackSurfaceReductionRules_Actions Enabled
+
+
+Add-MpPreference -AttackSurfaceReductionRules_Ids <GUID> -AttackSurfaceReductionRules_Actions AuditMode
+
+
+Get-MpPreference | Select-Object -ExpandProperty AttackSurfaceReductionRules_Ids
+
+
+Get-ComputerInfo | Select WindowsProductName, CsTotalPhysicalMemory, DeviceGuard*
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
 
