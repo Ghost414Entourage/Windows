@@ -15,3 +15,31 @@ Activating and Verifying HVCI To enable Memory Integrity (which activates HVCI):
 3. ​ Toggle Memory integrity to On ​
 
 4. ​ Restart when prompted
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+dism /Online /Enable-Feature /FeatureName:VirtualMachinePlatform /All /NoRestart
+
+bcdedit /set hypervisorlaunchtype auto
+
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "EnableVirtualizationBasedSecurity" /t REG_DWORD /d 1 /f
+
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard" /v "RequirePlatformSecurityFeatures" /t REG_DWORD /d 1 /f
+
+reg add "HKLM\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" /v "Enabled" /t REG_DWORD /d 1 /f
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -Name "EnableVirtualizationBasedSecurity" -Value 1
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard" -Name "RequirePlatformSecurityFeatures" -Value 1
+Set-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\DeviceGuard\Scenarios\HypervisorEnforcedCodeIntegrity" -Name "Enabled" -Value 1
+
+shutdown /r /t 0
+
+Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\Microsoft\Windows\DeviceGuard | Select-Object VirtualizationBasedSecurityStatus
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
