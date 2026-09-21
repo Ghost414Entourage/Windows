@@ -173,8 +173,31 @@ Get-ComputerInfo | Select WindowsProductName, CsTotalPhysicalMemory, DeviceGuard
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Get-MpPreference | Select-Object DisableRealtimeMonitoring, SubmitSamplesConsent, MAPSReporting, DisableTamperProtection
+
+Set-MpPreference -DisableRealtimeMonitoring $false -SubmitSamplesConsent 1 -MAPSReporting 2 -DisableTamperProtection $false
+
+"%ProgramFiles%\Windows Defender\MpCmdRun.exe" -GetFiles  # Collect diagnostic data
+
+MpCmdRun.exe -Scan -ScanType 1  # Quick scan
+
+"%ProgramFiles%\Windows Defender\MpCmdRun.exe" -GetFiles  # Collect diagnostic data
+
+MpCmdRun.exe -Scan -ScanType 1  # Quick scan
 
 
+
+
+Action: Start a program > Program/script: "%ProgramFiles%\Windows Defender\MpCmdRun.exe" Arguments: -Scan -ScanType 1
+
+Same process, but change arguments to -Scan -ScanType 2
+
+
+Start-MpWDOScan
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
