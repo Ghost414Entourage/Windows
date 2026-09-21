@@ -1,0 +1,14 @@
+Set-MpPreference -EnableControlledFolderAccess Enabled
+
+Add protected folder: 
+
+Add-MpPreference -ControlledFolderAccessProtectedFolders "C:\ImportantData" 
+
+Allow app: 
+
+Add-MpPreference -ControlledFolderAccessAllowedApplications "C:\Tools\CustomApp.exe"
+
+
+View current settings: 
+
+Get-MpPreference | Select-Object ControlledFolderAccess*,ControlledFolderAccessAllowedApplications,ControlledFolderAccessProtectedFolders
