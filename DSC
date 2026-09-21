@@ -129,4 +129,9 @@ dsc config set -f .\disable-bluetooth-full.dsc.yaml
 
 Get-Service -Name "bthserv", "BTAGService" | Stop-Service -Force -ErrorAction SilentlyContinue
 
+Get-Service -Name "bthserv", "BTAGService", "bthhfsrv" -ErrorAction SilentlyContinue | Stop-Service -Force
+
+Stop-Process -Name "SystemSettings", "explorer" -Force
+
 ---------------------------------------------------------------------------------------------------------------------
+
