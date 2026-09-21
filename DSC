@@ -201,3 +201,10 @@ resources:
 
 
 ---------------------------------------------------------------------------------------------------------------------
+
+Get-PnpDevice -Class Bluetooth | Where-Object { $_.FriendlyName -notlike "*Enumerator*" -and $_.FriendlyName -notlike "*Protocol*" } | Disable-PnpDevice -Confirm:$false
+
+Get-PnpDevice -Class Bluetooth | Select-Object FriendlyName, Status, Problem
+
+---------------------------------------------------------------------------------------------------------------------
+
