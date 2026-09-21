@@ -320,6 +320,7 @@ Set-NetFirewallProfile -Profile Domain,Private,Public -LogFileName "$env:SystemR
 
 -----------------------------------------------------------------------------------------------------
 
+Set-NetFirewallProfile -Profile Domain,Private,Public -LogFileName "%systemroot%\system32\logfiles\firewall\pfirewall.log" -LogBlocked True -LogAllowed True -LogFileSize 4096
 
 
 
