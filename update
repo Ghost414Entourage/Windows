@@ -199,4 +199,9 @@ DISM /Online /Cleanup-Image /RestoreHealth
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Check for pending Windows updates or corrupted NGC folder (%SystemDrive%\Windows\ServiceProfiles\LocalService\AppData\Local\Microsoft\Ngc)
+
+
+Run SFC /scannow and DISM /Online /Cleanup-Image /RestoreHealth
+
 
