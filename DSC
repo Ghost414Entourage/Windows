@@ -2,3 +2,12 @@ https://learn.microsoft.com/en-us/powershell/dsc/install?view=dsc-3.0&tabs=windo
 
 
 ---------------------------------------------------------------------------------------------------------------------
+
+winget search DesiredStateConfiguration --source msstore
+
+winget install --id Microsoft.PowerShell --source winget
+
+winget install --id 9NVTPZWRC6KQ --source msstore
+
+winget install --id 9PCX3HX4HZ0Z --source msstore
+
