@@ -125,4 +125,8 @@ resources:
 
 ---------------------------------------------------------------------------------------------------------------------
 
+dsc config set -f .\disable-bluetooth-full.dsc.yaml
 
+Get-Service -Name "bthserv", "BTAGService" | Stop-Service -Force -ErrorAction SilentlyContinue
+
+---------------------------------------------------------------------------------------------------------------------
