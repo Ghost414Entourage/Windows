@@ -39,6 +39,7 @@ shutdown /r /t 0
 
 Get-CimInstance -ClassName Win32_DeviceGuard -Namespace root\Microsoft\Windows\DeviceGuard | Select-Object VirtualizationBasedSecurityStatus
 
+Get-ComputerInfo | Select DeviceGuard*
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
