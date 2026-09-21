@@ -28,3 +28,14 @@ Launch Sandbox: ​
 
 Sandbox supports configuration files (.wsb) that allow fine-grained control over each session. Create an XML file with .wsb extension and double-click to launch customized Sandbox.
 
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Enable-WindowsOptionalFeature -FeatureName "Containers-DisposableClientVM" -All -Online
+
+dism /Online /Enable-Feature /FeatureName:"Containers-DisposableClientVM" /All
+
+--------------------------------------------------------------------------------------------------------------------------------------------------
+
