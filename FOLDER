@@ -12,3 +12,8 @@ Add-MpPreference -ControlledFolderAccessAllowedApplications "C:\Tools\CustomApp.
 View current settings: 
 
 Get-MpPreference | Select-Object ControlledFolderAccess*,ControlledFolderAccessAllowedApplications,ControlledFolderAccessProtectedFolders
+
+
+icacls "C:\Confidential" /inheritance:r /grant:r Administrators:(OI)(CI)F /grant:r SYSTEM:(OI)(CI)F /remove:g Users
+
+
