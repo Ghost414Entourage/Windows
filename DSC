@@ -78,4 +78,51 @@ dsc config set -f .\disable-bluetooth-full.dsc.yaml
 
 ---------------------------------------------------------------------------------------------------------------------
 
+@'
+$schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/2024/04/config/document.json
+resources:
+  # 1. Group Policy Registry setting to block Bluetooth
+  - name: Disable Bluetooth Group Policy
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKLM\SOFTWARE\Policies\Microsoft\Windows\Connectivity\Bluetooth
+      valueName: AllowBluetooth
+      valueData:
+        DWord: 0
+      _exist: true
+
+  # 2. Prevent users from toggling radio devices in Settings
+  - name: Disable Radio Management Policy
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKLM\SOFTWARE\Policies\Microsoft\Control Panel\International
+      valueName: AllowRadioManagement
+      valueData:
+        DWord: 0
+      _exist: true
+
+  # 3. Disable Bluetooth Support Service startup
+  - name: Disable Bluetooth Support Service
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKLM\SYSTEM\CurrentControlSet\Services\bthserv
+      valueName: Start
+      valueData:
+        DWord: 4
+      _exist: true
+
+  # 4. Disable Bluetooth Handsfree Service startup
+  - name: Disable Bluetooth Handsfree Service
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKLM\SYSTEM\CurrentControlSet\Services\BTAGService
+      valueName: Start
+      valueData:
+        DWord: 4
+      _exist: true
+'@ | Set-Content -Path .\disable-bluetooth-full.dsc.yaml
+
+
+---------------------------------------------------------------------------------------------------------------------
+
 
