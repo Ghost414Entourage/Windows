@@ -34,5 +34,48 @@ $resource.capabilities
 
 $resource | Format-List
 
+dsc resource schema --resource Microsoft.Windows/Registry
+
+
+New-Item -Path "C:\DSC" -ItemType Directory -Force
+
+Set-Location -Path "C:\DSC"
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+@'
+$schema: https://raw.githubusercontent.com/PowerShell/DSC/main/schemas/2024/04/config/document.json
+resources:
+  - name: Disable Bluetooth Policy
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKLM\SOFTWARE\Policies\Microsoft\Windows\Connectivity\Bluetooth
+      valueName: AllowBluetooth
+      valueData:
+        DWord: 0
+      _exist: true
+
+  - name: Disable Bluetooth Support Service
+    type: Microsoft.Windows/Registry
+    properties:
+      keyPath: HKLM\SYSTEM\CurrentControlSet\Services\bthserv
+      valueName: Start
+      valueData:
+        DWord: 4
+      _exist: true
+'@ | Set-Content -Path .\disable-bluetooth-full.dsc.yaml
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+dsc config test -f .\disable-bluetooth-full.dsc.yaml
+
+dsc config set -f .\disable-bluetooth-full.dsc.yaml
+
+---------------------------------------------------------------------------------------------------------------------
 
 
