@@ -484,7 +484,103 @@ Copy-Item -Path "$HOME\Documents\WindowsPowerShell\Modules\PowerSTIG" -Destinati
 (Get-Module PowerStig -ListAvailable).RequiredModules | ForEach-Object { Install-Module -Name $_.Name -RequiredVersion $_.Version -Scope AllUsers -Force -SkipPublisherCheck }
 
 
+Get-Stig -Technology WindowsClient
 
+
+
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+Configuration Windows11
+{
+    Import-DscResource -ModuleName PowerSTIG -ModuleVersion 4.30.0
+
+    WindowsClient Win11Baseline
+    {
+        StigVersion = "2.7"
+        OsVersion   = "11"
+    }
+}
+
+. Windows11 -OutputPath "C:\temp"
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+Start-Service WinRM
+
+Get-Service WinRM
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+Start-DscConfiguration -Path "C:\temp" -Wait -Verbose -Force
+
+
+Get-ChildItem "C:\Program Files\WindowsPowerShell\Modules" -Recurse | Unblock-File
+
+Stop-Service WinRM
+Set-Service WinRM -StartupType Disabled
+
+
+---------------------------------------------------------------------------------------------------------------------
+
+[DSCLocalConfigurationManager()]
+Configuration LCMSettings
+{
+    Node localhost
+    {
+        Settings
+        {
+            ActionAfterReboot              = 'ContinueConfiguration'
+            ConfigurationMode              = 'ApplyOnly'
+            RebootNodeIfNeeded             = $true
+            AllowModuleOverwrite           = $true
+        }
+    }
+}
+
+# Create output folder and compile meta-MOF
+New-Item -Path "C:\temp\LCM" -ItemType Directory -Force | Out-Null
+LCMSettings -OutputPath "C:\temp\LCM"
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+Test-DscConfiguration
+
+Set-DscLocalConfigurationManager -Path "C:\temp\LCM" -Verbose
+
+Get-DscLocalConfigurationManager
+
+---------------------------------------------------------------------------------------------------------------------
+
+$CurrentConfig = Get-DscConfiguration
+$CurrentConfig | Select-Object ResourceId, PSComputerName
+
+---------------------------------------------------------------------------------------------------------------------
+
+
+# 1. Read the compiled MOF file to count total expected rules
+$MofContent = Get-Content "C:\temp\localhost.mof"
+$ExpectedRules = ($MofContent | Select-String -Pattern 'instance of').Count
+
+# 2. Get the count of currently active enforced rules on the system
+$AppliedRules = (Get-DscConfiguration).Count
+
+[PSCustomObject]@{
+    TotalMofRules   = $ExpectedRules
+    TotalApplied    = $AppliedRules
+    Status          = if ($ExpectedRules -eq $AppliedRules) { "100% In Sync" } else { "Mismatch" }
+}
+
+---------------------------------------------------------------------------------------------------------------------
+
+# Inspect rules skipped due to missing Organizational Values
+Import-Module PowerSTIG -RequiredVersion 4.30.0 -Force
+Get-StigRule -OsName WindowsClient -OsVersion 11 -StigVersion 2.7 | 
+    Where-Object { $_.OrganizationalValue -ne $null } | 
+    Select-Object RuleId, Title, Severity
 
 ---------------------------------------------------------------------------------------------------------------------
 
