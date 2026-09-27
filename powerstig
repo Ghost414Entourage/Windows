@@ -476,6 +476,14 @@ Test-Path "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG"
 
 Copy-Item -Path "$HOME\Documents\WindowsPowerShell\Modules\PowerSTIG" -Destination "C:\Program Files\WindowsPowerShell\Modules\" -Recurse -Force
 
+(Get-Module PowerStig -ListAvailable).RequiredModules | ForEach-Object {
+    Install-Module -Name $_.Name -RequiredVersion $_.Version -Scope AllUsers -Force -SkipPublisherCheck
+}
+
+
+(Get-Module PowerStig -ListAvailable).RequiredModules | ForEach-Object { Install-Module -Name $_.Name -RequiredVersion $_.Version -Scope AllUsers -Force -SkipPublisherCheck }
+
+
 
 
 ---------------------------------------------------------------------------------------------------------------------
