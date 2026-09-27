@@ -426,30 +426,23 @@ Install-Module PowerSTIG -Scope CurrentUser
 
 ===========================================================================================================================================================================================================================================================================================
 
-Remove-Module -Name PowerSTIG -Force -ErrorAction SilentlyContinue
-Uninstall-Module -Name PowerSTIG -Scope CurrentUser
-
-Remove-Item -Path "C:\Users\computer\Documents\WindowsPowerShell\Modules\PowerSTIG" -Recurse -Force
-
-Import-Module -Name "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG\4.30.0\PowerSTIG.psd1" -Force
-
-Remove-Module -Name PowerSTIG -Force -ErrorAction SilentlyContinue
-
-Uninstall-Module -Name PowerSTIG -AllVersions -Force -ErrorAction SilentlyContinue
-
-Remove-Item -Path "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG" -Recurse -Force -ErrorAction SilentlyContinue
-
-Get-Module -Name PowerSTIG -ListAvailable
-
-
-
-
 # Clears the legal notice title and message text
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "legalnoticetext" -Value ""
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System" -Name "legalcaption" -Value ""
 
 # Refreshes Group Policy
 gpupdate /force
+
+
+===========================================================================================================================================================================================================================================================================================
+
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+
+Install-Module -Name PowerStig -Scope CurrentUser -Force -SkipPublisherCheck
+
+Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 
 
 
