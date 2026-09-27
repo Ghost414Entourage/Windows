@@ -555,34 +555,7 @@ Get-DscLocalConfigurationManager
 
 ---------------------------------------------------------------------------------------------------------------------
 
-$CurrentConfig = Get-DscConfiguration
-$CurrentConfig | Select-Object ResourceId, PSComputerName
-
----------------------------------------------------------------------------------------------------------------------
-
-
-# 1. Read the compiled MOF file to count total expected rules
-$MofContent = Get-Content "C:\temp\localhost.mof"
-$ExpectedRules = ($MofContent | Select-String -Pattern 'instance of').Count
-
-# 2. Get the count of currently active enforced rules on the system
-$AppliedRules = (Get-DscConfiguration).Count
-
-[PSCustomObject]@{
-    TotalMofRules   = $ExpectedRules
-    TotalApplied    = $AppliedRules
-    Status          = if ($ExpectedRules -eq $AppliedRules) { "100% In Sync" } else { "Mismatch" }
-}
-
----------------------------------------------------------------------------------------------------------------------
-
-# Inspect rules skipped due to missing Organizational Values
-Import-Module PowerSTIG -RequiredVersion 4.30.0 -Force
-Get-StigRule -OsName WindowsClient -OsVersion 11 -StigVersion 2.7 | 
-    Where-Object { $_.OrganizationalValue -ne $null } | 
-    Select-Object RuleId, Title, Severity
-
----------------------------------------------------------------------------------------------------------------------
+gpupdate /force
 
 
 
