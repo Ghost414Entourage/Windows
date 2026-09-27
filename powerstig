@@ -437,14 +437,48 @@ gpupdate /force
 ===========================================================================================================================================================================================================================================================================================
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
+
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process
 
 
 Install-Module -Name PowerStig -Scope CurrentUser -Force -SkipPublisherCheck
 
 Set-PSRepository -Name 'PSGallery' -InstallationPolicy Trusted
 
+Import-Module PowerStig
 
+Get-DscResource -Name WindowsServer -Module PowerStig | Select-Object -ExpandProperty Properties
+
+Get-InstalledModule -Name PowerStig
+Get-Module -Name PowerStig -ListAvailable
+
+Update-Module -Name PowerStig
+
+Get-Stig -ListAvailable
+
+Get-DscResource -Module PowerStig
+
+Test-Path "C:\Program Files\WindowsPowerShell\Modules\PowerSTIG"
+
+Copy-Item -Path "$HOME\Documents\WindowsPowerShell\Modules\PowerSTIG" -Destination "C:\Program Files\WindowsPowerShell\Modules\" -Recurse -Force
+
+
+
+---------------------------------------------------------------------------------------------------------------------
 
 
 
