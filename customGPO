@@ -4,6 +4,13 @@ cd $env:USERPROFILE\Downloads
 Expand-Archive -Path .\LGPO.zip -DestinationPath .\LGPO
 
 
+New-Item -ItemType Directory -Force -Path "C:\Baseline\DefaultLocalGPO"
+
+
+.\LGPO\LGPO.exe /b C:\Baseline\DefaultLocalGPO
+
+
+
 
 
 
