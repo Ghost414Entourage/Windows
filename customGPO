@@ -7,9 +7,6 @@ Expand-Archive -Path .\LGPO.zip -DestinationPath .\LGPO
 New-Item -ItemType Directory -Force -Path "C:\Baseline\DefaultLocalGPO"
 
 
-.\LGPO\LGPO.exe /b C:\Baseline\DefaultLocalGPO
-
-
 Get-ChildItem -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /b C:\Baseline\DefaultLocalGPO }
 
 
