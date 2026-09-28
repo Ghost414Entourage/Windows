@@ -10,5 +10,5 @@ New-Item -ItemType Directory -Force -Path "C:\Baseline\DefaultLocalGPO"
 Get-ChildItem -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /b C:\Baseline\DefaultLocalGPO }
 
 
-ls "C:\Baseline\DefaultLocalGPO\
+ls "C:\Baseline\DefaultLocalGPO"
   
