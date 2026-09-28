@@ -14,3 +14,6 @@ Get-Service | Where-Object Status -eq 'Running' |
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+$servicesToDisable = @('Fax','RemoteRegistry','SSDPSRV','WSearch','TlntSvr'); foreach ($svc in $servicesToDisable) { Try { Stop-Service -Name $svc -Force -ErrorAction Stop; Set-Service -Name $svc -StartupType Disabled; Write-Host "Disabled service: $svc" -ForegroundColor Green } Catch { Write-Warning "Could not disable ${svc}: $_" } }
+
