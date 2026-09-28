@@ -1,0 +1,10 @@
+cd $env:USERPROFILE\Downloads
+
+
+Expand-Archive -Path .\LGPO.zip -DestinationPath .\LGPO
+
+
+
+
+
+  
