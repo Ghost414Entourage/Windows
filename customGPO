@@ -19,26 +19,11 @@ ls "C:\Baseline\DefaultLocalGPO"
 
 
 @'
-{
-  "Account Lockout": {
-    "LockoutBadCount": 5,
-    "ResetLockoutCount": 30,
-    "LockoutDuration": 30
-  },
-  "Audit Policy": {
-    "AuditAccountLogon": "SuccessAndFailure",
-    "AuditPolicyChange": "Success"
-  },
-  "User Rights Assignment": {
-    "SeDenyInteractiveLogonRight": [
-      "Guest",
-      "ANONYMOUS LOGON"
-    ]
-  },
-  "Security Options": {
-    "NetworkSecurity_LMCompatibilityLevel": 5
-  }
-}
+Computer
+Software\Policies\Microsoft\Windows\System
+NetworkSecurity_LMCompatibilityLevel
+DWORD:5
+
 '@ | Out-File -FilePath "C:\Baseline\LocalPolicy.json" -Encoding utf8
 
 
@@ -48,4 +33,11 @@ ls "C:\Baseline\DefaultLocalGPO"
 
 
 Get-ChildItem -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /t C:\Baseline\LocalPolicy.json }
-Write-Host "Local policy applied successfully"
+
+Get-Content C:\Baseline\LocalPolicy.json
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+
