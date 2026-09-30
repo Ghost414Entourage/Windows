@@ -92,7 +92,9 @@ DWORD:0
 
 -------------------------------------------------------------------------------------------------------------------------
 
-Get-ChildItem -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /t C:\Baseline\LocalPolicy.json }
+Get-ChildItem -Path "$env:USERPROFILE\Downloads" -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /t C:\Baseline\LocalPolicy.json }
+
+gpupdate /force
 
 -------------------------------------------------------------------------------------------------------------------------
 
