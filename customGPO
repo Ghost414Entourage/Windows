@@ -66,5 +66,36 @@ Get-Content C:\Baseline\LocalPolicy.json
 -------------------------------------------------------------------------------------------------------------------------
 
 
+@'
+Computer
+Software\Policies\Microsoft\Windows\System
+NetworkSecurity_LMCompatibilityLevel
+DWORD:5
+
+Computer
+Software\Policies\Microsoft\Camera
+AllowCamera
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\CapabilityAccessManager\ConsentStore\webcam
+Value
+SZ:Deny
+
+Computer
+Software\Policies\Microsoft\Windows NT\DNSClient
+EnableMulticast
+DWORD:0
+
+'@ | Out-File -FilePath "C:\Baseline\LocalPolicy.json" -Encoding utf8
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+Get-ChildItem -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /t C:\Baseline\LocalPolicy.json }
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
 
 
