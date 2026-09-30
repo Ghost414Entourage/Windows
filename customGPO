@@ -138,4 +138,9 @@ Get-ChildItem -Path "$env:USERPROFILE\Downloads" -Recurse -Filter "LGPO.exe" | F
 
 -------------------------------------------------------------------------------------------------------------------------
 
+Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\Dnscache\Parameters" -Name EnableMDNS
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
 
