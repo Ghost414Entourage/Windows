@@ -238,4 +238,68 @@ Get-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Services\WinHTTPAutoProxy
 
 -------------------------------------------------------------------------------------------------------------------------
 
+@'
+Computer
+Software\Policies\Microsoft\Windows\System
+NetworkSecurity_LMCompatibilityLevel
+DWORD:5
+
+Computer
+Software\Policies\Microsoft\Camera
+AllowCamera
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\CapabilityAccessManager\ConsentStore\webcam
+Value
+SZ:Deny
+
+Computer
+Software\Policies\Microsoft\Windows NT\DNSClient
+EnableMulticast
+DWORD:0
+
+Computer
+System\CurrentControlSet\Services\Dnscache\Parameters
+EnableMDNS
+DWORD:0
+
+Computer
+Software\Policies\Microsoft\Windows\LocationAndSensors
+DisableLocation
+DWORD:1
+
+Computer
+System\CurrentControlSet\Services\WinHTTPAutoProxySvc
+Start
+DWORD:4
+
+Computer
+Software\Policies\Microsoft\Windows\CapabilityAccessManager\ConsentStore\microphone
+Value
+SZ:Deny
+
+Computer
+Software\Policies\Microsoft\Windows\AppPrivacy
+LetAppsAccessMicrophone
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\Windows\AppPrivacy
+LetAppsAccessMicrophone_UserInControlOfTheirState
+DWORD:0
+
+'@ | Out-File -FilePath "C:\Baseline\LocalPolicy.json" -Encoding utf8
+
+
+-------------------------------------------------------------------------------------------------------------------------
+
+
+Get-ChildItem -Path "$env:USERPROFILE\Downloads" -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /t C:\Baseline\LocalPolicy.json }
+
+gpupdate /force
+
+Get-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\AppPrivacy" -Name LetAppsAccessMicrophone
+
+-------------------------------------------------------------------------------------------------------------------------
 
