@@ -125,8 +125,8 @@ Software\Policies\Microsoft\Windows NT\DNSClient
 EnableMulticast
 DWORD:0
 
-System
-CurrentControlSet\Services\Dnscache\Parameters
+Computer
+System\CurrentControlSet\Services\Dnscache\Parameters
 EnableMDNS
 DWORD:0
 
