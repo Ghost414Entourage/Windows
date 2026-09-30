@@ -458,7 +458,18 @@ Software\Policies\Microsoft\Windows\CapabilityAccessManager\ConsentStore\userNot
 Value
 SZ:Deny
 
+Computer
+Software\Policies\Microsoft\Windows\AppPrivacy
+LetAppsAccessNotifications
+DWORD:2
+
+Computer
+Software\Policies\Microsoft\Windows\AppPrivacy
+LetAppsAccessNotifications_UserInControlOfTheirState
+DWORD:0
+
 '@ | Out-File -FilePath "C:\Baseline\LocalPolicy.json" -Encoding utf8
+
 
 -------------------------------------------------------------------------------------------------------------------------
 
@@ -466,7 +477,7 @@ Get-ChildItem -Path "$env:USERPROFILE\Downloads" -Recurse -Filter "LGPO.exe" | F
 
 gpupdate /force
 
-Get-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\CurrentVersion\PushNotifications" -Name NoToastApplicationNotification
+Get-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows\AppPrivacy" -Name LetAppsAccessNotifications
 
 -------------------------------------------------------------------------------------------------------------------------
 
