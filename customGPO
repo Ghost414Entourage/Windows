@@ -96,6 +96,11 @@ Get-ChildItem -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /t C:
 
 -------------------------------------------------------------------------------------------------------------------------
 
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" -Name "EnableMulticast" -ErrorAction SilentlyContinue
+
+Get-DnsClientGlobalSetting | Select-Object EnableMulticast
+
+-------------------------------------------------------------------------------------------------------------------------
 
 
 
