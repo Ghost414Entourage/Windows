@@ -98,7 +98,7 @@ gpupdate /force
 
 -------------------------------------------------------------------------------------------------------------------------
 
-Get-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows NT\DNSClient" -Name "EnableMulticast" -ErrorAction SilentlyContinue
+Get-ItemProperty -Path "HKLM:\Software\Policies\Microsoft\Windows NT\DNSClient" -Name EnableMulticast
 
 Get-DnsClientGlobalSetting | Select-Object EnableMulticast
 
