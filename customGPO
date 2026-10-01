@@ -36,6 +36,7 @@ Get-ChildItem -Recurse -Filter "LGPO.exe" | ForEach-Object { & $_.FullName /t C:
 
 Get-Content C:\Baseline\LocalPolicy.json
 
+Get-Content C:\Baseline\LocalPolicy.txt
 
 -------------------------------------------------------------------------------------------------------------------------
 
