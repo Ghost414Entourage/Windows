@@ -5,7 +5,12 @@ Get-ChildItem -Path 'C:\$Recycle.Bin' -Force -Recurse
 
 ---------------------------------------------------------------------------------------------------------------
 
+Get-PSDrive -PSProvider FileSystem
 
-Clear-RecycleBin -Force
+Get-PSDrive -PSProvider FileSystem | ForEach-Object { Clear-RecycleBin -DriveLetter $_.Name -Force -ErrorAction SilentlyContinue }
+
+Clear-RecycleBin -DriveLetter C -Force
+
+
 
 
