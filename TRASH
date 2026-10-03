@@ -1,0 +1,11 @@
+(New-Object -ComObject Shell.Application).Namespace(0xa).Items() | Select-Object Name, Path, ModifyDate
+
+Get-ChildItem -Path 'C:\$Recycle.Bin' -Force -Recurse
+
+
+---------------------------------------------------------------------------------------------------------------
+
+
+Clear-RecycleBin -Force
+
+
