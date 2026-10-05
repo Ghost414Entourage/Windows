@@ -210,6 +210,6 @@ Run SFC /scannow and DISM /Online /Cleanup-Image /RestoreHealth
 
 Stuck downloading/installing  Pause/resume updates, clear SoftwareDistribution folder (%windir%\SoftwareDistribution), run Windows Update Troubleshooter
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
-
+Get-ComputerInfo | Select-Object OsName, OSDisplayVersion, OsBuildNumber
