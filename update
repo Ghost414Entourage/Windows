@@ -213,3 +213,6 @@ Stuck downloading/installing  Pause/resume updates, clear SoftwareDistribution 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 Get-ComputerInfo | Select-Object OsName, OSDisplayVersion, OsBuildNumber
+
+systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
+
