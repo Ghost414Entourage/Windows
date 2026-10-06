@@ -20,3 +20,27 @@ winget source reset --force
 
 winget install --id XP8C9QZMS2PC1T --source msstore --force 
 
+
+
+
+winget search sysinternals  
+winget install --id Microsoft.Sysinternals.Suite --source winget  
+winget upgrade --all --silent  
+   
+# capture installed apps  
+winget export -o C:\Temp\baseline-apps.json
+
+# reproduce on another server
+winget import -i C:\Temp\baseline-apps.json   
+
+
+winget install --id Microsoft.PowerShell --source winget
+
+winget install --id Microsoft.WindowsTerminal --source winget
+
+winget install --id Microsoft.Sysinternals.Suite --source winget
+
+winget install --id Microsoft.VisualStudioCode --source winget
+
+winget install --id Git.Git --source winget
+
