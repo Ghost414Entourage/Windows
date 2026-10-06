@@ -1,4 +1,19 @@
+# Install PowerSTIG from the PowerShell Gallery
+Install-Module -Name PowerSTIG -Scope AllUsers -Force
 
+# Example: apply a Windows Server security policy configuration
+Configuration HardenedServer {
+    Import-DscResource -ModuleName PowerSTIG
+    Node 'localhost' {
+        WindowsServer BaselineHardening {
+            OsVersion   = '2022'
+            OsRole      = 'MS'
+            StigVersion = '2.5'
+        }
+    }
+}
+HardenedServer -OutputPath .\HardeningConfig
+Start-DscConfiguration -Path .\HardeningConfig -Wait -Verbose
 
 
 
