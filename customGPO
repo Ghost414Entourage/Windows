@@ -1,5 +1,10 @@
 https://www.microsoft.com/en-us/download/details.aspx?id=108849
 
+
+Set-Location C:\Windows\PolicyDefinitions
+
+
+
 -------------------------------------------------------------------------------------------------------------------------
 
 cd $env:USERPROFILE\Downloads
