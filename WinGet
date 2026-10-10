@@ -48,3 +48,9 @@ winget install --id Git.Git --source winget
 winget install --id Microsoft.Sysinternals.Suite --source winget --accept-package-agreements --accept-source-agreements
 
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+start ms-windows-store://pdp/?productid=9nblggh4nns1
+
+
+
