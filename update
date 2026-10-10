@@ -218,3 +218,8 @@ Get-ComputerInfo | Select-Object OsName, OSDisplayVersion, OsBuildNumber
 
 systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-HotFix -Id KB5124010
+
+systeminfo | findstr "KB5124010"
