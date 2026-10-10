@@ -223,3 +223,8 @@ systeminfo | findstr /B /C:"OS Name" /C:"OS Version"
 Get-HotFix -Id KB5124010
 
 systeminfo | findstr "KB5124010"
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+winget install --id Microsoft.Edge --installer-type msi --force
