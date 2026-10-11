@@ -147,6 +147,56 @@ GETMAC
 HOSTNAME
 
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+ipconfig  
+ipconfig /all 
+ipconfig /release  
+ipconfig /renew  
+ipconfig /release6
+ipconfig /renew6  
+ipconfig /flushdns  
+ipconfig /displaydns  
+ipconfig /registerdns  
+ipconfig /showclassid "Ethernet"
+
+
+Get-NetIPConfiguration  
+Get-NetIPConfiguration -Detailed  
+Get-NetIPAddress  
+Get-NetIPAddress -AddressFamily IPv4  
+Get-NetIPInterface 
+Get-NetIPInterface -AddressFamily IPv4 | Sort-Object InterfaceMetric
+
+
+Get-NetIPAddress -AddressFamily IPv4 |    Where-Object { $_.IPAddress -notlike '169.254*' -and $_.InterfaceAlias -notlike '*Loopback*' } |    Select-Object InterfaceAlias, IPAddress, PrefixLength
+
+New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.50 -PrefixLength 24 -DefaultGateway 192.168.1.1  Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses 8.8.8.8,1.1.1.1
+
+
+Set-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.60 -PrefixLength 24
+
+Remove-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.50 -Confirm:$false
+
+
+Set-NetIPInterface -InterfaceAlias "Ethernet" -Dhcp Enabled  Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ResetServerAddresses  ipconfig /renew
+
+
+
+netsh interface ipv4 show config  
+netsh interface ipv4 show addresses
+
+
+netsh interface ipv4 show interfaces  
+netsh interface ipv4 set address name="Ethernet" static 192.168.1.50 255.255.255.0 192.168.1.1  
+netsh interface ipv4 set address name="Ethernet" source=dhcp  
+netsh interface ipv4 set dnsservers name="Ethernet" static 8.8.8.8 primary  
+netsh interface ipv4 add dnsservers name="Ethernet" 1.1.1.1 index=2  
+netsh interface ipv4 set dnsservers name="Ethernet" source=dhcp
+
+
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
