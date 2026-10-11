@@ -195,7 +195,7 @@ gpresult /h "$env:USERPROFILE\Desktop\GPO_Report.html"
 
 gpresult /r
 
-
+.\LGPO\LGPO_30\LGPO.exe /parse /m C:\Windows\System32\GroupPolicy\Machine\registry.pol
 
 
 
