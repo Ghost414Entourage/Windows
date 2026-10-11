@@ -52,5 +52,6 @@ winget install --id Microsoft.Sysinternals.Suite --source winget --accept-packag
 
 start ms-windows-store://pdp/?productid=9nblggh4nns1
 
+start ms-windows-store://search/?query=Microsoft%20app%20installer
 
 
