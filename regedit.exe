@@ -4,3 +4,7 @@ https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-priva
 
 
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Privacy
+
+------------------------------------------------------------------------------------------------------------------------
+
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth
