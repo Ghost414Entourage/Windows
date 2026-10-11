@@ -190,6 +190,11 @@ gpupdate /force
 gpupdate /force
 
 
+gpresult /h "$env:USERPROFILE\Desktop\GPO_Report.html"
+
+
+gpresult /r
+
 
 
 
