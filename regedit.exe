@@ -8,3 +8,18 @@ Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Privacy
 ------------------------------------------------------------------------------------------------------------------------
 
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth
+
+------------------------------------------------------------------------------------------------------------------------
+
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\Privacy" /s
+
+Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy" -Recurse | Get-ItemProperty
+
+Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy" -Recurse | Where-Object { $_.Property -contains "value" } | ForEach-Object { Set-ItemProperty -Path $_.PSPath -Name "value" -Value 2 }
+
+------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
