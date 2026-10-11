@@ -1,0 +1,71 @@
+chkdsk  
+chkdsk C:  
+chkdsk C: /f  
+chkdsk C: /r  
+chkdsk C: /scan  
+chkdsk C: /spotfix  
+chkdsk C: /f /x
+
+/f Fix errors. Requires exclusive access to the volume.
+/r Locate bad sectors and recover readable data. Implies /f. Slow.
+/x Force the volume to dismount first. Implies /f.
+/scan Online scan of an NTFS volume with no dismount.
+/spotfix Apply fixes found by /scan, requiring only brief downtime.
+/b Re-evaluate previously flagged bad clusters. Implies /r.
+/i Skip thorough index checks. Faster, less complete.
+/c Skip directory cycle checks. Faster, less complete.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Repair-Volume -DriveLetter C -Scan  
+Repair-Volume -DriveLetter C -SpotFix  
+Repair-Volume -DriveLetter C -OfflineScanAndFix
+
+
+sfc /scannow  
+sfc /verifyonly
+
+DISM /Online /Cleanup-Image /CheckHealth  
+DISM /Online /Cleanup-Image /ScanHealth  
+DISM /Online /Cleanup-Image /RestoreHealth
+
+
+DISM /Online /Cleanup-Image /RestoreHealth /Source:WIM:D:\sources\install.wim:1 /LimitAccess
+
+
+DISM /Online /Cleanup-Image /AnalyzeComponentStore  
+DISM /Online /Cleanup-Image /StartComponentCleanup  
+DISM /Online /Cleanup-Image /StartComponentCleanup /ResetBase
+
+
+Get-PhysicalDisk | Select-Object FriendlyName, HealthStatus, OperationalStatus
+
+Get-StorageReliabilityCounter -PhysicalDisk (Get-PhysicalDisk -DeviceNumber 0) | Format-List  wmic diskdrive get model,status
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+fsutil fsinfo drives  
+fsutil fsinfo drivetype C:  
+fsutil fsinfo volumeinfo C:  
+fsutil fsinfo ntfsinfo C:  
+fsutil fsinfo statistics C:  
+fsutil volume diskfree C:
+
+
+fsutil dirty query C:  
+fsutil dirty set C:
+
+
+fsutil hardlink create C:\link.txt C:\original.txt  
+fsutil hardlink list C:\original.txt
+
+mklink C:\link.txt C:\original.txt  
+mklink /D C:\linkdir C:\originaldir  
+mklink /H C:\hardlink.txt C:\original.txt  
+mklink /J C:\junction C:\originaldir
+
+
+
+
+
