@@ -19,6 +19,15 @@ Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy" -Re
 
 ------------------------------------------------------------------------------------------------------------------------
 
+# Enable Windows Firewall for all profiles
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { $p="HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; Set-ItemProperty $p -Name "EnableFirewall" -Value 1 -Type DWord }
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { $p="HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_"; if(Test-Path $p){Get-ItemProperty $p -Name "EnableFirewall" -EA SilentlyContinue}else{[PSCustomObject]@{Profile=$_;Status="Not Configured"}} }
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { [PSCustomObject]@{Profile=$_; Value=(Get-ItemProperty "HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_" -Name "EnableFirewall" -EA SilentlyContinue).EnableFirewall} }
+
+
 
 
 
