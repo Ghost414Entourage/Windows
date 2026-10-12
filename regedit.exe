@@ -29,6 +29,16 @@ Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy" -Re
 
 
 
+# Default deny inbound
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { [PSCustomObject]@{Profile=$_; Value=(Get-ItemProperty "HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_" -Name "DefaultInboundAction" -EA SilentlyContinue).DefaultInboundAction} }
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { $p="HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; Set-ItemProperty $p -Name "DefaultInboundAction" -Value 1 -Type DWord }
+
+
+
+
+
 
 
 
