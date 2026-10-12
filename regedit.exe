@@ -67,6 +67,24 @@ Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy" -Re
 
 ------------------------------------------------------------------------------------------------------------------------
 
+# Configure Windows Defender settings
+
+Get-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableRealtimeMonitoring" -EA SilentlyContinue
+
+$p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; Set-ItemProperty $p -Name "DisableRealtimeMonitoring" -Value 0 -Type DWord
+
+
+
+Get-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableBehaviorMonitoring" -EA SilentlyContinue
+
+$p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; Set-ItemProperty $p -Name "DisableBehaviorMonitoring" -Value 0 -Type DWord
+
+
+
+Get-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableIOAVProtection" -EA SilentlyContinue
+
+$p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; Set-ItemProperty $p -Name "DisableIOAVProtection" -Value 0 -Type DWord
+
 
 
 
