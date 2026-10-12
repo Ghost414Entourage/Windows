@@ -38,6 +38,35 @@ Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy" -Re
 
 
 
+# Enable logging
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { [PSCustomObject]@{Profile=$_; Value=(Get-ItemProperty "HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_\Logging" -Name "LogFilePath" -EA SilentlyContinue).LogFilePath} }
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { $p="HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; $lp="$p\Logging"; if(!(Test-Path $lp)){New-Item $lp -Force|Out-Null}; Set-ItemProperty $lp -Name "LogFilePath" -Value "%SystemRoot%\System32\LogFiles\Firewall\pfirewall.log" -Type String }
+
+
+
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { [PSCustomObject]@{Profile=$_; Value=(Get-ItemProperty "HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_\Logging" -Name "LogFileSize" -EA SilentlyContinue).LogFileSize} }
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { $lp="HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_\Logging"; if(!(Test-Path $lp)){New-Item $lp -Force|Out-Null}; Set-ItemProperty $lp -Name "LogFileSize" -Value 16384 -Type DWord }
+
+
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { [PSCustomObject]@{Profile=$_; Value=(Get-ItemProperty "HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_\Logging" -Name "LogDroppedPackets" -EA SilentlyContinue).LogDroppedPackets} }
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { $lp="HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_\Logging"; if(!(Test-Path $lp)){New-Item $lp -Force|Out-Null}; Set-ItemProperty $lp -Name "LogDroppedPackets" -Value 1 -Type DWord }
+
+
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { $lp="HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_\Logging"; if(!(Test-Path $lp)){New-Item $lp -Force|Out-Null}; Set-ItemProperty $lp -Name "LogSuccessfulConnections" -Value 1 -Type DWord }
+
+"DomainProfile", "PrivateProfile", "PublicProfile" | ForEach-Object { $lp="HKLM:\Software\Policies\Microsoft\WindowsFirewall\$_\Logging"; if(!(Test-Path $lp)){New-Item $lp -Force|Out-Null}; Set-ItemProperty $lp -Name "LogSuccessfulConnections" -Value 1 -Type DWord }
+
+
+
+------------------------------------------------------------------------------------------------------------------------
+
 
 
 
