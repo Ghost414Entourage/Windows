@@ -86,6 +86,16 @@ Get-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time P
 $p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; Set-ItemProperty $p -Name "DisableIOAVProtection" -Value 0 -Type DWord
 
 
+Get-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableOnAccessProtection" -EA SilentlyContinue
+
+$p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; Set-ItemProperty $p -Name "DisableOnAccessProtection" -Value 0 -Type DWord
+
+
+Get-ItemProperty "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection" -Name "DisableScanOnRealtimeEnable" -EA SilentlyContinue
+
+$p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; if(!(Test-Path $p)){New-Item $p -Force|Out-Null}; Set-ItemProperty $p -Name "DisableScanOnRealtimeEnable" -Value 0 -Type DWord
+
+
 
 
 
