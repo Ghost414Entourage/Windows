@@ -202,3 +202,40 @@ gpresult /r
 
 
 
+
+
+
+
+
+
+
+Get-Content "$env:TEMP\secedit_audit.log" | Select-String "Configure", "Privilege", "User Rights", "Warning", "Error", "\*" -Context 1
+
+
+Get-Content ".\STIG_Package\DoD Windows 11 v2r8\GPOs\{E4D1C087-DEED-4F34-A584-C860A1E9BD35}\DomainSysvol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf" | Select-String "Privilege Rights", "Group Membership", "="
+
+
+
+
+
+$path = ".\STIG_Package\DoD Windows 11 v2r8\GPOs\{E4D1C087-DEED-4F34-A584-C860A1E9BD35}\DomainSysvol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf"
+
+(Get-Content $path) | ForEach-Object {
+    $_ -replace 'ADD YOUR DOMAIN ADMINS,?', '' `
+       -replace 'ADD YOUR ENTERPRISE ADMINS,?', '' `
+       -replace ',,', ',' `
+       -replace '=\s*,', '='
+} | Set-Content $path -Encoding Unicode
+
+
+
+
+
+.\LGPO\LGPO_30\LGPO.exe /g ".\STIG_Package\DoD Windows 11 v2r8\GPOs\{E4D1C087-DEED-4F34-A584-C860A1E9BD35}"
+
+
+
+
+
+
+
