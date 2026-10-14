@@ -12,7 +12,7 @@ Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Privacy
 
 ------------------------------------------------------------------------------------------------------------------------
 
-HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth
+HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth  0
 
 ------------------------------------------------------------------------------------------------------------------------
 
