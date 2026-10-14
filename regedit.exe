@@ -104,3 +104,33 @@ $p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; 
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+$Path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy\AllowAutoAcceptPairingAndPrivacyConsentPrompts"
+
+New-Item -Path $Path -Force | Out-Null
+New-ItemProperty -Path $Path -Name "value" -PropertyType DWord -Value 0 -Force
+
+
+
+
+
+
+
+
