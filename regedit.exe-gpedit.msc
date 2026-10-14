@@ -130,6 +130,11 @@ New-ItemProperty -Path $Path -Name "value" -PropertyType DWord -Value 0 -Force
 
 
 
+New-ItemProperty -Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\AppPrivacy" -Name "LetAppsAccessMicrophone" -PropertyType DWord -Value 2 -Force
+
+
+
+
 
 
 
