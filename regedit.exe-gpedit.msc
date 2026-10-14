@@ -122,15 +122,27 @@ $p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; 
 
 
 
-$Path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy\AllowAutoAcceptPairingAndPrivacyConsentPrompts"
 
-New-Item -Path $Path -Force | Out-Null
-New-ItemProperty -Path $Path -Name "value" -PropertyType DWord -Value 0 -Force
+Get-ChildItem -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy" -Recurse | Where-Object { $_.Property -contains "value" } | ForEach-Object {
+    # Get the current value for context
+    $currentVal = (Get-ItemProperty -Path $_.PSPath -Name "value" -ErrorAction SilentlyContinue).value
+    
+    # Show the current key path and value
+    Write-Host "`n----------------------------------------" -ForegroundColor DarkGray
+    Write-Host "Path: $($_.PSPath)" -ForegroundColor Cyan
+    Write-Host "Current 'value': $currentVal" -ForegroundColor Yellow
+    
+    # Prompt for new value (press Enter without typing to skip)
+    $userInput = Read-Host "Enter new value"
+    
+    if ($userInput -ne "") {
+        Set-ItemProperty -Path $_.PSPath -Name "value" -Value ([int]$userInput)
+        Write-Host "-> Updated successfully!" -ForegroundColor Green
+    } else {
+        Write-Host "-> Skipped." -ForegroundColor DarkYellow
+    }
+}
 
-
-
-
-New-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\Privacy" -Name "LetAppsAccessMicrophone" -PropertyType DWord -Value 2 -Force
 
 
 
