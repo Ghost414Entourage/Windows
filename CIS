@@ -18,6 +18,9 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRight
 
 reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessCredentialManagerAsTrustedCaller"
 
+$inf="$env:TEMP\user_rights.inf"; secedit /export /areas user_rights /cfg $inf /quiet | Out-Null; Get-Content $inf | Select-String "SeTrustedCredManAccessPrivilege"; Remove-Item $inf
+
+
 *****************************************************************************************************************************************************************
 
 
