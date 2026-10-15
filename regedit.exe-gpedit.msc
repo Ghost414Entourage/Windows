@@ -105,19 +105,7 @@ $p = "HKLM:\Software\Policies\Microsoft\Windows Defender\Real-Time Protection"; 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Privacy
 
 
 
