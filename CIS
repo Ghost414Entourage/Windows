@@ -2,4 +2,13 @@ https://downloads.cisecurity.org/#/
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
+2.2.1Ensure 'Access Credential Manager as a trusted caller' is set to 'No One
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+On the right pane double-click 'Deny access to this computer from the network
+Ensure that 'Guests' and 'Local account' are included in the user-defined list.
+
+
+
+
 
