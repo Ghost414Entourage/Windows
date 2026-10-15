@@ -3,7 +3,7 @@ https://downloads.cisecurity.org/#/
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-2.2.1Ensure 'Access Credential Manager as a trusted caller' is set to 'No One
+2.2.1Ensure 'Access Credential Manager as a trusted caller' is set to 'No One'
 
 gpedit.msc
 
@@ -22,6 +22,14 @@ $inf="$env:TEMP\user_rights.inf"; secedit /export /areas user_rights /cfg $inf /
 
 
 *****************************************************************************************************************************************************************
+
+2.2.2 Ensure 'Access this computer from the network' is set to 'Administrators, Remote Desktop Users'
+
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+Double-click 'Access this computer from the network'
+Check if the access is allowed only to Administrators, Remote Desktop Users. Remove other Users and Groups from the list.
 
 
 
