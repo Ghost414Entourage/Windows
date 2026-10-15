@@ -52,6 +52,9 @@ $inf="$env:TEMP\user_rights.inf"; secedit /export /areas user_rights /cfg $inf /
 *S-1-5-32-551 $\rightarrow$ Backup Operators
 
 
+$inf="$env:TEMP\apply_policy.inf"; "[Unicode]`nUnicode=yes`n[Version]`nsignature=`"`$CHICAGO$`"`n[Privilege Rights]`nSeNetworkLogonRight = *S-1-5-32-544,*S-1-5-32-555" | Set-Content $inf; secedit /configure /db "$env:TEMP\sec.sdb" /cfg $inf /quiet; Remove-Item $inf, "$env:TEMP\sec.sdb" -ErrorAction SilentlyContinue
+
+
 
 
 
