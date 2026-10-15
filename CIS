@@ -16,9 +16,12 @@ regedit.exe
 
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessCredentialManagerAsTrustedCaller
 
+
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessCredentialManagerAsTrustedCaller" -ErrorAction SilentlyContinue
 
+
 reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessCredentialManagerAsTrustedCaller"
+
 
 $inf="$env:TEMP\user_rights.inf"; secedit /export /areas user_rights /cfg $inf /quiet | Out-Null; Get-Content $inf | Select-String "SeTrustedCredManAccessPrivilege"; Remove-Item $inf
 
@@ -32,6 +35,16 @@ gpedit.msc
 Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
 Double-click 'Access this computer from the network'
 Check if the access is allowed only to Administrators, Remote Desktop Users. Remove other Users and Groups from the list.
+
+
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessFromNetwork"
+
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessFromNetwork" -ErrorAction SilentlyContinue
+
+
+$inf="$env:TEMP\user_rights.inf"; secedit /export /areas user_rights /cfg $inf /quiet | Out-Null; Get-Content $inf | Select-String "SeNetworkLogonRight"; Remove-Item $inf
+
 
 
 
