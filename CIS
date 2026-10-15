@@ -9,6 +9,12 @@ gpedit.msc
 
 Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
 
+
+regedit.exe
+
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessCredentialManagerAsTrustedCaller
+
+
 *****************************************************************************************************************************************************************
 
 
