@@ -46,6 +46,7 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRight
 $inf="$env:TEMP\user_rights.inf"; secedit /export /areas user_rights /cfg $inf /quiet | Out-Null; Get-Content $inf | Select-String "SeNetworkLogonRight"; Remove-Item $inf
 
 
+*S-1-1-0 $\rightarrow$ Everyone*S-1-5-32-544 $\rightarrow$ Administrators*S-1-5-32-545 $\rightarrow$ Users*S-1-5-32-551 $\rightarrow$ Backup Operators
 
 
 
