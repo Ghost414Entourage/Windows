@@ -14,6 +14,8 @@ Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Privacy
 
 HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth  0
 
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth" /v "value" /t REG_DWORD /d 0 /f
+
 ------------------------------------------------------------------------------------------------------------------------
 
 reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\Privacy" /s
