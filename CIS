@@ -97,6 +97,10 @@ Import-Module SecurityPolicy
 
 Get-UserRightsAssignment -UserRightsAssignment SeNetworkLogonRight
 
+Add-UserRightsAssignment -UserRightsAssignment SeNetworkLogonRight -Identity 'BUILTIN\Administrators'
+
+Remove-UserRightsAssignment -UserRightsAssignment SeNetworkLogonRight -Identity 'BUILTIN\Administrators'
+
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 
