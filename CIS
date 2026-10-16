@@ -9,7 +9,7 @@ https://learn.microsoft.com/en-us/windows/client-management/mdm/policy-csp-userr
 --------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-2.2.1Ensure 'Access Credential Manager as a trusted caller' is set to 'No One'
+2.2.1 Ensure 'Access Credential Manager as a trusted caller' is set to 'No One'
 
 gpedit.msc
 
