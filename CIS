@@ -137,6 +137,7 @@ reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPar
 
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartOfTheOperatingSystem /t REG_SZ /d "*S-1-5-32-544"
 
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartOfTheOperatingSystem /t REG_SZ /d "" /f
 
 
 
