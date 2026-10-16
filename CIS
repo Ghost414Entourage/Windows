@@ -53,6 +53,8 @@ reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" /v A
 
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessFromNetwork" -ErrorAction SilentlyContinue
 
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights" -Name "AccessFromNetwork" -ErrorAction SilentlyContinue
+
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" -Name "AccessFromNetwork" -ErrorAction SilentlyContinue
 
 
@@ -74,7 +76,12 @@ $inf="$env:TEMP\apply_policy.inf"; "[Unicode]`nUnicode=yes`n[Version]`nsignature
 
 $path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights"; if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }; Set-ItemProperty -Path $path -Name "AccessFromNetwork" -Value "*S-1-5-32-544"
 
+$path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights"; if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }; Set-ItemProperty -Path $path -Name "AccessFromNetwork" -Value "*S-1-5-32-544"
+
 $path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights"; if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }; Set-ItemProperty -Path $path -Name "AccessFromNetwork" -Value ""
+
+$path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights"; if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }; Set-ItemProperty -Path $path -Name "AccessFromNetwork" -Value ""
+
 
 
 "\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights`nAccessFromNetwork = *S-1-5-32-544" | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
