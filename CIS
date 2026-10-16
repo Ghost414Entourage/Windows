@@ -89,6 +89,14 @@ reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AccessFrom
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AccessFromNetwork /t REG_SZ /d "" /f
 
 
+Install-Module -Name SecurityPolicy
+
+Set-ExecutionPolicy Bypass -Scope Process
+
+Import-Module SecurityPolicy
+
+Get-UserRightsAssignment -UserRightsAssignment SeNetworkLogonRight
+
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 
