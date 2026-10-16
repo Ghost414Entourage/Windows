@@ -74,30 +74,21 @@ $inf="$env:TEMP\apply_policy.inf"; "[Unicode]`nUnicode=yes`n[Version]`nsignature
 $inf="$env:TEMP\apply_policy.inf"; "[Unicode]`nUnicode=yes`n[Version]`nsignature=`"`$CHICAGO$`"`n[Privilege Rights]`nSeNetworkLogonRight =" | Set-Content $inf; secedit /configure /db "$env:TEMP\sec.sdb" /cfg $inf /quiet; Remove-Item $inf, "$env:TEMP\sec.sdb" -ErrorAction SilentlyContinue
 
 
-$path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights"; if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }; Set-ItemProperty -Path $path -Name "AccessFromNetwork" -Value "*S-1-5-32-544"
 
 $path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights"; if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }; Set-ItemProperty -Path $path -Name "AccessFromNetwork" -Value "*S-1-5-32-544"
-
-$path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights"; if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }; Set-ItemProperty -Path $path -Name "AccessFromNetwork" -Value ""
 
 $path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights"; if (-not (Test-Path $path)) { New-Item -Path $path -Force | Out-Null }; Set-ItemProperty -Path $path -Name "AccessFromNetwork" -Value ""
 
 
 
-"\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights`nAccessFromNetwork = *S-1-5-32-544" | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
 
 "\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\default\UserRights`nAccessFromNetwork = *S-1-5-32-544" | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
-
-"\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights`nAccessFromNetwork = " | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
 
 "\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\default\UserRights`nAccessFromNetwork = " | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
 
 
-reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" /v AccessFromNetwork /t REG_SZ /d "*S-1-5-32-544" /f
 
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AccessFromNetwork /t REG_SZ /d "*S-1-5-32-544" /f
-
-reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" /v AccessFromNetwork /t REG_SZ /d "" /f
 
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AccessFromNetwork /t REG_SZ /d "" /f
 
