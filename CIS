@@ -124,6 +124,8 @@ Invoke-DscResource -Name UserRightsAssignment -ModuleName SecurityPolicyDsc -Met
 Set-NetConnectionProfile -InterfaceIndex 9 -NetworkCategory Public
 Stop-Service WinRM
 Set-Service WinRM -StartupType Manual
+Get-Service WinRM
+winrm get winrm/config
 Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope LocalMachine -Force
 Uninstall-Module SecurityPolicyDsc -Force
 Uninstall-Module SecurityPolicy -Force
