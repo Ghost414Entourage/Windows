@@ -86,7 +86,11 @@ $path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights"; if (-not (T
 
 "\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights`nAccessFromNetwork = *S-1-5-32-544" | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
 
+"\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\default\UserRights`nAccessFromNetwork = *S-1-5-32-544" | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
+
 "\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights`nAccessFromNetwork = " | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
+
+"\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\default\UserRights`nAccessFromNetwork = " | Out-File "$env:TEMP\r.txt" -Encoding unicode; regini "$env:TEMP\r.txt"; Remove-Item "$env:TEMP\r.txt"
 
 
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" /v AccessFromNetwork /t REG_SZ /d "*S-1-5-32-544" /f
