@@ -101,6 +101,28 @@ Add-UserRightsAssignment -UserRightsAssignment SeNetworkLogonRight -Identity 'BU
 
 Remove-UserRightsAssignment -UserRightsAssignment SeNetworkLogonRight -Identity 'BUILTIN\Administrators'
 
+
+
+Install-Module -Name SecurityPolicyDsc -Force
+
+Get-NetConnectionProfile
+Set-NetConnectionProfile -InterfaceIndex 9 -NetworkCategory Private
+
+winrm quickconfig
+
+Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+Set-ExecutionPolicy RemoteSigned -Scope Process -Force
+Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope CurrentUser -Force
+Set-ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+Invoke-DscResource -Name UserRightsAssignment -ModuleName SecurityPolicyDsc -Method Set -Property @{ Policy = 'Access_this_computer_from_the_network'; Identity = @('BUILTIN\Administrators'); Ensure = 'Present' }
+
+Invoke-DscResource -Name UserRightsAssignment -ModuleName SecurityPolicyDsc -Method Set -Property @{ Policy = 'Access_this_computer_from_the_network'; Identity = @('BUILTIN\Administrators'); Ensure = 'Absent' }
+
+
+
+
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 
