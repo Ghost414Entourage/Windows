@@ -82,6 +82,9 @@ $path = "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights"; if (
 
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" /v AccessFromNetwork /t REG_SZ /d "*S-1-5-32-544" /f
 
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AccessFromNetwork /t REG_SZ /d "*S-1-5-32-544" /f
+
+
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" /v AccessFromNetwork /t REG_SZ /d "" /f
 
 
