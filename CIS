@@ -135,6 +135,8 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRight
 reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartOfTheOperatingSystem
 
 
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartOfTheOperatingSystem /t REG_SZ /d "*S-1-5-32-544"
+
 
 
 
