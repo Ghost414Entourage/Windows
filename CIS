@@ -135,7 +135,6 @@ Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRi
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem" -Name "value" -Value ""
 
 
-
 reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartOfTheOperatingSystem
 
 
