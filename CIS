@@ -48,14 +48,10 @@ reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessFromNe
 
 reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AccessFromNetwork
 
-reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" /v AccessFromNetwork
-
 
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessFromNetwork" -ErrorAction SilentlyContinue
 
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights" -Name "AccessFromNetwork" -ErrorAction SilentlyContinue
-
-Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" -Name "AccessFromNetwork" -ErrorAction SilentlyContinue
 
 
 $inf="$env:TEMP\user_rights.inf"; secedit /export /areas user_rights /cfg $inf /quiet | Out-Null; Get-Content $inf | Select-String "SeNetworkLogonRight"; Remove-Item $inf
