@@ -113,6 +113,9 @@ Double-click 'Act as part of the operating system'
 Check if any User or Group is added to the list. Remove it if there is any.
 
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem
+
+
 
 
 
