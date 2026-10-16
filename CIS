@@ -147,6 +147,9 @@ Set-Content "$env:TEMP\regini.txt" "\Registry\Machine\SOFTWARE\Microsoft\PolicyM
 
 Set-Content "$env:TEMP\regini.txt" "\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem`n    value = REG_SZ "; regini "$env:TEMP\regini.txt"; Remove-Item "$env:TEMP\regini.txt" -ErrorAction SilentlyContinue
 
+Remove-Item "$env:TEMP\regini.txt" -ErrorAction SilentlyContinue
+
+del /f /q "%TEMP%\regini.txt"
 
 
 
