@@ -143,6 +143,10 @@ reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartO
 reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartOfTheOperatingSystem /f
 
 
+Set-Content "$env:TEMP\regini.txt" "\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem`n    value = REG_SZ *S-1-5-32-544"; regini "$env:TEMP\regini.txt"; Remove-Item "$env:TEMP\regini.txt" -ErrorAction SilentlyContinue
+
+Set-Content "$env:TEMP\regini.txt" "\Registry\Machine\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem`n    value = REG_SZ "; regini "$env:TEMP\regini.txt"; Remove-Item "$env:TEMP\regini.txt" -ErrorAction SilentlyContinue
+
 
 
 
