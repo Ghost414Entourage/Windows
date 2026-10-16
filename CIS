@@ -37,6 +37,9 @@ Double-click 'Access this computer from the network'
 Check if the access is allowed only to Administrators, Remote Desktop Users. Remove other Users and Groups from the list.
 
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessFromNetwork
+
+
 reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AccessFromNetwork"
 
 
