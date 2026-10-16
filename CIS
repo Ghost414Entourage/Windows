@@ -125,6 +125,9 @@ $inf="$env:TEMP\apply_policy.inf"; "[Unicode]`nUnicode=yes`n[Version]`nsignature
 $inf="$env:TEMP\apply_policy.inf"; "[Unicode]`nUnicode=yes`n[Version]`nsignature=`"`$CHICAGO$`"`n[Privilege Rights]`nSeTcbPrivilege =" | Set-Content $inf; secedit /configure /db "$env:TEMP\sec.sdb" /cfg $inf /quiet; Remove-Item $inf, "$env:TEMP\sec.sdb" -ErrorAction SilentlyContinue
 
 
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem" -ErrorAction SilentlyContinue
+
+
 
 
 
