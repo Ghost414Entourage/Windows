@@ -132,5 +132,10 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRight
 
 
 
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartOfTheOperatingSystem
+
+
+
+
 
 
