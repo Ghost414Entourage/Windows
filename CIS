@@ -139,6 +139,8 @@ reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartO
 
 reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v ActAsPartOfTheOperatingSystem /f
 
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem" -Name "value"
+
 
 
 
