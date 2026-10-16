@@ -51,6 +51,7 @@ Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRight
 
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" -Name "AccessFromNetwork" -ErrorAction SilentlyContinue
 
+
 $inf="$env:TEMP\user_rights.inf"; secedit /export /areas user_rights /cfg $inf /quiet | Out-Null; Get-Content $inf | Select-String "SeNetworkLogonRight"; Remove-Item $inf
 
 
