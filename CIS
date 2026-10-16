@@ -82,6 +82,13 @@ reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\current\device\UserRights" /v Acc
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 
+2.2.3 Ensure 'Act as part of the operating system' is set to 'No One'
+
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+Double-click 'Act as part of the operating system'
+Check if any User or Group is added to the list. Remove it if there is any.
+
 
 
 
