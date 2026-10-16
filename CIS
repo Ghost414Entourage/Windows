@@ -127,7 +127,7 @@ $inf="$env:TEMP\apply_policy.inf"; "[Unicode]`nUnicode=yes`n[Version]`nsignature
 
 Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem" -ErrorAction SilentlyContinue
 
-
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ActAsPartOfTheOperatingSystem" -Name "value" -Value "*S-1-5-32-544"
 
 
 
