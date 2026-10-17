@@ -51,7 +51,7 @@ winget settings --enable InstallerHashOverride
 
 winget install --id Microsoft.Sysinternals.Suite --source winget --accept-package-agreements --accept-source-agreements --ignore-security-hash
 
-
+winget settings --disable InstallerHashOverride
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
