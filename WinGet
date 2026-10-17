@@ -47,6 +47,11 @@ winget install --id Git.Git --source winget
 
 winget install --id Microsoft.Sysinternals.Suite --source winget --accept-package-agreements --accept-source-agreements
 
+winget settings --enable InstallerHashOverride
+
+winget install --id Microsoft.Sysinternals.Suite --source winget --accept-package-agreements --accept-source-agreements --ignore-security-hash
+
+
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
