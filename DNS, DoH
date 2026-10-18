@@ -148,6 +148,10 @@ NOTE: Changes to DNS / LLMNR / WPAD may affect:
 
 Active Directory, older NAS devices, network printers, VPN solutions, corporate environments.
 
+--------------------------------------------------------------
 
+services.msc
+
+dnsmgmt.msc
 
 
