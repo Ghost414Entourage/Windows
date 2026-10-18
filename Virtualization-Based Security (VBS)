@@ -49,4 +49,7 @@ Get-ComputerInfo | Select-Object DeviceGuardSmartStatus
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+VBS and Credential Guard status 
+Get-CimInstance Win32_DeviceGuard -Namespace root\Microsoft\Windows\DeviceGuard
+
 
