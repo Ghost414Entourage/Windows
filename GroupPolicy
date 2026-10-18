@@ -2,6 +2,8 @@ https://learn.microsoft.com/en-us/training/modules/implement-group-policy-object
 
 -----------------------------------------------------------------------------------------------------------------------
 
+C:\Windows\PolicyDefinitions\
+
 gpmc.msc
 
 Opens the Local Group Policy Editor
