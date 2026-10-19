@@ -367,4 +367,12 @@ Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\Bac
 
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
+2.2.8 Ensure 'Change the system time' is set to 'Administrators, LOCAL SERVICE'
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+On the right pane double-click 'Change the system time'
+Ensure the policy is set to Administrators and LOCAL SERVICE
+
+
+
 
