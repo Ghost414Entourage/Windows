@@ -65,6 +65,8 @@ Expand-Archive -Path "$env:TEMP\SysinternalsSuite.zip" -DestinationPath "C:\Sysi
 
 [Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Sysinternals", "Machine")
 
+Get-ChildItem "C:\Sysinternals" -Filter "*.exe" | Select-Object
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 https://learn.microsoft.com/en-us/windows/apps/develop/launch/launch-store-app
