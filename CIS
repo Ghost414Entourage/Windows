@@ -278,6 +278,10 @@ Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\All
 
 2.2.6 Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators, Remote Desktop Users'
 
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+Double-click 'Allow log on through Remote Desktop Services'
+Ensure this policy is set to Administrators, Remote Desktop Users
+
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop
 
 
