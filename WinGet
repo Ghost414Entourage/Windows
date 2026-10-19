@@ -63,6 +63,7 @@ Invoke-WebRequest -Uri "https://download.sysinternals.com/files/SysinternalsSuit
 # Extract archive
 Expand-Archive -Path "$env:TEMP\SysinternalsSuite.zip" -DestinationPath "C:\Sysinternals" -Force
 
+[Environment]::SetEnvironmentVariable("Path", $env:Path + ";C:\Sysinternals", "Machine")
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
