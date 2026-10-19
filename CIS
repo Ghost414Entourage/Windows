@@ -201,5 +201,9 @@ $f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content
 
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess" /v "value" /t REG_SZ /d "*S-1-5-32-544&#xF000;*S-1-5-19&#xF000;*S-1-5-20" /f
 
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AdjustMemoryQuotasForProcess /t REG_SZ /d "*S-1-5-32-544&#xF000;*S-1-5-19&#xF000;*S-1-5-20" /f
 
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess" /f
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AdjustMemoryQuotasForProcess /f
 
