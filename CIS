@@ -321,5 +321,12 @@ Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\All
 
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
+2.2.7 Ensure 'Back up files and directories' is set to 'Administrators' 
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+On the right pane double-click 'Back up files and directories'
+Check if the right is assigned to Administrators. Remove other Users and Groups from the list.
+
+
 
 
