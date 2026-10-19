@@ -199,5 +199,7 @@ Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\
 $f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeIncreaseQuotaPrivilege\s*=.*','SeIncreaseQuotaPrivilege = *S-1-5-32-544,*S-1-5-19,*S-1-5-20' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
 
 
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess" /v "value" /t REG_SZ /d "*S-1-5-32-544&#xF000;*S-1-5-19&#xF000;*S-1-5-20" /f
+
 
 
