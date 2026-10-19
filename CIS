@@ -331,4 +331,40 @@ Check if the right is assigned to Administrators. Remove other Users and Groups 
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories
 
 
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS | Out-Null; Select-String -Path $f -Pattern "SeBackupPrivilege"; Remove-Item $f -ErrorAction SilentlyContinue
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeBackupPrivilege\s*=.*','SeBackupPrivilege = *S-1-5-32-544' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeBackupPrivilege\s*=.*','SeBackupPrivilege = ' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+
+
+
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" /v "value"
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" /v "value" /t REG_SZ /d "*S-1-5-32-544" /f
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" /v "value" /t REG_SZ /d "" /f
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" /v "value" /f
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" /f
+
+
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" -Name "value"
+
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" -Force
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" -Name "value" -Value "*S-1-5-32-544"
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" -Name "value" -Value ""
+
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" -Name "value"
+
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\BackupFilesAndDirectories" -Recurse -Force
+
+
+**********************************************************************************************************************************************************************************************************************************************************************************************************************************
+
 
