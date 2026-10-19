@@ -281,3 +281,41 @@ Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\All
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop
 
 
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS | Out-Null; Select-String -Path $f -Pattern "SeRemoteInteractiveLogonRight"; Remove-Item $f -ErrorAction SilentlyContinue
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeRemoteInteractiveLogonRight\s*=.*','SeRemoteInteractiveLogonRight = *S-1-5-32-544,*S-1-5-32-555' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeRemoteInteractiveLogonRight\s*=.*','SeRemoteInteractiveLogonRight = ' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+
+
+
+reg query "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" /v "value"
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" /v "value" /t REG_SZ /d "*S-1-5-32-544&#xF000;*S-1-5-32-555" /f
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" /v "value" /t REG_SZ /d "" /f
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" /v "value" /f
+
+
+
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" -Name "value"
+
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" -Force
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" -Name "value" -Value "*S-1-5-32-544$([char]0xF000)*S-1-5-32-555"
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" -Name "value" -Value ""
+
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" -Name "value"
+
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop" -Recurse -Force
+
+
+
+**********************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+
+
