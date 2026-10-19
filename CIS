@@ -207,3 +207,5 @@ reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemor
 
 reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AdjustMemoryQuotasForProcess /f
 
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AdjustMemoryQuotasForProcess /t REG_SZ /d "" /f
+
