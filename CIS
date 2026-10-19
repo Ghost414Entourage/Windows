@@ -209,3 +209,13 @@ reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AdjustM
 
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights" /v AdjustMemoryQuotasForProcess /t REG_SZ /d "" /f
 
+
+
+
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess" -Name "value" -Value "*S-1-5-32-544$([char]0xF000)*S-1-5-19$([char]0xF000)*S-1-5-20"
+
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess" -Name "value"
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess" -Name "value" -Value ""
+
