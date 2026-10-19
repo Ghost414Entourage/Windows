@@ -278,4 +278,6 @@ Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\All
 
 2.2.6 Ensure 'Allow log on through Remote Desktop Services' is set to 'Administrators, Remote Desktop Users'
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLogOnThroughRemoteDesktop
+
 
