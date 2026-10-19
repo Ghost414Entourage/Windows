@@ -219,3 +219,19 @@ Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRi
 
 Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess" -Name "value" -Value ""
 
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess" -Force
+
+gpupdate /force
+
+
+**********************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+
+2.2.5 Ensure 'Allow log on locally' is set to 'Administrators, Users'
+
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+Double-click 'Allow log on locally '
+Ensure the policy is set to Administrators, Users
+
+
