@@ -248,7 +248,7 @@ $f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content
 
 
 
-
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /v "value"
 
 reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /v "value" /t REG_SZ /d "*S-1-5-32-544&#xF000;*S-1-5-32-545" /f
 
@@ -258,10 +258,9 @@ reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalL
 
 reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /f
 
-reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /v "value"
 
 
-
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Name "value"
 
 New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Force
 
@@ -272,8 +271,6 @@ Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRight
 Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Name "value"
 
 Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Recurse -Force
-
-Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Name "value"
 
 
 
