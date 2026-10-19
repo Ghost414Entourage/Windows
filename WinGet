@@ -53,6 +53,17 @@ winget install --id Microsoft.Sysinternals.Suite --source winget --accept-packag
 
 winget settings --disable InstallerHashOverride
 
+
+# Create destination directory
+New-Item -ItemType Directory -Path "C:\Sysinternals" -Force
+
+# Download directly from official Microsoft source
+Invoke-WebRequest -Uri "https://download.sysinternals.com/files/SysinternalsSuite.zip" -OutFile "$env:TEMP\SysinternalsSuite.zip"
+
+# Extract archive
+Expand-Archive -Path "$env:TEMP\SysinternalsSuite.zip" -DestinationPath "C:\Sysinternals" -Force
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 https://learn.microsoft.com/en-us/windows/apps/develop/launch/launch-store-app
