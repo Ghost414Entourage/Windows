@@ -187,6 +187,10 @@ del /f /q "%TEMP%\regini.txt"
 
 2.2.4 Ensure 'Adjust memory quotas for a process' is set to 'Administrators, LOCAL SERVICE, NETWORK SERVICE'
 
+Navigate to: Computer Configuration\Windows Settings\Security Settings\Local Policies\User Rights Assignment\Adjust memory quotas for a process
+On the right pane double click the 'Adjust memory quotas for a process' setting
+Ensure the policy is set to Administrators, LOCAL SERVICE, NETWORK SERVICE
+
 
 
 
