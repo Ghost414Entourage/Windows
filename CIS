@@ -235,3 +235,45 @@ Double-click 'Allow log on locally '
 Ensure the policy is set to Administrators, Users
 
 
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeInteractiveLogonRight\s*=.*','SeInteractiveLogonRight = *S-1-5-32-544,*S-1-5-32-545' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeInteractiveLogonRight\s*=.*','SeInteractiveLogonRight = ' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS | Out-Null; Select-String -Path $f -Pattern "SeInteractiveLogonRight"; Remove-Item $f -ErrorAction SilentlyContinue
+
+
+
+
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /v "value" /t REG_SZ /d "*S-1-5-32-544&#xF000;*S-1-5-32-545" /f
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /v "value" /t REG_SZ /d "" /f
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /v "value" /f
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /f
+
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" /v "value"
+
+
+
+
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Force
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Name "value" -Value "*S-1-5-32-544$([char]0xF000)*S-1-5-32-545"
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Name "value" -Value ""
+
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Name "value"
+
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Recurse -Force
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogon" -Name "value"
+
+
+
+**********************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+
+
