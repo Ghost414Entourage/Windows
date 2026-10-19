@@ -236,13 +236,15 @@ Ensure the policy is set to Administrators, Users
 
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogOn
 
-$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeInteractiveLogonRight\s*=.*','SeInteractiveLogonRight = *S-1-5-32-544,*S-1-5-32-545' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS | Out-Null; Select-String -Path $f -Pattern "SeInteractiveLogonRight"; Remove-Item $f -ErrorAction SilentlyContinue
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeInteractiveLogonRight\s*=.*','SeInteractiveLogonRight =' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
 
 $f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeInteractiveLogonRight\s*=.*','SeInteractiveLogonRight = *S-1-5-32-544,*S-1-5-32-545' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
 
 $f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeInteractiveLogonRight\s*=.*','SeInteractiveLogonRight = ' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
 
-$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS | Out-Null; Select-String -Path $f -Pattern "SeInteractiveLogonRight"; Remove-Item $f -ErrorAction SilentlyContinue
 
 
 
