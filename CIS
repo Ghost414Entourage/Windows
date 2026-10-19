@@ -193,4 +193,8 @@ Ensure the policy is set to Administrators, LOCAL SERVICE, NETWORK SERVICE
 
 
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AdjustMemoryQuotasForProcess
+
+
+
 
