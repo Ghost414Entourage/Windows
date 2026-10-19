@@ -224,6 +224,14 @@ Get-HotFix -Id KB5124010
 
 systeminfo | findstr "KB5124010"
 
+Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsBuildNumber
+
+winver
+
+$v = Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion"; "$($v.CurrentBuild).$($v.UBR)"
+
+
+
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
