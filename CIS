@@ -373,6 +373,8 @@ Navigate to Computer Configuration > Windows Settings > Security Settings > Loca
 On the right pane double-click 'Change the system time'
 Ensure the policy is set to Administrators and LOCAL SERVICE
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\ChangeTimeZone
+
 
 Query via secedit (Live Security Database)
 
