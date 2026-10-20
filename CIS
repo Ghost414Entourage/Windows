@@ -514,4 +514,10 @@ Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\Cre
 
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
+2.2.10 Ensure 'Create a token object' is set to 'No One'
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+On the right pane double-click 'Create a token object'
+Check if no user or group is added. Remove if there is any.
+
 
