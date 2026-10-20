@@ -600,4 +600,75 @@ Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\
 
 
 
+Query via secedit (Live Security Database)
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS | Out-Null; Select-String -Path $f -Pattern "SeCreateGlobalPrivilege"; Remove-Item $f -ErrorAction SilentlyContinue
+
+Set CIS Configuration (Single-Line PowerShell Execution)
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeCreateGlobalPrivilege\s*=.*','SeCreateGlobalPrivilege = *S-1-5-32-544,*S-1-5-19,*S-1-5-20,*S-1-5-6' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+Clear / Empty the Right via secedit
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeCreateGlobalPrivilege\s*=.*','SeCreateGlobalPrivilege = ' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+
+
+Query via PowerShell
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" -Name "value"
+
+Create Key Path
+
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" -Force
+
+Add / Set CIS Configuration (Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE)
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" -Name "value" -Value "*S-1-5-32-544$([char]0xF000)*S-1-5-19$([char]0xF000)*S-1-5-20$([char]0xF000)*S-1-5-6"
+
+Clear the Value (Make Blank / Empty)
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" -Name "value" -Value ""
+
+Remove the Value Property Entirely
+
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" -Name "value"
+
+Delete the Key Container Entirely
+
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" -Recurse -Force
+
+
+
+
+Query via Command Prompt (reg)
+
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" /v "value"
+
+Command Prompt Registry Method (reg)
+
+Add / Set CIS Configuration (Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE)
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" /v "value" /t REG_SZ /d "*S-1-5-32-544&#xF000;*S-1-5-19&#xF000;*S-1-5-20&#xF000;*S-1-5-6" /f
+
+Clear the Value (Make Blank / Empty)
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" /v "value" /t REG_SZ /d "" /f
+
+Remove the Value Property Entirely
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" /v "value" /f
+
+Delete the Key Container Entirely
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects" /f
+
+
+
+**********************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+
+
+
+
 
