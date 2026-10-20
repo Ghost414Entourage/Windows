@@ -595,5 +595,9 @@ On the right pane double-click 'Create global objects'
 Ensure the policy is set to Administrators, LOCAL SERVICE, NETWORK SERVICE, SERVICE
 
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGlobalObjects
+
+
+
 
 
