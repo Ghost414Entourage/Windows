@@ -667,6 +667,14 @@ reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateGloba
 
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
+2.2.12 Ensure 'Create permanent shared objects' is set to 'No One' 
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+On the right pane double-click 'Create permanent shared objects
+Check if no user or group is added. Remove if there is any.
+
+
+
 
 
 
