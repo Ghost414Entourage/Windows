@@ -339,6 +339,27 @@ Get-NetFirewallRule -DisplayName "*Remote Desktop*" | Get-NetFirewallPortFilter 
 
 -----------------------------------------------------------------------------------------------------
 
+Get-NetFirewallRule -Enabled True -Direction Inbound -Action Allow | ForEach-Object { $p = $_ | Get-NetFirewallPortFilter; [PSCustomObject]@{ Name = $_.DisplayName; Protocol = $p.Protocol; Port = $p.LocalPort } } | Sort-Object Port
+netsh advfirewall firewall add rule name="Allow HTTP" dir=in action=allow protocol=TCP localport=80
+netsh advfirewall firewall add rule name="Allow App" dir=in action=allow program="C:\App\app.exe" enable=yes
+netsh advfirewall firewall add rule name="Block IP" dir=in action=block remoteip=203.0.113.5
+netsh advfirewall firewall delete rule name="Allow HTTP"
+New-NetFirewallRule -DisplayName "Allow HTTP" -Direction Inbound -Protocol TCP -LocalPort 80 -Action Allow
+New-NetFirewallRule -DisplayName "Allow SQL" -Direction Inbound -Protocol TCP -LocalPort 1433 -Action Allow -Profile Domain,Private
+New-NetFirewallRule -DisplayName "Allow App" -Direction Inbound -Program "C:\App\app.exe" -Action Allow
+New-NetFirewallRule -DisplayName "Block Range" -Direction Inbound -RemoteAddress 203.0.113.0/24 -Action Block
+Remove-NetFirewallRule -DisplayName "Allow HTTP"
+Disable-NetFirewallRule -DisplayName "Allow HTTP"
+Enable-NetFirewallRule -DisplayName "Allow HTTP"
+New-NetFirewallRule -DisplayName "Allow RDP from LAN" -Direction Inbound -Protocol TCP -LocalPort 3389 -RemoteAddress 192.168.1.0/24 -Action Allow
+netsh advfirewall set allprofiles state on
+netsh advfirewall set allprofiles state off
+netsh advfirewall set publicprofile state on
+Set-NetFirewallProfile -Profile Domain,Public,Private -Enabled True
+
+
+-----------------------------------------------------------------------------------------------------
+
 
 
 
