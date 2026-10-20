@@ -521,3 +521,5 @@ On the right pane double-click 'Create a token object'
 Check if no user or group is added. Remove if there is any.
 
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken
+
