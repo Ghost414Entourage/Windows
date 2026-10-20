@@ -541,49 +541,49 @@ $f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content
 
 Query via Command Prompt (reg)
 
-reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" /v "value"
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" /v "value"
 
 Add / Set CIS Configuration (No One / Empty)
 
-reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" /v "value" /t REG_SZ /d "" /f
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" /v "value" /t REG_SZ /d "" /f
 
 Clear the Value (Make Blank / Empty)
 
-reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" /v "value" /t REG_SZ /d "" /f
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" /v "value" /t REG_SZ /d "" /f
 
 Remove the Value Property Entirely
 
-reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" /v "value" /f
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" /v "value" /f
 
 Delete the Key Container Entirely
 
-reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" /f
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" /f
 
 
 
 Query via PowerShell
 
-Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" -Name "value"
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" -Name "value"
 
 Create Key Path
 
-New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" -Force
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" -Force
 
 Add / Set CIS Configuration (No One / Empty)
 
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" -Name "value" -Value ""
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" -Name "value" -Value ""
 
 Clear the Value (Make Blank / Empty)
 
-Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" -Name "value" -Value ""
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" -Name "value" -Value ""
 
 Remove the Value Property Entirely
 
-Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" -Name "value"
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" -Name "value"
 
 Delete the Key Container Entirely
 
-Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateTokenObject" -Recurse -Force
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreateToken" -Recurse -Force
 
 
 **********************************************************************************************************************************************************************************************************************************************************************************************************************************
