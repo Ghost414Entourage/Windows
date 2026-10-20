@@ -447,6 +447,9 @@ On the right pane double-click 'Create a pagefile'
 Ensure the policy is set to Administrators
 
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogOn
+
+
 
 
 
