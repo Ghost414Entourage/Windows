@@ -680,6 +680,80 @@ Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\
 
 
 
+Query via secedit (Live Security Database)
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS | Out-Null; Select-String -Path $f -Pattern "SeCreatePermanentPrivilege"; Remove-Item $f -ErrorAction SilentlyContinue
+
+Set CIS Configuration (Single-Line PowerShell Execution - No One / Empty)
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeCreatePermanentPrivilege\s*=.*','SeCreatePermanentPrivilege = ' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+Clear / Empty the Right via secedit
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeCreatePermanentPrivilege\s*=.*','SeCreatePermanentPrivilege = ' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+
+
+
+
+Query via PowerShell
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" -Name "value"
+
+Create Key Path
+
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" -Force
+
+Add / Set CIS Configuration (No One / Empty)
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" -Name "value" -Value ""
+
+Clear the Value (Make Blank / Empty)
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" -Name "value" -Value ""
+
+Remove the Value Property Entirely
+
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" -Name "value"
+
+Delete the Key Container Entirely
+
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" -Recurse -Force
+
+
+
+Query via Command Prompt (reg)
+
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" /v "value"
+
+Add / Set CIS Configuration (No One / Empty)
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" /v "value" /t REG_SZ /d "" /f
+
+Clear the Value (Make Blank / Empty)
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" /v "value" /t REG_SZ /d "" /f
+
+Remove the Value Property Entirely
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" /v "value" /f
+
+Delete the Key Container Entirely
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects" /f
+
+
+
+**********************************************************************************************************************************************************************************************************************************************************************************************************************************
+
+
+
+
+
+
+
+
+
 
 
 
