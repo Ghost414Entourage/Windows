@@ -322,6 +322,24 @@ Set-NetFirewallProfile -Profile Domain,Private,Public -LogFileName "$env:SystemR
 
 Set-NetFirewallProfile -Profile Domain,Private,Public -LogFileName "%systemroot%\system32\logfiles\firewall\pfirewall.log" -LogBlocked True -LogAllowed True -LogFileSize 4096
 
+-----------------------------------------------------------------------------------------------------
+
+netsh advfirewall show allprofiles
+netsh advfirewall show currentprofile
+netsh advfirewall show domainprofile
+netsh advfirewall firewall show rule name=all
+netsh advfirewall firewall show rule name="Remote Desktop"
+Get-NetFirewallProfile
+Get-NetFirewallProfile | Select-Object Name, Enabled, DefaultInboundAction, DefaultOutboundAction
+Get-NetFirewallRule
+Get-NetFirewallRule -Enabled True -Direction Inbound
+Get-NetFirewallRule -DisplayName "*Remote Desktop*"
+Get-NetFirewallRule -DisplayName "*Remote Desktop*" | Get-NetFirewallPortFilter | Select-Object Protocol, LocalPort
+
+
+-----------------------------------------------------------------------------------------------------
+
+
 
 
 
