@@ -674,6 +674,9 @@ On the right pane double-click 'Create permanent shared objects
 Check if no user or group is added. Remove if there is any.
 
 
+Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePermanentSharedObjects
+
+
 
 
 
