@@ -442,5 +442,12 @@ Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\Cha
 
 2.2.9 Ensure 'Create a pagefile' is set to 'Administrators'
 
+Navigate to Computer Configuration > Windows Settings > Security Settings > Local Policies > User Rights Assignment
+On the right pane double-click 'Create a pagefile'
+Ensure the policy is set to Administrators
+
+
+
+
 
 
