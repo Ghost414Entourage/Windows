@@ -450,7 +450,68 @@ Ensure the policy is set to Administrators
 Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\PolicyManager\default\UserRights\AllowLocalLogOn
 
 
+Query via secedit (Live Security Database)
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS | Out-Null; Select-String -Path $f -Pattern "SeCreatePagefilePrivilege"; Remove-Item $f -ErrorAction SilentlyContinue
+
+secedit Method (Active Security Database)
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeCreatePagefilePrivilege\s*=.*','SeCreatePagefilePrivilege = *S-1-5-32-544' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
+
+Clear / Empty the Right via secedit
+
+$f="$env:TEMP\sec.inf"; secedit /export /cfg $f /areas USER_RIGHTS; (Get-Content $f) -replace 'SeCreatePagefilePrivilege\s*=.*','SeCreatePagefilePrivilege = ' | Set-Content $f; secedit /configure /db "$env:SystemRoot\security\local.sdb" /cfg $f /areas USER_RIGHTS; Remove-Item $f -ErrorAction SilentlyContinue
 
 
+
+
+Query via Command Prompt (reg)
+
+reg query "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" /v "value"
+
+Add / Set CIS Configuration (Administrators Only)
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" /v "value" /t REG_SZ /d "*S-1-5-32-544" /f
+
+Clear the Value (Make Blank / Empty)
+
+reg add "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" /v "value" /t REG_SZ /d "" /f
+
+Remove the Value Property Entirely
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" /v "value" /f
+
+Delete the Key Container Entirely
+
+reg delete "HKLM\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" /f
+
+
+
+Query via PowerShell
+
+Get-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" -Name "value"
+
+Create Key Path
+
+New-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" -Force
+
+Add / Set CIS Configuration (Administrators Only)
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" -Name "value" -Value "*S-1-5-32-544"
+
+Clear the Value (Make Blank / Empty)
+
+Set-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" -Name "value" -Value ""
+
+Remove the Value Property Entirely
+
+Remove-ItemProperty -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" -Name "value"
+
+Delete the Key Container Entirely
+
+Remove-Item -Path "HKLM:\SOFTWARE\Microsoft\PolicyManager\default\UserRights\CreatePageFile" -Recurse -Force
+
+
+**********************************************************************************************************************************************************************************************************************************************************************************************************************************
 
 
