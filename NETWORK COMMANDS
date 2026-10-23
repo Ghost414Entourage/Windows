@@ -299,4 +299,99 @@ netsh interface ipv4 set dnsservers name="Ethernet" source=dhcp
    
 
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+netstat -an
+# -a = All connections and listening ports
+# -n = Numeric addresses and port numbers (no name resolution)
+
+netstat -ano
+# -a = All connections and listening ports
+# -n = Numeric addresses and port numbers
+# -o = Owning process ID (PID) for each connection
+
+netstat -anob
+# -a = All connections and listening ports
+# -n = Numeric addresses and port numbers
+# -o = Owning process ID (PID)
+# -b = Executable/binary file involved in creating the connection
+
+netstat -ant
+# -a = All connections and listening ports
+# -n = Numeric addresses and port numbers
+# -t = TCP connection offload state
+
+netstat -anu
+# -a = All connections and listening ports
+# -n = Numeric addresses and port numbers
+# -u = UDP protocol context
+
+netstat -r
+# -r = Routing table (displays IP routing table contents)
+
+netstat -s
+# -s = Statistics by protocol (detailed breakdown for IP, TCP, UDP, ICMP)
+
+netstat -e
+# -e = Ethernet statistics (bytes and packets sent/received)
+
+netstat -an 5
+# -a = All connections and listening ports
+# -n = Numeric addresses and port numbers
+# 5  = Refresh interval (redisplays information every 5 seconds)
+
+
+
+netstat -ano | findstr :3389  
+
+netstat -ano | findstr LISTENING  
+
+netstat -ano | findstr
+
+
+tasklist /fi "PID eq 1234"  
+
+Get-Process -Id
+
+tasklist /fi "PID eq 1234"
+Get-Process -Id 1234
+
+Get-NetTCPConnection
+Get-NetTCPConnection -State Listen
+Get-NetTCPConnection -LocalPort 443
+Get-NetTCPConnection -RemoteAddress 192.168.1.100
+Get-NetUDPEndpoint
+
+Get-NetTCPConnection -State Listen |
+    Select-Object LocalAddress, LocalPort, OwningProcess,
+        @{n='Process';e={(Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue).ProcessName}} |
+    Sort-Object LocalPort
+
+Get-NetTCPConnection -State Established |
+    Select-Object RemoteAddress, RemotePort, OwningProcess,
+        @{n='Process';e={(Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue).ProcessName}} |
+    Sort-Object Process
+
+
+
+$pid = (Get-NetTCPConnection -LocalPort 8080 -State Listen).OwningProcess
+Get-Process -Id $pid
+Stop-Process -Id $pid -Force
+
+netsh interface ipv4 show excludedportrange protocol=tcp
+netsh interface ipv4 show dynamicport tcp
+netsh interface ipv4 set dynamicport tcp start=49152 num=16384
+netsh int ipv4 add excludedportrange protocol=tcp startport=8080 numberofports=1
+
+
+
+
+netsh interface portproxy add v4tov4 listenport=8080 listenaddress=0.0.0.0 connectport=80
+
+netsh interface portproxy show all  netsh interface portproxy delete v4tov4 listenport=8080
+
+netsh interface portproxy
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
