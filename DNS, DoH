@@ -154,4 +154,76 @@ services.msc
 
 dnsmgmt.msc
 
+--------------------------------------------------------------
 
+ipconfig /flushdns
+ipconfig /displaydns
+ipconfig /registerdns
+
+Clear-DnsClientCache
+Get-DnsClientCache
+Get-DnsClientCache | Where-Object Entry -like "*example.com*"
+Register-DnsClient
+
+nslookup google.com
+nslookup google.com 8.8.8.8
+nslookup -type=MX google.com
+nslookup -type=NS google.com
+nslookup -type=TXT google.com
+nslookup -type=SOA google.com
+nslookup -type=CNAME www.google.com
+nslookup -type=PTR 8.8.8.8
+nslookup -type=ANY google.com
+nslookup -debug google.com
+nslookup
+
+--------------------------------------------------------------
+
+Resolve-DnsName 8.8.8.8 -Type PTR
+
+Resolve-DnsName example.com -Server 8.8.8.8 -DnsOnly -NoHostsFile
+
+Resolve-DnsName google.com
+Resolve-DnsName google.com -Type MX
+Resolve-DnsName google.com -Type ALL
+Resolve-DnsName google.com -Server 8.8.8.8
+Resolve-DnsName google.com -DnsOnly
+Resolve-DnsName google.com -NoHostsFile
+
+"8.8.8.8","1.1.1.1","9.9.9.9" | ForEach-Object {
+    Resolve-DnsName example.com -Server $_ -Type A |
+    Select-Object @{n='Resolver';e={$_}}, Name, IPAddress
+}
+
+
+--------------------------------------------------------------
+
+
+Set-DnsClientGlobalSetting -SuffixSearchList @("corp.local","ad.corp.local")
+
+Get-DnsClient
+Get-DnsClientServerAddress
+Get-DnsClientServerAddress -AddressFamily IPv4
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses ("8.8.8.8","1.1.1.1")
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ResetServerAddresses
+Set-DnsClient -InterfaceAlias "Ethernet" -ConnectionSpecificSuffix "corp.local"
+Get-DnsClientGlobalSetting
+
+notepad C:\Windows\System32\drivers\etc\hosts
+Get-Content C:\Windows\System32\drivers\etc\hosts
+Add-Content C:\Windows\System32\drivers\etc\hosts "192.168.1.50 `tserver01.local"
+
+
+Get-DnsServerZone
+Get-DnsServerResourceRecord -ZoneName "corp.local"
+Add-DnsServerResourceRecordA -ZoneName "corp.local" -Name "web01" -IPv4Address "192.168.1.60"
+Remove-DnsServerResourceRecord -ZoneName "corp.local" -Name "web01" -RRType A -Force
+Clear-DnsServerCache -Force
+Get-DnsServerForwarder
+Set-DnsServerForwarder -IPAddress 8.8.8.8,1.1.1.1
+
+dnscmd /enumzones
+dnscmd /zoneprint corp.local
+dnscmd /clearcache
+
+--------------------------------------------------------------
