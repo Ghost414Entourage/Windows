@@ -15,4 +15,10 @@ Get-Service -Name "BITS" | Get-Member -MemberType Property
 
 Get-Service | Where-Object { $_.Status -eq "Stopped" -and $_.StartType -eq "Auto" } | Select-Object Name, DisplayName, Status, StartType
 
+Get-Process | Sort-Object -Property CPU -Descending | Select-Object ProcessName, CPU, Id
+
+Stop-Process -Id 4520 -Force
+
+-------------------------------------------------------------------------------------------------------------------
+
 
