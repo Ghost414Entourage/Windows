@@ -199,5 +199,12 @@ Start-MpWDOScan
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Set-MpPreference -DisableRealtimeMonitoring $false -SubmitSamplesConsent 1 -MAPSReporting 2 -DisableTamperProtection $false
+
+Get-MpPreference | Select-Object DisableRealtimeMonitoring, SubmitSamplesConsent, MAPSReporting, DisableTamperProtection
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 
