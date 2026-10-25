@@ -18,6 +18,11 @@ Get-Service | Where-Object { $_.Status -eq "Stopped" -and $_.StartType -eq "Auto
 
 -------------------------------------------------------------------------------------------------------------------
 
+Open gpedit.msc (Local Group Policy Editor) or your domain's Group Policy Management Editor.
+Navigate to: Computer Configuration > Administrative Templates > Windows Components > Windows PowerShell.
+Enable the setting "Turn on PowerShell Script Block Logging.
+
+
 
 $RegistryPath = "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\ScriptBlockLogging"
 $RegistryName = "EnableScriptBlockLogging"
