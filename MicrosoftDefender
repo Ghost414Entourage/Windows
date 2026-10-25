@@ -211,7 +211,7 @@ reg add "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" /v DisableAntiSpywar
 
 Get-Service | Where-Object Status -eq Running | Select Name , DisplayName , StartType , Status
 
-Get-Service | Select Name , DisplayName , StartType , Status , @ { Name = "Path" ; Expression = {( Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\$ ($_.Name )" -Name ImagePath - EA SilentlyContinue).ImagePath}}
+Get-Service | Select Name, DisplayName, StartType, Status, @{ Name = "Path"; Expression = {(Get-ItemProperty "HKLM:\SYSTEM\CurrentControlSet\Services\$($_.Name)" -Name ImagePath -EA SilentlyContinue).ImagePath}}
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
