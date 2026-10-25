@@ -2,8 +2,10 @@ Get-Process
 
 Get-Process -Name "explorer", "chrome"
 
-
 Get-Process | Sort-Object -Property CPU -Descending | Select-Object -First 30 ProcessName, CPU, Id
+
+Stop-Process -Id 1234 -Force
+
 
 -------------------------------------------------------------------------------------------------------------------
 
