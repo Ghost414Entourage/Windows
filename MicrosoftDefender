@@ -215,3 +215,17 @@ Get-Service | Select Name, DisplayName, StartType, Status, @{ Name = "Path"; Exp
 
 ---------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Get-ExecutionPolicy -List
+
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
+Get-LocalGroupMember -Group "Administrators" | Select-Object Name, PrincipalSource
+
+Get-LocalGroupMember -Group "Administrators" | Where-Object PrincipalSource -eq 'Local' | Select-Object Name, PrincipalSource, ObjectClass
+
+Get-LocalGroupMember -Group "Administrators" | Select-Object Name, PrincipalSource, SID
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------
+
