@@ -346,6 +346,8 @@ Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.NotAfter -lt (Get-Date).
 Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Client' -ErrorAction
 
 
+-------------------------------------------------------------------------------------------------------------------
+
 
 
 
