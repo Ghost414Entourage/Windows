@@ -341,6 +341,10 @@ Get-ChildItem Cert:\LocalMachine\My | Select-Object Subject, NotAfter
 
 -------------------------------------------------------------------------------------------------------------------
 
+Get-ChildItem Cert:\LocalMachine\My | Where-Object { $_.NotAfter -lt (Get-Date).AddDays(90) } | Select-Object Subject, NotAfter
+
+Get-ItemProperty 'HKLM:\SYSTEM\CurrentControlSet\Control\SecurityProviders\SCHANNEL\Protocols\TLS 1.2\Client' -ErrorAction
+
 
 
 
