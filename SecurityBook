@@ -44,3 +44,305 @@ if (-not (Test-Path "HKLM:\SOFTWARE\Policies\Microsoft\Windows\PowerShell\Script
 -------------------------------------------------------------------------------------------------------------------
 
 
+Get-NetIPConfiguration
+Get-NetIPConfiguration -Detailed
+Get-NetIPAddress
+Get-NetIPAddress -AddressFamily IPv4
+Get-NetIPInterface
+Get-NetIPInterface -AddressFamily IPv4 | Sort-Object InterfaceMetric
+Get-NetIPAddress -AddressFamily IPv4 | Where-Object { $_.IPAddress -notlike '169.254*' -and$_.InterfaceAlias -notlike '*Loopback*' } | Select-Object InterfaceAlias, IPAddress, PrefixLength
+New-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.50 -PrefixLength 24 -DefaultGateway 192.168.1.1
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses 8.8.8.8,1.1.1.1
+Set-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.60 -PrefixLength 24
+
+-------------------------------------------------------------------------------------------------------------------
+
+Remove-NetIPAddress -InterfaceAlias "Ethernet" -IPAddress 192.168.1.50 -Confirm:$false
+Set-NetIPInterface -InterfaceAlias "Ethernet" -Dhcp Enabled
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ResetServerAddresses
+ipconfig /renew
+netsh interface ipv4 show config
+netsh interface ipv4 show addresses
+netsh interface ipv4 show interfaces
+netsh interface ipv4 set address name="Ethernet" static 192.168.1.50 255.255.255.0 192.168.1.1
+netsh interface ipv4 set address name="Ethernet" source=dhcp
+netsh interface ipv4 set dnsservers name="Ethernet" static 8.8.8.8 primary
+
+-------------------------------------------------------------------------------------------------------------------
+
+netsh interface ipv4 add dnsservers name="Ethernet" 1.1.1.1 index=2
+netsh interface ipv4 set dnsservers name="Ethernet" source=dhcp
+Get-NetIPInterface | Sort-Object InterfaceMetric | Format-Table InterfaceAlias, AddressFamily, InterfaceMetric, ConnectionState
+Set-NetIPInterface -InterfaceAlias "Ethernet" -InterfaceMetric 10
+Set-NetIPInterface -InterfaceAlias "Wi-Fi" -InterfaceMetric 50
+
+-------------------------------------------------------------------------------------------------------------------
+
+Get-NetAdapter
+Get-NetAdapter -Name "Ethernet" | Format-List *
+Get-NetAdapter | Where-Object Status -eq 'Up'
+Get-NetAdapterStatistics
+Get-NetAdapterHardwareInfo
+Disable-NetAdapter -Name "Ethernet" -Confirm:$false
+Enable-NetAdapter -Name "Ethernet" -Confirm:$false
+Restart-NetAdapter -Name "Ethernet"
+Rename-NetAdapter -Name "Ethernet 2" -NewName "LAN"
+netsh interface set interface "Ethernet" admin=disabled
+netsh interface set interface "Ethernet" admin=enabled
+
+-------------------------------------------------------------------------------------------------------------------
+
+Start-Job { Start-Sleep 10; Enable-NetAdapter -Name "Ethernet" -Confirm:$false }
+Disable-NetAdapter -Name "Ethernet" -Confirm:$false
+Get-NetAdapterAdvancedProperty -Name "Ethernet"
+Get-NetAdapterAdvancedProperty -Name "Ethernet" -DisplayName "Speed & Duplex"
+Set-NetAdapterAdvancedProperty -Name "Ethernet" -DisplayName "Speed & Duplex" -DisplayValue "1.0 Gbps Full Duplex"
+Reset-NetAdapterAdvancedProperty -Name "Ethernet" -DisplayName "*"
+Get-NetAdapterAdvancedProperty -Name "Ethernet" | Where-Object DisplayName -like "*Offload*"
+
+-------------------------------------------------------------------------------------------------------------------
+
+Get-NetAdapterChecksumOffload -Name "Ethernet"
+Get-NetAdapterRss -Name "Ethernet"
+Get-NetAdapterLso -Name "Ethernet"
+ping 8.8.8.8 -f -l 1472
+netsh interface ipv4 show subinterfaces
+netsh interface ipv4 set subinterface "Ethernet" mtu=1400 store=persistent
+Get-NetIPInterface | Select-Object InterfaceAlias, NlMtu
+Set-NetIPInterface -InterfaceAlias "Ethernet" -NlMtuBytes 1400
+
+-------------------------------------------------------------------------------------------------------------------
+
+getmac
+getmac /v
+getmac /v /fo list
+Get-NetAdapter | Select-Object Name, MacAddress, LinkSpeed
+Set-NetAdapter -Name "Ethernet" -MacAddress "00-11-22-33-44-55"
+New-NetLbfoTeam -Name "Team1" -TeamMembers "Ethernet","Ethernet 2" -TeamingMode SwitchIndependent
+Get-NetLbfoTeam
+Remove-NetLbfoTeam -Name "Team1" -Confirm:$false
+
+-------------------------------------------------------------------------------------------------------------------
+
+ping 8.8.8.8
+ping google.com
+ping -t 8.8.8.8
+ping -n 10 8.8.8.8
+ping -l 1400 8.8.8.8
+ping -f -l 1472 8.8.8.8
+ping -a 192.168.1.1
+ping -4 google.com
+ping -6 google.com
+ping -w 1000 8.8.8.8
+
+-------------------------------------------------------------------------------------------------------------------
+
+Test-NetConnection google.com  
+Test-NetConnection google.com -Port 443  
+Test-NetConnection SERVER01 -Port
+
+Test-NetConnection SERVER01 -CommonTCPPort SMB
+Test-NetConnection SERVER01 -CommonTCPPort HTTP
+Test-NetConnection SERVER01 -CommonTCPPort RDP
+Test-NetConnection google.com -TraceRoute
+Test-NetConnection google.com -InformationLevel Detailed
+Test-NetConnection -ComputerName SERVER01 -DiagnoseRouting
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+Test-Connection google.com
+Test-Connection google.com -Count 4
+Test-Connection google.com -Quiet
+Test-Connection -ComputerName SERVER01,SERVER02,SERVER03 -Count 1
+tracert google.com
+tracert -d google.com
+tracert -h 15 google.com
+tracert -4 google.com
+pathping google.com
+pathping -n google.com
+pathping -q 50 google.com
+
+-------------------------------------------------------------------------------------------------------------------
+
+ipconfig /flushdns
+ipconfig /displaydns
+ipconfig /registerdns
+Clear-DnsClientCache
+Get-DnsClientCache
+Get-DnsClientCache | Where-Object Entry -like "*example.com*"
+Register-DnsClient
+nslookup google.com
+nslookup google.com 8.8.8.8
+nslookup -type=MX google.com
+nslookup -type=NS google.com
+nslookup -type=TXT google.com
+nslookup -type=SOA google.com
+nslookup -type=CNAME [www.google.com](https://www.google.com/search?q=https%3A%2F%2Fwww.google.com)
+nslookup -type=PTR 8.8.8.8
+nslookup -type=ANY google.com
+nslookup -debug google.com
+nslookup
+server 8.8.8.8
+set type=MX
+
+-------------------------------------------------------------------------------------------------------------------
+
+Resolve-DnsName google.com
+Resolve-DnsName google.com -Type MX
+Resolve-DnsName google.com -Type ALL
+Resolve-DnsName google.com -Server 8.8.8.8
+Resolve-DnsName google.com -DnsOnly
+Resolve-DnsName google.com -NoHostsFile
+Resolve-DnsName 8.8.8.8 -Type PTR
+Resolve-DnsName example.com -Server 8.8.8.8 -DnsOnly -NoHostsFile
+
+-------------------------------------------------------------------------------------------------------------------
+
+Get-DnsClient
+Get-DnsClientServerAddress
+Get-DnsClientServerAddress -AddressFamily IPv4
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ServerAddresses ("8.8.8.8","1.1.1.1")
+Set-DnsClientServerAddress -InterfaceAlias "Ethernet" -ResetServerAddresses
+Set-DnsClient -InterfaceAlias "Ethernet" -ConnectionSpecificSuffix "corp.local"
+Get-DnsClientGlobalSetting
+Set-DnsClientGlobalSetting -SuffixSearchList @("corp.local","ad.corp.local")
+notepad C:\Windows\System32\drivers\etc\hosts
+Get-Content C:\Windows\System32\drivers\etc\hosts
+Add-Content C:\Windows\System32\drivers\etc\hosts "192.168.1.50 `tserver01.local"
+
+-------------------------------------------------------------------------------------------------------------------
+
+Get-DnsServerZone
+Get-DnsServerResourceRecord -ZoneName "corp.local"
+Add-DnsServerResourceRecordA -ZoneName "corp.local" -Name "web01" -IPv4Address "192.168.1.60"
+Remove-DnsServerResourceRecord -ZoneName "corp.local" -Name "web01" -RRType A -Force
+Clear-DnsServerCache -Force
+Get-DnsServerForwarder
+Set-DnsServerForwarder -IPAddress 8.8.8.8,1.1.1.1
+dnscmd /enumzones
+dnscmd /zoneprint corp.local
+dnscmd /clearcache
+
+-------------------------------------------------------------------------------------------------------------------
+
+route print
+route print -4
+route print 192.168.*
+netstat -r
+Get-NetRoute
+Get-NetRoute -AddressFamily IPv4
+Get-NetRoute -DestinationPrefix "0.0.0.0/0"
+route add 10.0.0.0 mask 255.0.0.0 192.168.1.254
+route add -p 10.0.0.0 mask 255.0.0.0 192.168.1.254
+route add -p 10.0.0.0 mask 255.0.0.0 192.168.1.254 metric 10 if 12
+route delete 10.0.0.0
+route change 10.0.0.0 mask 255.0.0.0 192.168.1.253
+
+-------------------------------------------------------------------------------------------------------------------
+
+New-NetRoute -DestinationPrefix "10.0.0.0/8" -InterfaceAlias "Ethernet" -NextHop 192.168.1.254
+Remove-NetRoute -DestinationPrefix "10.0.0.0/8" -Confirm:$false
+Get-NetRoute | Sort-Object RouteMetric | Format-Table DestinationPrefix, NextHop, RouteMetric, InterfaceAlias
+route print
+Get-NetAdapter | Select-Object Name, ifIndex
+Find-NetRoute -RemoteIPAddress 8.8.8.8
+arp -a
+arp -a -N 192.168.1.50
+arp -d
+arp -d 192.168.1.100
+arp -s 192.168.1.100 00-11-22-33-44-55
+
+-------------------------------------------------------------------------------------------------------------------
+
+Get-NetNeighbor
+Get-NetNeighbor -AddressFamily IPv4
+Get-NetNeighbor -State Reachable
+Remove-NetNeighbor -IPAddress 192.168.1.100 -Confirm:$false
+New-NetNeighbor -InterfaceAlias "Ethernet" -IPAddress 192.168.1.100 -LinkLayerAddress "00-11-22-33-44-55"
+Get-NetIPInterface | Select-Object InterfaceAlias, AddressFamily, Forwarding
+Set-NetIPInterface -InterfaceAlias "Ethernet" -Forwarding Enabled
+netsh interface ipv4 set interface "Ethernet" forwarding=enabled
+
+-------------------------------------------------------------------------------------------------------------------
+
+pktmon start --etw
+pktmon start --etw -c --pkt-size 0
+pktmon stop
+pktmon list
+pktmon counters
+pktmon filter list
+pktmon filter add -p 443
+pktmon filter add -i 192.168.1.100
+pktmon filter add -t TCP -p 3389
+pktmon filter remove
+pktmon format PktMon.etl -o capture.txt
+pktmon etl2pcap PktMon.etl -o capture.pcapng
+
+
+pktmon filter remove
+pktmon filter add -p 445
+pktmon start --etw -c --pkt-size 0
+pktmon stop
+pktmon etl2pcap PktMon.etl -o C:\temp\smb-issue.pcapng
+netsh trace show scenarios
+netsh trace start capture=yes tracefile=C:\temp\trace.etl
+netsh trace start scenario=NetConnection capture=yes tracefile=C:\temp\trace.etl
+netsh trace start scenario=InternetClient capture=yes maxsize=512 tracefile=C:\temp\trace.etl
+netsh trace stop
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+netstat -e -s
+netsh interface ipv4 show ipstats
+netsh interface ipv4 show tcpstats
+netsh winsock show catalog
+netsh winsock reset
+netsh int ip reset
+netsh int ipv6 reset
+netsh advfirewall reset
+ipconfig /release
+ipconfig /flushdns
+ipconfig /renew
+netsh wlan show wlanreport
+Get-NetAdapterStatistics
+Get-NetIPInterface | Format-Table -AutoSize
+Get-NetConnectionProfile
+Set-NetConnectionProfile -InterfaceAlias "Ethernet" -NetworkCategory
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+certutil -store My 
+Opens and displays the certificates stored in the current user's or computer's **"Personal" (My)** certificate store, which typically contains personal certificates used for client authentication, code signing, or encryption.
+
+certutil -store Root 
+Displays the certificates in the **Trusted Root Certification Authorities** store, listing the trusted root certificates that the operating system uses to verify the authenticity of other certificates.
+
+certutil -verify -urlfetch C:\temp\cert.cer
+Validates a specific certificate file (`cert.cer`) against its issuing Certificate Authority, automatically fetching and checking Certificate Revocation Lists (CRLs) and AIA (Authority Information Access) URLs referenced inside the certificate to ensure it hasn't been revoked.
+
+certutil -hashfile C:\temp\file.iso SHA256
+Generates and displays the cryptographic hash (using the **SHA256** algorithm) of a specified file (`file.iso`), commonly used to verify file integrity and check that a download hasn't been corrupted or tampered with.
+
+Get-ChildItem Cert:\LocalMachine\My | Select-Object Subject, NotAfter
+A PowerShell command that queries the local machine's personal certificate store (`Cert:\LocalMachine\My`) and filters the output to display only the **Subject** (who the certificate belongs to) and the **NotAfter** expiration date for each certificate.
+
+certutil -store My
+certutil -store Root
+certutil -verify -urlfetch C:\temp\cert.cer
+certutil -hashfile C:\temp\file.iso SHA256
+Get-ChildItem Cert:\LocalMachine\My | Select-Object Subject, NotAfter
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
