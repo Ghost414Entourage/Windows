@@ -1,1 +1,4 @@
 Get-ChildItem -Path "C:\" -Filter "*brave*" -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+
+Get-ChildItem -Path "$env:LOCALAPPDATA\BraveSoftware", "$env:ProgramFiles\BraveSoftware" -Filter "*brave*" -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
+
