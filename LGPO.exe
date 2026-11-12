@@ -302,6 +302,11 @@ LGPO.exe /g ".\{351CE990-3095-4335-A893-433E96684D44}"
 $path = ".\{351CE990-3095-4335-A893-433E96684D44}\DomainSysvol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf"; (Get-Content $path) | ForEach-Object { $_ -replace 'ADD YOUR DOMAIN ADMINS,?', '' -replace 'ADD YOUR ENTERPRISE ADMINS,?', '' -replace ',,', ',' -replace '=\s*,', '=' } | Set-Content $path -Encoding Unicode
 
 
+$path = ".\{351CE990-3095-4335-A893-433E96684D44}\DomainSysvol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf"; (Get-Content $path) -replace 'ADD YOUR[^,\r\n]*', '' -replace ',,', ',' -replace '=\s*,', '=' | Set-Content $path -Encoding Unicode
+
+
+$path = ".\{351CE990-3095-4335-A893-433E96684D44}\DomainSysvol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf"; (Get-Content $path) | Where-Object { $_ -notmatch '\*S-1-5-21-' } | Set-Content $path -Encoding Unicode
+
 
 
 
