@@ -282,4 +282,9 @@ cd "Windows 11 v26H2 Security Baseline v2"
 
 cd Scripts
 
+Set-ExecutionPolicy RemoteSigned -Scope Process
+
+.\Baseline-LocalInstall.ps1 -Win11NonDomainJoined
+
+
 
