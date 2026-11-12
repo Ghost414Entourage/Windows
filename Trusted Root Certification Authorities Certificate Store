@@ -63,3 +63,26 @@ Get-ItemProperty -Path 'HKLM:\Software\Policies\Microsoft\SystemCertificates\Aut
 certutil -generateSSTFromWU roots.sst
 
 certutil -addstore -f root roots.sst
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+************************************************************************************************************************************
+
+
+mkdir c:\trusted-root-certs
+cd c:\trusted-root-certs
+Certutil.exe -generateSSTFromWU roots.sst
