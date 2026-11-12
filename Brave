@@ -1,0 +1,1 @@
+Get-ChildItem -Path "C:\" -Filter "*brave*" -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
