@@ -239,3 +239,47 @@ Get-ChildItem -Path "C:\Users\computer\Downloads\STIG_Package" -Recurse -File -E
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Get-ChildItem *.zip | ForEach-Object { Expand-Archive -Path $_.FullName -DestinationPath $_.BaseName -Force }
+
+Expand-Archive -Path "LGPO.zip" -DestinationPath "LGPO" -Force
+
+
+Get-ChildItem -Recurse -Filter "LGPO.exe" | Select-Object -ExpandProperty FullName
+
+Copy-Item "LGPO\LGPO_30\LGPO.exe" -Destination "C:\Windows\System32\"
+
+Test-Path "C:\Windows\System32\LGPO.exe"
+
+Get-ChildItem -Directory | Select-Object Name
+
+cd "Windows 11*"
+
+cd "Windows 11 v26H2 Security Baseline v2"
+
+cd Scripts
+
+
