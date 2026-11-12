@@ -6,6 +6,8 @@ https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/certificate-trus
 
 ---------------------------------------------------------------------------------------------------------------------------------------
 
+explorer .
+
 certmgr.msc
 
 certutil -store Root
