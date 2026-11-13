@@ -41,3 +41,21 @@ $netShare.EnumEveryConnection | ForEach-Object {
 
 Get-NetAdapter | Format-List -Property *
 
+
+
+
+
+
+
+-------------------------------------------------------------------------------------
+
+
+
+netsh wlan show profiles
+
+netsh wlan delete profile name="PetShadow"
+
+explorer C:\ProgramData\Microsoft\Wlansvc\Profiles\Interfaces
+
+
+
