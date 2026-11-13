@@ -19,31 +19,11 @@ Show saved wireless profiles:
 netsh wlan show profiles
 
 
--------------------------------------------------------------------------------------
 
-$netShare = New-Object -ComObject HNetCfg.HNetShare
-
-$netShare.EnumEveryConnection | ForEach-Object {
-    $props = $netShare.NetConnectionProps($_)
-    $config = $netShare.INetSharingConfigurationForINetConnection($_)
-    
-    [PSCustomObject]@{
-        "Adapter Name"            = $props.Name
-        "Device Name"             = $props.DeviceName
-        "Status"                  = $props.Status
-        "Sharing Enabled"         = $config.SharingEnabled
-        "Sharing Connection Type" = if ($config.SharingEnabled) { $config.SharingConnectionType } else { "N/A" }
-        "Open Connection Control" = $config.InternetOpenConnectionControl
-    }
-} | Format-Table -AutoSize
 
 -------------------------------------------------------------------------------------
 
 Get-NetAdapter | Format-List -Property *
-
-
-
-
 
 
 
@@ -63,6 +43,9 @@ cd "{4E1CBBA2-3465-4188-9F82-2D77EAC072A3}"
 
 Get-Content "C:\ProgramData\Microsoft\Wlansvc\Profiles\Interfaces\{4E1CBBA2-3465-4188-9F82-2D77EAC072A3}\{1200263C-3896-4162-A0AA-B8C513996108}.xml"
 
+netsh wlan connect name="PetShadow"
+
+netsh wlan connect name="PetShadow2"
 
 -------------------------------------------------------------------------------------
 
