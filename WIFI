@@ -57,5 +57,14 @@ netsh wlan delete profile name="PetShadow"
 
 explorer C:\ProgramData\Microsoft\Wlansvc\Profiles\Interfaces
 
+cd C:\ProgramData\Microsoft\Wlansvc\Profiles\Interfaces
+
+cd "{4E1CBBA2-3465-4188-9F82-2D77EAC072A3}"
+
+Get-Content "C:\ProgramData\Microsoft\Wlansvc\Profiles\Interfaces\{4E1CBBA2-3465-4188-9F82-2D77EAC072A3}\{1200263C-3896-4162-A0AA-B8C513996108}.xml"
+
+
+-------------------------------------------------------------------------------------
+
 
 
