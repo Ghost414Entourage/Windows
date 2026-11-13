@@ -10,6 +10,57 @@ Get-Module -ListAvailable -Name GroupPolicy
 Import-Module GroupPolicy -UseWindowsPowerShell
 
 
+-----------------------------------------------------------------------------------------------------------------------
+
+C:\Windows\PolicyDefinitions\
+
+gpmc.msc
+
+Opens the Local Group Policy Editor
+
+gpedit.msc
+
+
+Opens Local Security Policy
+
+secpol.msc
+
+
+Generates an HTML report of the currently applied Group Policy settings
+
+gpresult /h C:\gpresult.html
+
+
+Opens Resultant Set of Policy
+
+rsop.msc
+
+
+gpresult /r /scope computer
+
+-----------------------------------------------------------------------------------------------------------------------
+
+gpedit.msc
+
+regedit.exe
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
