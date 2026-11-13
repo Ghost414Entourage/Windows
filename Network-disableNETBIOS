@@ -56,6 +56,13 @@ Get-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters
 
 Restart-NetAdapter -Name "*"
 
+
+Get-CimInstance Win32_NetworkAdapterConfiguration -Filter "IPEnabled = true" | Invoke-CimMethod -MethodName SetTcpipNetbios -Arguments @{ TcpipNetbiosOptions = [uint32]2 }
+
+Get-CimInstance Win32_NetworkAdapterConfiguration -Filter "IPEnabled = true" | Select-Object Description, TcpipNetbiosOptions
+
+
+
 Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\NetBT\Parameters' -Name "NodeType" -Value 2 -Type DWord
 
 Set-Service -Name "lmhosts" -StartupType Disabled
