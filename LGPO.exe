@@ -294,6 +294,16 @@ cd  'DoD Windows 11 v2r11'
 C:\Users\computer\Downloads\LGPO\LGPO_30\LGPO.exe
 
 
+file that causes error:
+
+C:\Users\computer\Downloads\U_STIG_GPO_Package_October_2026 (2)\DoD Windows 11 v2r11\GPOs\{351CE990-3095-4335-A893-433E96684D44}\DomainSysvol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf
+
+
+
+
+& "C:\Users\computer\Downloads\LGPO\LGPO_30\LGPO.exe" /g "C:\Users\computer\Downloads\U_STIG_GPO_Package_October_2026 (2)\DoD Windows 11 v2r11\GPOs"
+
+
 
 
 
