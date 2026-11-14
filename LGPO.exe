@@ -298,6 +298,9 @@ file that causes error:
 
 C:\Users\computer\Downloads\U_STIG_GPO_Package_October_2026 (2)\DoD Windows 11 v2r11\GPOs\{351CE990-3095-4335-A893-433E96684D44}\DomainSysvol\GPO\Machine\microsoft\windows nt\SecEdit\GptTmpl.inf
 
+Get-ChildItem -Path "C:\Users\computer\Downloads\U_STIG_GPO_Package_October_2026 (2)\DoD Windows 11 v2r11\GPOs" -Filter "GptTmpl.inf" -Recurse | Select-Object -ExpandProperty FullName
+
+Get-ChildItem -Path "C:\Users\computer\Downloads\U_STIG_GPO_Package_October_2026 (2)\DoD Windows 11 v2r11\GPOs" -Filter "GptTmpl.inf" -Recurse | Remove-Item -Force
 
 
 
