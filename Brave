@@ -9,3 +9,7 @@ ii "C:\Users\computer\AppData\Local\BraveSoftware\"
 Start-Process "C:\Users\computer\AppData\Local\BraveSoftware\"
 
 
+----------------------------------------------------------------------------------------------------------------
+
+cd $env:USERPROFILE\Downloads
+
