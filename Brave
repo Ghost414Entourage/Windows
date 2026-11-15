@@ -13,3 +13,5 @@ Start-Process "C:\Users\computer\AppData\Local\BraveSoftware\"
 
 cd $env:USERPROFILE\Downloads
 
+Expand-Archive -Path policy_templates.zip -DestinationPath .
+
