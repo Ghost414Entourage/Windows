@@ -3,3 +3,9 @@ Get-ChildItem -Path "C:\" -Filter "*brave*" -Recurse -ErrorAction SilentlyContin
 Get-ChildItem -Path "$env:LOCALAPPDATA\BraveSoftware", "$env:ProgramFiles\BraveSoftware" -Filter "*brave*" -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
 
 explorer.exe "C:\Users\computer\AppData\Local\BraveSoftware\"
+
+ii "C:\Users\computer\AppData\Local\BraveSoftware\"
+
+Start-Process "C:\Users\computer\AppData\Local\BraveSoftware\"
+
+
