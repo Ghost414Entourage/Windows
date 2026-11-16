@@ -323,7 +323,7 @@ start ms-windows-store://pdp/?productid=9nblggh4nns1
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-
+ winget list "Microsoft Windows Application Compatibility"
 
 
 
