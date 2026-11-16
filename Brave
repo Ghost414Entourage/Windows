@@ -11,7 +11,19 @@ Start-Process "C:\Users\computer\AppData\Local\BraveSoftware\"
 
 ----------------------------------------------------------------------------------------------------------------
 
+https://support.brave.app/hc/en-us/articles/360039248271-Group-Policy
+
+************************************************************
+
+
 cd $env:USERPROFILE\Downloads
 
 Expand-Archive -Path policy_templates.zip -DestinationPath .
+
+Copy-Item windows\admx\brave.admx -Destination C:\Windows\PolicyDefinitions\
+
+Copy-Item windows\admx\en-US\brave.adml -Destination C:\Windows\PolicyDefinitions\en-US\
+
+gpupdate /force
+
 
