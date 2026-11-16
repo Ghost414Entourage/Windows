@@ -27,4 +27,4 @@ Copy-Item windows\admx\en-US\brave.adml -Destination C:\Windows\PolicyDefinition
 
 gpupdate /force
 
-
+gpedit.msc
