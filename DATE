@@ -23,3 +23,5 @@ w32tm /query /configuration
 
 w32tm /query /peers
 
+Set-Service -Name w32time -StartupType Automatic
+
