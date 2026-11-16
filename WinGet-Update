@@ -323,8 +323,11 @@ start ms-windows-store://pdp/?productid=9nblggh4nns1
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
- winget list "Microsoft Windows Application Compatibility"
+winget list "Microsoft Windows Application Compatibility"
 
+winget list | Select-String "Unknown"
+
+sdbinst.exe -u "C:\WINDOWS\AppPatch\CustomSDB\{22221111-1111-1111-1111-111111111111}.sdb"
 
 
 
