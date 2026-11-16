@@ -333,6 +333,107 @@ winget uninstall --id "ARP\Machine\X64\{22221111-1111-1111-1111-111111111111}"
 
 
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+https://www.dell.com/support/home/en-us?app=drivers
+https://www.dell.com/support/product-details/en-us/product/optiplex-5070-micro/drivers
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+winget show Dell.CommandUpdate.Universal
+
+winget show Dell.CommandUpdate.Universal --versions
+
+
+winget install -e --id Dell.CommandUpdate.Universal
+
+winget install --id Dell.CommandUpdate.Universal --version <version>
+
+
+cd "C:\Program Files\Dell\CommandUpdate"
+
+
+dcu-cli.exe /scan
+
+.\dcu-cli.exe /scan
+
+
+dcu-cli.exe /applyUpdates 
+
+.\dcu-cli.exe /applyUpdates
+
+shutdown /r /t 0 /f
+
+
+winget list Shows what is installed on your computer
+
+winget show Shows information about a package in the repository
+
+winget list --id Dell.CommandUpdate.Universal
+
+
+
+Get-ItemProperty "HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\*" |
+Where-Object DisplayName -like "*Dell Command*" |
+Select-Object DisplayName, InstallLocation
+
+
+Get-ChildItem "C:\Program Files\Dell\CommandUpdate\"
+
+& "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /scan
+
+& "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /applyUpdates
+
+& "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" /?
+
+& "C:\Program Files\Dell\CommandUpdate\dcu-cli.exe" -help
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+winget search supportassist
+
+winget search supportassist --source msstore
+
+winget install --id XPDCCXDN26VNBT --source msstore
+
+winget list --id supportassist
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+winget list Dell
+winget search dell
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+cd $home\Downloads
+
+Get-ChildItem *SupportAssist*
+
+Get-ChildItem *SupportAssist* | Select-Object Name, @{N="FileVersion"; E={$_.VersionInfo.FileVersion}}, @{N="ProductVersion"; E={$_.VersionInfo.ProductVersion}}
+
+Get-ChildItem *SupportAssist* | ForEach-Object { $_.VersionInfo } | Select-Object FileName, FileVersion, ProductVersion, FileDescription
+
+Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object Name, Domain, PartOfDomain, Workgroup
+
+(Get-CimInstance -ClassName Win32_OperatingSystem).Caption
+
+.\SupportAssistinstaller.exe
+
+Remove-Item *SupportAssist*.exe
+
+
+
+
+
+
+
+
 
 
 
