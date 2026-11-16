@@ -28,3 +28,7 @@ Copy-Item windows\admx\en-US\brave.adml -Destination C:\Windows\PolicyDefinition
 gpupdate /force
 
 gpedit.msc
+
+explorer C:\Windows\System32\GroupPolicy
+
+explorer C:\Windows\System32\config
