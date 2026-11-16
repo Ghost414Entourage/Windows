@@ -17,3 +17,9 @@ w32tm /resync /force
 
 Set-Date -Adjust (New-TimeSpan -Hours -2)
 
+w32tm /query /status
+
+w32tm /query /configuration
+
+w32tm /query /peers
+
