@@ -11,3 +11,9 @@ Get-TimeZone -ListAvailable
 
 Set-TimeZone -Id "Central Standard Time"
 
+Start-Service w32time
+
+w32tm /resync /force
+
+Set-Date -Adjust (New-TimeSpan -Hours -2)
+
