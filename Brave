@@ -15,6 +15,7 @@ https://support.brave.app/hc/en-us/articles/360039248271-Group-Policy
 
 ************************************************************
 
+start C:\Windows\PolicyDefinitions
 
 cd $env:USERPROFILE\Downloads
 
