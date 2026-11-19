@@ -22,6 +22,11 @@ REG_DWORD value of 1
 HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile:EnableFirewall
 
 
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
+
+
 *************************************************************************************************************************
 
 
