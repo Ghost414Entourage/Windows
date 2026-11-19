@@ -46,6 +46,16 @@ Get-PnpDevice -Class Bluetooth | Select-Object * | Format-List
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'Software\Microsoft\Windows\CurrentVersion\Bluetooth' -ValueName 'AdvancedDiscoveryMode' -ValueData @('0') -ValueType 'Dword' -TargetType 'UserConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:user /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
 
+
+reg.exe query 'HKCU\Software\Microsoft\Windows\CurrentVersion\Bluetooth' /v AdvancedDiscoveryMode
+
+
+****************************************************************************************************************************
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth' -ValueName 'value' -ValueData @('0') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+reg.exe query 'HKLM\SOFTWARE\Microsoft\PolicyManager\default\Connectivity\AllowBluetooth' /v value
 
 
