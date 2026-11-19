@@ -1,4 +1,15 @@
 
+Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers -Force
+
+
+Get-DscResource -Module GPRegistryPolicyDsc
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 9.2.1 Ensure 'Windows Firewall: Private: Firewall state' is set to 'On 
 
 
