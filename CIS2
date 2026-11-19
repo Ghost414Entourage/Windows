@@ -46,6 +46,10 @@ REG_DWORD value of 1.
 
 HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile:DefaultInboundAction 
 
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
+
 *************************************************************************************************************************
 
 
@@ -69,6 +73,9 @@ REG_DWORD value of 1.
 
 HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile:DisableNotifications 
 
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
 
 
 *************************************************************************************************************************
@@ -77,10 +84,6 @@ $old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Proc
 
 
 reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile' /v DisableNotifications
-
-
-
-
 
 
 
@@ -104,6 +107,9 @@ HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging:LogFileP
 
  %SystemRoot%\System32\logfiles\firewall\privatefw.log.
 
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
 
 
 *************************************************************************************************************************
@@ -134,7 +140,9 @@ REG_DWORD value of 16384.
 
 HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging:LogFileSize 
 
+gpedit.msc
 
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
 
 
 *************************************************************************************************************************
@@ -162,7 +170,9 @@ REG_DWORD value of 1.
 
 HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging:LogDroppedPackets 
 
+gpedit.msc
 
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
 
 
 *************************************************************************************************************************
@@ -192,8 +202,9 @@ REG_DWORD value of 1.
 
 HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging:LogSuccessfulConnections
 
+gpedit.msc
 
-
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
 
 *************************************************************************************************************************
 
@@ -210,9 +221,217 @@ reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\L
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+9.3.1 Ensure 'Windows Firewall: Public: Firewall state' is set to 'On
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1.
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile:EnableFirewall 
+
+
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
 
 
 
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile' -ValueName 'EnableFirewall' -ValueData @('1') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile' /v EnableFirewall
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+9.3.2 Ensure 'Windows Firewall: Public: Inbound connections' is set to 'Block
+
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile:DefaultInboundAction
+
+
+
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
+
+
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile' -ValueName 'DefaultInboundAction' -ValueData @('1') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile' /v DefaultInboundAction
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+9.3.3 Ensure 'Windows Firewall: Public: Settings: Display a notification' is set to 'No' 
+
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile:DisableNotifications
+
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
+
+
+
+*************************************************************************************************************************
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile' -ValueName 'DisableNotifications' -ValueData @('1') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile' /v DisableNotifications
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+9.3.4 Ensure 'Windows Firewall: Public: Logging: Name' is configured
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_SZ value of <path>\<filename>.log. Where <path> is the location and <file> is 
+the log name specified by the organization. 
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging:LogFilePath 
+
+
+ %SystemRoot%\System32\logfiles\firewall\publicfw.log.
+
+
+gpedit.msc
+
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
+
+
+*************************************************************************************************************************
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging' -ValueName 'LogFilePath' -ValueData @('%SystemRoot%\System32\logfiles\firewall\publicfw.log') -ValueType 'String' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging' /v LogFilePath
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+9.3.5 Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater'
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 16384. 
+
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging:LogFileSize
+
+
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
+
+
+
+
+*************************************************************************************************************************
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging' -ValueName 'LogFileSize' -ValueData @('16384') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging' /v LogFileSize
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+9.3.6 Ensure 'Windows Firewall: Public: Logging: Log dropped packets' is set to 'Yes' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging:LogDroppedPackets
+
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging' -ValueName 'LogDroppedPackets' -ValueData @('1') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging' /v LogDroppedPackets
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+9.3.7 Ensure 'Windows Firewall: Public: Logging: Log successful connections' is set to 'Yes' 
+
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging:LogSuccessfulConnections 
+
+gpedit.msc
+
+Navigate to Computer Configuration > Windows Settings > Security Settings > Windows Defender Firewall with Advanced Security
+
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging' -ValueName 'LogSuccessfulConnections' -ValueData @('1') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging' /v LogSuccessfulConnections
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
