@@ -72,6 +72,41 @@ reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile' 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+9.2.4 Ensure 'Windows Firewall: Private: Logging: Name' is configured
+
+
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_SZ value of <path>\<filename>.log. Where <path> is the location and <file> is 
+the log name specified by the organization. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging:LogFilePath 
+
+
+ %SystemRoot%\System32\logfiles\firewall\privatefw.log.
+
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging' -ValueName 'LogFilePath' -ValueData @('%SystemRoot%\System32\logfiles\firewall\privatefw.log') -ValueType 'String' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging' /v LogFilePath
+
+
+
+
+
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
