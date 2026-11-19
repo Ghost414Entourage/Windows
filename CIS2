@@ -12,3 +12,12 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\
 18.9.54 (L1) Ensure 'Configure the behavior of the sudo command' is set to 'Enabled: Disabled' (Automated) 
 
 
+Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers -Force
+
+Get-DscResource -Module GPRegistryPolicyDsc
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\Windows\Sudo' -ValueName 'Enabled' -ValueData @('0') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+
