@@ -490,13 +490,16 @@ HKLM\SOFTWARE\Policies\Microsoft\W32Time\TimeProviders\NtpClient:Enabled
 
 gpedit.msc
 
+Navigate to Computer Configuration > Administrative Templates > System > Windows Time Service > Time Providers
+In the right pane double-click the 'Enable Windows NTP Client' policy setting
 
 
+*************************************************************************************************************************
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\W32Time\TimeProviders\NtpClient' -ValueName 'Enabled' -ValueData @('1') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
 
 
-
-
-
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\W32Time\TimeProviders\NtpClient' /v Enabled
 
 
 
@@ -506,6 +509,24 @@ New-Item -Path "HKLM:\SOFTWARE\Policies\Microsoft\W32Time\TimeProviders\NtpClien
 
 Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\W32Time\TimeProviders"; Start-Process regedit.exe
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+18.9.53.1.2 Ensure 'Enable Windows NTP Server' is set to 'Disabled'
+
+gpedit.msc
+
+Navigate to Computer Configuration > Administrative Templates > System > Windows Time Service > Time Providers In the right pane double-click the 'Enable Windows NTP Server' policy setting
+
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; $m = Get-Module -ListAvailable GPRegistryPolicyDsc | Sort-Object Version -Descending | Select-Object -First 1; Import-Module (Join-Path $m.ModuleBase 'DSCResources\MSFT_RegistryPolicyFile\MSFT_RegistryPolicyFile.psm1') -Force -ErrorAction Stop; Set-TargetResource -Key 'SOFTWARE\Policies\Microsoft\W32Time\TimeProviders\NtpServer' -ValueName 'Enabled' -ValueData @('0') -ValueType 'Dword' -TargetType 'ComputerConfiguration' -Ensure 'Present' -Verbose -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SOFTWARE\Policies\Microsoft\W32Time\TimeProviders\NtpServer' /v Enabled
+
 
 
 
@@ -513,9 +534,6 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 18.9.54 (L1) Ensure 'Configure the behavior of the sudo command' is set to 'Enabled: Disabled' (Automated) 
-
-
-
 
 
 
