@@ -75,6 +75,36 @@ reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\bthserv' /v Start
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+5.3 Ensure 'Computer Browser (Browser)' is set to 'Disabled' or 'Not Installed' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4 or that the key does not exist.
+
+
+HKLM\SYSTEM\CurrentControlSet\Services\Browser:Start
+
+
+services.msc
+
+In the Services window, scroll down the content until you find the 'Computer Browser'
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (Get-Service -Name 'Browser' -ErrorAction SilentlyContinue) { Set-Service -Name 'Browser' -StartupType Disabled -ErrorAction Stop } else { Write-Host 'Browser service is not installed (compliant).' }; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\Browser' /v Start
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
