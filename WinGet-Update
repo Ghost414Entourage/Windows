@@ -316,9 +316,21 @@ Get-CimInstance -ClassName Win32_ComputerSystem | Select-Object Name, Domain, Pa
 
 Remove-Item *SupportAssist*.exe
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Test-NetConnection storeedgefd.dsx.mp.microsoft.com -Port 443
+
+
+winget source reset --force
+winget source update
+winget upgrade --all
+winget source update --name msstore
+winget upgrade --source msstore
 
 
 
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
