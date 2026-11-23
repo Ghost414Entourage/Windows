@@ -570,11 +570,51 @@ reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\sshd' /v Start
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+5.13 Ensure 'Peer Name Resolution Protocol (PNRPsvc)' is set to 'Disabled' or 'Not Installed'
+5.14 Ensure 'Peer Name Resolution Protocol (PNRPsvc)' is set to 'Disabled'
 
 
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4 or that the key does not exist.
 
 
+HKLM\SYSTEM\CurrentControlSet\Services\PNRPsvc:Start
 
+
+services.msc
+
+
+In the Services window, scroll down the content until you find the 'Peer Name Resolution Protocol'
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+regedit
+
+
+Go to the following key: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\PNRPsvcv
+Double click REG_DWORD 'Start' to edit its value
+Set it to '4' (Disabled)
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (Get-Service -Name 'PNRPsvc' -ErrorAction SilentlyContinue) { Set-Service -Name 'PNRPsvc' -StartupType Disabled -ErrorAction Stop } else { Write-Host 'PNRPsvc service is not installed (compliant).' }; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (-not (Test-Path 'HKLM:\SYSTEM\CurrentControlSet\Services\PNRPsvc')) { New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\PNRPsvc' -Force -ErrorAction Stop | Out-Null }; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\PNRPsvc' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\PNRPsvc' /v Start
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
