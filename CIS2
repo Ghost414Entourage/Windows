@@ -5,8 +5,7 @@ Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers -Force
 Get-DscResource -Module GPRegistryPolicyDsc
 
 
-
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 5.1 Ensure 'Bluetooth Audio Gateway Service (BTAGService)' is set to 'Disabled'
@@ -30,8 +29,10 @@ Click 'Ok'
 *************************************************************************************************************************
 
 
-
 $old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; Set-Service -Name 'BTAGService' -StartupType Disabled -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTAGService' -Force -ErrorAction Stop | Out-Null; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTAGService' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
 
 
 Get-ItemPropertyValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTAGService' -Name 'Start'
@@ -40,6 +41,7 @@ Get-ItemPropertyValue -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\BTAGService
 reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\BTAGService' /v Start
 
 
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -76,7 +78,7 @@ reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\bthserv' /v Start
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 5.3 Ensure 'Computer Browser (Browser)' is set to 'Disabled' or 'Not Installed' 
 
@@ -111,6 +113,8 @@ reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\Browser' /v Start
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
