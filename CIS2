@@ -392,6 +392,7 @@ reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\lltdsvc' /v Start
 
 
 5.10 Ensure 'Microsoft FTP Service (FTPSVC)' is set to 'Disabled' or 'Not Installed' 
+5.11 Ensure 'Microsoft FTP Service (FTPSVC)' is set to 'Disabled' or 'Not Installed'
 
 
 Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
@@ -400,6 +401,25 @@ REG_DWORD value of 4 or that the key does not exist.
 
 
 HKLM\SYSTEM\CurrentControlSet\Services\FTPSVC:Start 
+
+
+services.msc
+
+
+In the Services window, scroll down the content until you find the 'Microsoft FTP Service'.
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+regedit
+
+
+Go to the following key: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\FTPSVC
+Double click REG_DWORD 'Start' to edit its value
+Set it to '4' (Disabled)
+Click 'Ok'
 
 
 *************************************************************************************************************************
