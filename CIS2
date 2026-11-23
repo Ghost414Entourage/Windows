@@ -800,10 +800,62 @@ $old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Proc
 reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\Spooler' /v Start
 
 
+Set-Service -Name 'Spooler' -StartupType Disabled -ErrorAction Stop; Stop-Service -Name 'Spooler' -Force -ErrorAction Stop
+
+
+Get-Service -Name 'Spooler' | Select-Object Name, Status, StartType
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+5.18 Ensure 'Problem Reports and Solutions Control Panel Support (wercplsupport)' is set to 'Disabled' 
 
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4. 
+
+
+HKLM\SYSTEM\CurrentControlSet\Services\wercplsupport:Start
+
+
+services.msc
+
+
+In the Services window, scroll down the content until you find the 'Problem Reports and Solutions Control Panel Support'
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+regedit
+
+
+Go to the following key: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\wercplsupport
+Double click REG_DWORD 'Start' to edit its value
+Set it to '4' (Disabled)
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; Set-Service -Name 'wercplsupport' -StartupType Disabled -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (-not (Test-Path 'HKLM:\SYSTEM\CurrentControlSet\Services\wercplsupport')) { New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\wercplsupport' -Force -ErrorAction Stop | Out-Null }; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\wercplsupport' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\wercplsupport' /v Start
+
+
+Get-Service -Name 'wercplsupport' | Select-Object Name, Status, StartType
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
