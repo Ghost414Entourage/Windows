@@ -332,6 +332,11 @@ $old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Proc
 $old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\SharedAccess' -Force -ErrorAction Stop | Out-Null; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\SharedAccess' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
 
 
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; Set-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\SharedAccess' -Name 'Start' -Type DWord -Value 4 -Force -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+
+
 reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\SharedAccess' /v Start
 
 
