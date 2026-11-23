@@ -9,6 +9,26 @@ Get-DscResource -Module GPRegistryPolicyDsc
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+5.1 Ensure 'Bluetooth Audio Gateway Service (BTAGService)' is set to 'Disabled'
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4
+
+HKLM\SYSTEM\CurrentControlSet\Services\BTAGService:Start 
+
+services.msc
+
+In the Services window, scroll down the content until you find the 'Bluetooth Audio Gateway Service'
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
 
 
 
