@@ -69,6 +69,9 @@ Click 'Ok'
 $old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; Set-Service -Name 'bthserv' -StartupType Disabled -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
 
 
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\bthserv' -Force -ErrorAction Stop | Out-Null; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\bthserv' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
 reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\bthserv' /v Start
 
 
