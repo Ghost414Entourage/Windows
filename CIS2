@@ -183,6 +183,15 @@ reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\GameInputSvc' /v Start
 
 
 5.5 Ensure 'Geolocation Service (lfsvc)' is set to 'Disabled'
+5.6 Ensure 'Geolocation Service (lfsvc)' is set to 'Disabled'
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4. 
+
+
+HKLM\SYSTEM\CurrentControlSet\Services\lfsvc:Start
 
 
 HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\lfsvc
@@ -214,8 +223,42 @@ reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\lfsvc' /v Start
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+5.6 Ensure 'IIS Admin Service (IISADMIN)' is set to 'Disabled' or 'Not Installed'
+5.7 Ensure 'IIS Admin Service (IISADMIN)' is set to 'Disabled' or 'Not Installed' 
 
 
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4 or that the key does not exist.
+
+
+HKLM\SYSTEM\CurrentControlSet\Services\IISADMIN:Start 
+
+
+services.msc
+
+
+In the Services window, scroll down the content until you find the 'IIS Admin Service'.
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (Get-Service -Name 'IISADMIN' -ErrorAction SilentlyContinue) { Set-Service -Name 'IISADMIN' -StartupType Disabled -ErrorAction Stop } else { Write-Host 'IISADMIN service is not installed (compliant).' }; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\IISADMIN' -Force -ErrorAction Stop | Out-Null; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\IISADMIN' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\IISADMIN' /v Start
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
