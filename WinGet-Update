@@ -334,6 +334,27 @@ winget upgrade --source msstore
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+Resolve-DnsName storeedgefd.dsx.mp.microsoft.com -Type A | Where-Object IPAddress | ForEach-Object { Test-NetConnection $_.IPAddress -Port 443 }
+
+Resolve-DnsName storeedgefd.dsx.mp.microsoft.com -Type AAAA | Where-Object IPAddress | ForEach-Object { Test-NetConnection $_.IPAddress -Port 443 }
+
+Resolve-DnsName cdn.winget.microsoft.com -Type A | Where-Object IPAddress | ForEach-Object { Test-NetConnection $_.IPAddress -Port 443 }
+
+Resolve-DnsName cdn.winget.microsoft.com -Type AAAA | Where-Object IPAddress | ForEach-Object { Test-NetConnection $_.IPAddress -Port 443 }
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+resmon.exe
+
+https://learn.microsoft.com/en-us/windows/privacy/windows-11-endpoints-non-enterprise-editions?utm_source=chatgpt.com
+
+
+Resolve-DnsName sls.update.microsoft.com -Type A | Where-Object IPAddress | ForEach-Object { Test-NetConnection $_.IPAddress -Port 443 }
+
+Resolve-DnsName sls.update.microsoft.com -Type AAAA | Where-Object IPAddress | ForEach-Object { Test-NetConnection $_.IPAddress -Port 443 }
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 
 
 
