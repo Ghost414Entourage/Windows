@@ -1454,9 +1454,45 @@ Get-Service -Name 'SSDPSRV' | Select-Object Name, Status, StartType
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+5.30.1 Ensure 'Computer Browser (Browser)' is set to 'Disabled' or 'Not Installed'
 
 
+services.msc
 
+
+In the Services window, scroll down the content until you find the 'Computer Browser'
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+regedit
+
+
+Go to the following key: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\Browser
+Double click REG_DWORD 'Start' to edit its value
+Set it to '4' (Disabled)
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (Get-Service -Name 'Browser' -ErrorAction SilentlyContinue) { Set-Service -Name 'Browser' -StartupType Disabled -ErrorAction Stop } else { Write-Host 'Browser service is not installed (compliant).' }; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (-not (Test-Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Browser')) { New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Browser' -Force -ErrorAction Stop | Out-Null }; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\Browser' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\Browser' /v Start
+
+
+Get-Service -Name 'Browser' -ErrorAction SilentlyContinue | Select-Object Name, Status, StartType
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
