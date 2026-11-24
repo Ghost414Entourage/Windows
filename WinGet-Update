@@ -12,7 +12,22 @@ https://www.catalog.update.microsoft.com/Home.aspx
 
 https://learn.microsoft.com/en-us/windows/package-manager/winget/
 
-https://msrc.microsoft.com/update-guide/
+
+
+
+
+
+
+
+
+
+https://www.catalog.update.microsoft.com/Home.aspx
+https://learn.microsoft.com/en-us/windows/release-health/windows11-release-information
+https://msrc.microsoft.com/update-guide
+https://www.microsoft.com/en-us/wdsi/defenderupdates
+
+
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
@@ -348,7 +363,7 @@ Resolve-DnsName cdn.winget.microsoft.com -Type AAAA | Where-Object IPAddress | F
 
 resmon.exe
 
-https://learn.microsoft.com/en-us/windows/privacy/windows-11-endpoints-non-enterprise-editions?utm_source=chatgpt.com
+https://learn.microsoft.com/en-us/windows/privacy/windows-11-endpoints-non-enterprise-editions
 
 
 Resolve-DnsName sls.update.microsoft.com -Type A | Where-Object IPAddress | ForEach-Object { Test-NetConnection $_.IPAddress -Port 443 }
