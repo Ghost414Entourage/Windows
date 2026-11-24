@@ -353,6 +353,19 @@ Resolve-DnsName sls.update.microsoft.com -Type A | Where-Object IPAddress | ForE
 
 Resolve-DnsName sls.update.microsoft.com -Type AAAA | Where-Object IPAddress | ForEach-Object { Test-NetConnection $_.IPAddress -Port 443 }
 
+UsoClient.exe StartScan
+
+UsoClient.exe StartDownload
+
+UsoClient.exe StartInstall
+
+(New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=0").Updates | Select-Object Title,KBArticleIDs
+
+$s = New-Object -ComObject Microsoft.Update.Session; $u = $s.CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=0").Updates; if ($u.Count -gt 0) { $d = $s.CreateUpdateDownloader(); $d.Updates = $u; $d.Download(); $i = $s.CreateUpdateInstaller(); $i.Updates = $u; $i.Install() }
+
+
+
+
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
