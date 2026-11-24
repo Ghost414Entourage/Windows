@@ -1053,6 +1053,53 @@ Get-Service -Name 'UmRdpService' | Select-Object Name, Status, StartType
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+5.23 Ensure 'Remote Procedure Call (RPC) Locator (RpcLocator)' is set to 'Disabled' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4. 
+
+
+HKLM\SYSTEM\CurrentControlSet\Services\RpcLocator:Start
+
+
+services.msc
+
+
+In the Services window, scroll down the content until you find the 'Remote Procedure Call (RPC) Locator' service.
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+regedit
+
+
+Go to the following key: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\RpcLocator
+Double click REG_DWORD 'Start' to edit its value
+Set it to '4' (Disabled)
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; Set-Service -Name 'RpcLocator' -StartupType Disabled -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (-not (Test-Path 'HKLM:\SYSTEM\CurrentControlSet\Services\RpcLocator')) { New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\RpcLocator' -Force -ErrorAction Stop | Out-Null }; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\RpcLocator' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\RpcLocator' /v Start
+
+
+Get-Service -Name 'RpcLocator' | Select-Object Name, Status, StartType
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
