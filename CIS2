@@ -1911,6 +1911,114 @@ Stop-Service -Name 'PushToInstall' -Force -ErrorAction Stop
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+5.39 Ensure 'Windows Remote Management (WS-Management) (WinRM)' is set to 'Disabled'
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4. 
+
+
+HKLM\SYSTEM\CurrentControlSet\Services\WinRM:Start 
+
+
+services.msc
+
+
+In the Services window, scroll down the content until you find the 'Windows Remote Management (WS-Management)'
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+regedit
+
+
+Go to the following key: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WinRM
+Double click REG_DWORD 'Start' to edit its value
+Set it to '4' (Disabled)
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; Set-Service -Name 'WinRM' -StartupType Disabled -ErrorAction Stop; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (-not (Test-Path 'HKLM:\SYSTEM\CurrentControlSet\Services\WinRM')) { New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\WinRM' -Force -ErrorAction Stop | Out-Null }; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\WinRM' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\WinRM' /v Start
+
+
+Get-Service -Name 'WinRM' | Select-Object Name, Status, StartType
+
+
+Stop-Service -Name 'WinRM' -Force -ErrorAction Stop
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+5.40 Ensure 'World Wide Web Publishing Service (W3SVC)' is set to 'Disabled' or 'Not Installed' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 4 or that the key does not exist. 
+
+
+HKLM\SYSTEM\CurrentControlSet\Services\W3SVC:Start 
+
+
+services.msc
+
+
+In the Services window, scroll down the content until you find the 'World Wide Web Publishing Service'.
+Then right-click on it and click the Stop button or click 'Stop the service' on the left pane.
+Double-click the service to open its properties
+Set the Startup type to 'Disabled'
+Click 'Ok'
+
+
+regedit
+
+
+Go to the following key: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\W3SVC
+Double click REG_DWORD 'Start' to edit its value
+Set it to '4' (Disabled)
+Click 'Ok'
+
+
+*************************************************************************************************************************
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (Get-Service -Name 'W3SVC' -ErrorAction SilentlyContinue) { Set-Service -Name 'W3SVC' -StartupType Disabled -ErrorAction Stop } else { Write-Host 'W3SVC service is not installed (compliant).' }; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+$old = Get-ExecutionPolicy -Scope Process; try { Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force -ErrorAction Stop; if (-not (Test-Path 'HKLM:\SYSTEM\CurrentControlSet\Services\W3SVC')) { New-Item -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\W3SVC' -Force -ErrorAction Stop | Out-Null }; New-ItemProperty -Path 'HKLM:\SYSTEM\CurrentControlSet\Services\W3SVC' -Name 'Start' -PropertyType DWord -Value 4 -Force -ErrorAction Stop | Out-Null; gpupdate.exe /target:computer /force } finally { Set-ExecutionPolicy -Scope Process -ExecutionPolicy $old -Force }
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\W3SVC' /v Start
+
+
+reg.exe query 'HKLM\SYSTEM\CurrentControlSet\Services\W3SVC'
+
+
+Get-Service -Name 'W3SVC' -ErrorAction SilentlyContinue | Select-Object Name, Status, StartType
+
+
+sc.exe query W3SVC
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 
 
