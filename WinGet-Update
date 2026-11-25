@@ -381,6 +381,98 @@ UsoClient.exe StartInstall
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+(New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher().Search("IsInstalled=0").Updates | Select-Object Title, IsHidden, IsDownloaded
+
+(New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=0").Updates | Select-Object Title
+
+(New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=1").Updates | Select-Object Title
+
+$s = New-Object -ComObject Microsoft.Update.Session; $u = $s.CreateUpdateSearcher().Search("IsInstalled=0").Updates; if ($u.Count -gt 0) { foreach ($x in $u) { if (!$x.EulaAccepted) { $x.AcceptEula() } }; $d = $s.CreateUpdateDownloader(); $d.Updates = $u; $d.Download(); $i = $s.CreateUpdateInstaller(); $i.Updates = $u; $i.Install() } else { Write-Output "No applicable updates found." }
+
+(New-Object -ComObject Microsoft.Update.SystemInfo).RebootRequired
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Microsoft Windows API Index
+https://learn.microsoft.com/en-us/windows/win32/apiindex/windows-api-list
+
+Windows API Reference (Win32)
+https://learn.microsoft.com/en-us/windows/win32/api/
+
+Windows Update Agent (WUA) API
+https://learn.microsoft.com/en-us/windows/win32/api/_wua/
+
+Windows Management Instrumentation (WMI) API
+https://learn.microsoft.com/en-us/windows/win32/wmisdk/wmi-reference
+
+Windows Runtime (WinRT) API
+https://learn.microsoft.com/en-us/uwp/api/
+
+Windows Installer API
+https://learn.microsoft.com/en-us/windows/win32/msi/windows-installer-reference
+
+Microsoft REST API Catalog
+https://learn.microsoft.com/en-us/rest/api/
+
+Microsoft Graph API
+https://learn.microsoft.com/en-us/graph/api/overview
+
+Microsoft Edge Enterprise API (Live JSON Endpoint)
+https://edgeupdates.microsoft.com/api/products?view=enterprise
+
+Microsoft REST API Specifications (GitHub)
+https://github.com/Azure/azure-rest-api-specs
+
+Microsoft Update Catalog
+https://www.catalog.update.microsoft.com/
+
+Windows Release Health
+https://learn.microsoft.com/en-us/windows/release-health/
+
+Microsoft Download Center
+https://www.microsoft.com/en-us/download
+
+PowerShell Documentation
+https://learn.microsoft.com/en-us/powershell/
+
+Microsoft Edge Browser Policies
+https://learn.microsoft.com/en-us/deployedge/microsoft-edge-policies
+
+Microsoft Edge Update Policies
+https://learn.microsoft.com/en-us/deployedge/microsoft-edge-update-policies
+
+Microsoft Edge Enterprise Downloads
+https://www.microsoft.com/en-us/edge/business/download
+
+Windows Package Manager (WinGet)
+https://learn.microsoft.com/en-us/windows/package-manager/
+
+WinGet Package Repository (GitHub)
+https://github.com/microsoft/winget-pkgs
+
+
+Dell Command | Update
+https://www.dell.com/support/kbdoc/en-us/000177325/dell-command-update
+
+Dell Command | Update Documentation
+https://www.dell.com/support/home/en-us/product-support/product/command-update/docs
+
+Dell Drivers and Downloads
+https://www.dell.com/support/home/en-us?app=drivers
+
+Dell Update Catalog Index
+https://downloads.dell.com/catalog/CatalogIndexPC.cab
+
+Dell Enterprise Update Catalog
+https://downloads.dell.com/catalog/Catalog.cab
+
+Dell Developer Portal
+https://developer.dell.com/
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
 
