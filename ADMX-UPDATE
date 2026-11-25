@@ -136,5 +136,7 @@ ADMX: Defines which policies appear in the GUI and how they function.
 ADML: Provides the readable policy names, descriptions, help text, and configuration labels displayed in the GUI.
 
 
+([xml](Get-Content "$env:windir\PolicyDefinitions\msedge.admx" -Raw)).policyDefinitions.categories.category | Select-Object name, displayName, parentCategory | Format-Table -AutoSize
+
 
 
