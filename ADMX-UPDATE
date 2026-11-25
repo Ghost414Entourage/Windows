@@ -182,3 +182,11 @@ Get-ChildItem $api -Filter "*.admx" | ForEach-Object { $file = $_.Name; $a = ([x
 winget list --id Microsoft.Edge --exact
 
 
+---------------------------------------------
+
+$data = Invoke-RestMethod "https://edgeupdates.microsoft.com/api/products?view=enterprise"; $stable = ($data | Where-Object Product -eq "Stable").Releases | Where-Object { $_.Platform -eq "Windows" -and $_.Architecture -eq "x64" } | Sort-Object { [version]$_.ProductVersion } -Descending | Select-Object -First 1; $policy = ($data | Where-Object Product -eq "Policy").Releases | Where-Object { $_.ProductVersion -eq $stable.ProductVersion } | Select-Object -First 1; if ($policy) { Invoke-WebRequest -Uri $policy.Artifacts[0].Location -OutFile "$env:USERPROFILE\Downloads\MicrosoftEdgePolicyTemplates-Stable.cab" -UseBasicParsing } else { Write-Warning "Matching Stable policy package not found." }
+
+$policy = ((Invoke-RestMethod "https://edgeupdates.microsoft.com/api/products?view=enterprise") | Where-Object Product -eq "Policy").Releases | Where-Object ProductVersion -eq "158.0.4370.33" | Select-Object -First 1; if ($policy) { Invoke-WebRequest -Uri $policy.Artifacts[0].Location -OutFile "$env:USERPROFILE\Downloads\MicrosoftEdgePolicyTemplates-158.0.4370.33.cab" -UseBasicParsing }
+
+winget upgrade --id Microsoft.Edge --exact --source winget
+
