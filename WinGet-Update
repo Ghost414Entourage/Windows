@@ -376,18 +376,6 @@ UsoClient.exe StartDownload
 
 UsoClient.exe StartInstall
 
-(New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=0").Updates | Select-Object Title,KBArticleIDs
-
-(New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=1").Updates | Select-Object Title,IsHidden
-
-(New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher().Search("(IsInstalled=0 and IsHidden=0) or (IsInstalled=0 and IsHidden=1)").Updates | Select-Object Title,IsHidden
-
-(New-Object -ComObject Microsoft.Update.Session).CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=1").Updates | ForEach-Object { $_.IsHidden = $false; $_ | Select-Object Title,IsHidden }
-
-$s = New-Object -ComObject Microsoft.Update.Session; $u = $s.CreateUpdateSearcher().Search("IsInstalled=0 and IsHidden=0").Updates; if ($u.Count -gt 0) { $d = $s.CreateUpdateDownloader(); $d.Updates = $u; $d.Download(); $i = $s.CreateUpdateInstaller(); $i.Updates = $u; $i.Install() }
-
-
-$s = New-Object -ComObject Microsoft.Update.Session; $u = $s.CreateUpdateSearcher().Search("(IsInstalled=0 and IsHidden=0) or (IsInstalled=0 and IsHidden=1)").Updates; if ($u.Count -gt 0) { $u | ForEach-Object { if ($_.IsHidden) { $_.IsHidden = $false }; if (-not $_.EulaAccepted) { $_.AcceptEula() } }; $d = $s.CreateUpdateDownloader(); $d.Updates = $u; $d.Download(); $i = $s.CreateUpdateInstaller(); $i.Updates = $u; $i.Install() }
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
