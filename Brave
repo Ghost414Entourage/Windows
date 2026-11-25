@@ -1,3 +1,29 @@
+
+
+winget search Brave
+
+
+winget search --id Brave.Brave --exact
+
+
+winget show --id Brave.Brave --exact
+
+
+winget install --id Brave.Brave --exact
+
+
+winget show --id Brave.Brave --exact --versions
+
+
+winget search Brave --source winget
+
+
+winget install --id Brave.Brave --exact --version 158.1.100.58
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 Get-ChildItem -Path "C:\" -Filter "*brave*" -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
 
 Get-ChildItem -Path "$env:LOCALAPPDATA\BraveSoftware", "$env:ProgramFiles\BraveSoftware" -Filter "*brave*" -Recurse -ErrorAction SilentlyContinue | Select-Object -ExpandProperty FullName
