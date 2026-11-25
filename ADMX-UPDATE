@@ -104,7 +104,25 @@ $src = "$env:USERPROFILE\Downloads\EdgeADMX\Extracted\windows\admx"; $dest = "$e
 
 Get-ChildItem "$env:windir\PolicyDefinitions" -Filter "*edge*.admx" | Select-Object Name, LastWriteTime
 
+C:\Windows\PolicyDefinitions
+
+ADMX files define:
+- Available Group Policy settings.
+- Registry keys and value names.
+- Enabled and Disabled configuration behavior.
+- Supported operating systems.
+- Policy categories and configuration options.
+
 Get-ChildItem "$env:windir\PolicyDefinitions\en-US" -Filter "msedge*.adml" | Select-Object Name, LastWriteTime
+
+C:\Windows\PolicyDefinitions\en-US
+
+ADML files provide:
+- Human-readable policy names.
+- Policy descriptions.
+- Help and explanation text.
+- Configuration interface labels.
+- Language-specific resources (US English in this case).
 
 gpupdate /force
 
