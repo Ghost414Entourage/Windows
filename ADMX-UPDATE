@@ -130,6 +130,10 @@ gpupdate /force
 gpedit.msc
 
 
+ADMX: Defines which policies appear in the GUI and how they function.
+
+
+ADML: Provides the readable policy names, descriptions, help text, and configuration labels displayed in the GUI.
 
 
 
