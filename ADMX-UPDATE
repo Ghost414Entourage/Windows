@@ -96,6 +96,9 @@ Get-ChildItem ".\EdgeADMX\Extracted" -Recurse -Filter "*.admx" | Select-Object N
 Get-ChildItem ".\EdgeADMX\Extracted\windows\admx\en-US" -Filter "*.adml" | Select-Object Name
 
 
+$src = "$env:USERPROFILE\Downloads\EdgeADMX\Extracted\windows\admx"; $dest = "$env:windir\PolicyDefinitions"; robocopy "$src" "$dest" *.admx /XC /XN /XO /R:0 /W:0 /L; robocopy "$src\en-US" "$dest\en-US" *.adml /XC /XN /XO /R:0 /W:0 /L
+
+
 $src = "$env:USERPROFILE\Downloads\EdgeADMX\Extracted\windows\admx"; $dest = "$env:windir\PolicyDefinitions"; robocopy "$src" "$dest" *.admx /XC /XN /XO /R:0 /W:0; robocopy "$src\en-US" "$dest\en-US" *.adml /XC /XN /XO /R:0 /W:0
 
 
