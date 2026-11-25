@@ -75,6 +75,40 @@ Test-Path "C:\Temp\ADMX26H2\Microsoft Group Policy\Windows 11 Sep 2026 Update (2
 $src = (Get-ChildItem "C:\Temp\ADMX26H2" -Recurse -Directory -Filter PolicyDefinitions | Select-Object -First 1).FullName; Get-ChildItem $src -Filter "*.admx" | ForEach-Object { $dest = Join-Path "$env:windir\PolicyDefinitions" $_.Name; [PSCustomObject]@{ Name = $_.Name; Status = if (!(Test-Path $dest)) { "Missing" } elseif ((Get-FileHash $_.FullName).Hash -eq (Get-FileHash $dest).Hash) { "Identical" } else { "Different" } } } | Sort-Object Status, Name | Format-Table -AutoSize
 
 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+cd "$env:USERPROFILE\Downloads"; Get-ChildItem
+
+
+New-Item -ItemType Directory -Path ".\EdgeADMX" -Force | Out-Null; expand.exe ".\MicrosoftEdgePolicyTemplates.cab" -F:* ".\EdgeADMX"
+
+
+Rename-Item ".\EdgeADMX\microsoftedgepolicytemplates.cab" -NewName "MicrosoftEdgePolicyTemplates.zip"
+
+
+Expand-Archive -LiteralPath ".\EdgeADMX\MicrosoftEdgePolicyTemplates.zip" -DestinationPath ".\EdgeADMX\Extracted" -Force
+
+
+Get-ChildItem ".\EdgeADMX\Extracted" -Recurse -Filter "*.admx" | Select-Object Name, FullName
+
+
+Get-ChildItem ".\EdgeADMX\Extracted\windows\admx\en-US" -Filter "*.adml" | Select-Object Name
+
+
+$src = "$env:USERPROFILE\Downloads\EdgeADMX\Extracted\windows\admx"; $dest = "$env:windir\PolicyDefinitions"; robocopy "$src" "$dest" *.admx /XC /XN /XO /R:0 /W:0; robocopy "$src\en-US" "$dest\en-US" *.adml /XC /XN /XO /R:0 /W:0
+
+
+Get-ChildItem "$env:windir\PolicyDefinitions" -Filter "*edge*.admx" | Select-Object Name, LastWriteTime
+
+
+gpupdate /force
+
+
+gpedit.msc
+
+
+
 
 
 
