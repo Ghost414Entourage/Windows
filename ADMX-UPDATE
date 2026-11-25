@@ -1,0 +1,77 @@
+
+
+https://www.microsoft.com/en-us/download/details.aspx?id=108847
+
+
+https://www.microsoft.com/en-us/download/details.aspx?id=108849
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, BuildNumber
+
+
+C:\Windows\PolicyDefinitions
+
+
+(Get-ChildItem "$env:windir\PolicyDefinitions" -Filter "*.admx").Count
+
+
+cd "$env:USERPROFILE\Downloads"
+
+
+Get-ChildItem
+
+
+Start-Process msiexec.exe -ArgumentList '/a "Administrative Templates (.admx) for Windows 11 Sep 2026 Update.msi" TARGETDIR="C:\Temp\ADMX26H2" /qn' -Wait
+
+
+Get-ChildItem "C:\Temp\ADMX26H2" -Recurse -Directory -Filter PolicyDefinitions
+
+
+$src = (Get-ChildItem "C:\Temp\ADMX26H2" -Recurse -Directory -Filter PolicyDefinitions | Select-Object -First 1).FullName; Get-ChildItem $src -Filter "*.admx" | ForEach-Object { $dest = Join-Path "$env:windir\PolicyDefinitions" $_.Name; [PSCustomObject]@{ Name = $_.Name; Status = if (!(Test-Path $dest)) { "Missing" } elseif ((Get-FileHash $_.FullName).Hash -eq (Get-FileHash $dest).Hash) { "Identical" } else { "Different" } } } | Sort-Object Status, Name | Format-Table -AutoSize
+
+
+Get-ChildItem $src -Filter "*.admx" | ForEach-Object { $dest = Join-Path "$env:windir\PolicyDefinitions" $_.Name; if ((Test-Path $dest) -and ((Get-FileHash $_.FullName).Hash -ne (Get-FileHash $dest).Hash)) { $file = $_.Name; $local = ([xml](Get-Content $dest -Raw)).policyDefinitions.policies.policy.name; $downloaded = ([xml](Get-Content $_.FullName -Raw)).policyDefinitions.policies.policy.name; $downloaded | Where-Object { $_ -notin $local } | ForEach-Object { [PSCustomObject]@{ Template = $file; MissingPolicy = $_ } } } } | Format-Table -AutoSize
+
+
+([xml](Get-Content "$src\en-US\refs.adml" -Raw)).policyDefinitionResources.resources.stringTable.string | Where-Object { $_.id -match "BlockExternalBusMount|BlockHotplugMount" } | Format-Table -AutoSize -Wrap
+
+
+Get-ChildItem $src -Filter "*.admx" | ForEach-Object { $dest = Join-Path "$env:windir\PolicyDefinitions" $_.Name; if ((Test-Path $dest) -and ((Get-FileHash $_.FullName).Hash -ne (Get-FileHash $dest).Hash)) { [PSCustomObject]@{ Template = $_.Name; LocalDate = (Get-Item $dest).LastWriteTime; DownloadedDate = $_.LastWriteTime; NewerByDate = if ($_.LastWriteTime -gt (Get-Item $dest).LastWriteTime) { "Downloaded" } elseif ($_.LastWriteTime -lt (Get-Item $dest).LastWriteTime) { "Local" } else { "Same Date" } } } } | Format-Table -AutoSize
+
+
+$src = (Read-Host "Enter extracted PolicyDefinitions directory"); $dest = "$env:windir\PolicyDefinitions"; robocopy "$src" "$dest" *.admx *.adml /S /XC /XN /XO /R:0 /W:0
+
+
+$src = (Read-Host "Enter extracted PolicyDefinitions directory"); $dest = "$env:windir\PolicyDefinitions"; robocopy "$src" "$dest" *.admx *.adml /S /XC /XN /XO /R:0 /W:0 /L
+
+
+C:\Temp\ADMX26H2\Microsoft Group Policy\Windows 11 Sep 2026 Update (26H2)\PolicyDefinitions
+
+
+Get-ChildItem $src -Filter "*.admx" | Where-Object { -not (Test-Path (Join-Path "$env:windir\PolicyDefinitions" $_.Name)) } | Select-Object Name
+
+
+(Get-ChildItem "$env:windir\PolicyDefinitions" -Filter "*.admx").Count
+
+
+gpedit.msc
+
+
+gpupdate /force
+
+
+Get-Process mmc -ErrorAction SilentlyContinue | Stop-Process -Force; Start-Process gpedit.msc
+
+
+Test-Path "C:\Temp\ADMX26H2\Microsoft Group Policy\Windows 11 Sep 2026 Update (26H2)\PolicyDefinitions"
+
+
+$src = (Get-ChildItem "C:\Temp\ADMX26H2" -Recurse -Directory -Filter PolicyDefinitions | Select-Object -First 1).FullName; Get-ChildItem $src -Filter "*.admx" | ForEach-Object { $dest = Join-Path "$env:windir\PolicyDefinitions" $_.Name; [PSCustomObject]@{ Name = $_.Name; Status = if (!(Test-Path $dest)) { "Missing" } elseif ((Get-FileHash $_.FullName).Hash -eq (Get-FileHash $dest).Hash) { "Identical" } else { "Different" } } } | Sort-Object Status, Name | Format-Table -AutoSize
+
+
+
+
+
