@@ -146,3 +146,30 @@ $release = ((Invoke-RestMethod "https://edgeupdates.microsoft.com/api/products?v
 
 
 Get-Item "$env:USERPROFILE\Downloads\MicrosoftEdgePolicyTemplates.cab" | Select-Object Name, Length, LastWriteTime
+
+
+
+Get-FileHash ".\MicrosoftEdgePolicyTemplates.cab", ".\MicrosoftEdgePolicyTemplates (1).cab" -Algorithm SHA256 | Format-List
+
+
+Get-AuthenticodeSignature -FilePath ".\MicrosoftEdgePolicyTemplates.cab", ".\MicrosoftEdgePolicyTemplates (1).cab" | Select-Object Path, Status, @{Name="Signer";Expression={$_.SignerCertificate.Subject}} | Format-List
+
+
+New-Item -ItemType Directory -Path ".\EdgeAPI" -Force | Out-Null; expand.exe ".\MicrosoftEdgePolicyTemplates.cab" -F:* ".\EdgeAPI"
+
+
+New-Item -ItemType Directory -Path ".\EdgeGUI" -Force | Out-Null; expand.exe ".\MicrosoftEdgePolicyTemplates (1).cab" -F:* ".\EdgeGUI"
+
+
+Get-ChildItem ".\EdgeAPI", ".\EdgeGUI" -Recurse -File | Get-FileHash -Algorithm SHA256 | Format-List
+
+
+Rename-Item ".\EdgeAPI\microsoftedgepolicytemplates.cab" -NewName "MicrosoftEdgePolicyTemplates.zip"; Rename-Item ".\EdgeGUI\microsoftedgepolicytemplates (1).cab" -NewName "MicrosoftEdgePolicyTemplates.zip"
+
+
+Expand-Archive -LiteralPath ".\EdgeAPI\MicrosoftEdgePolicyTemplates.zip" -DestinationPath ".\EdgeAPI\Extracted" -Force; Expand-Archive -LiteralPath ".\EdgeGUI\MicrosoftEdgePolicyTemplates.zip" -DestinationPath ".\EdgeGUI\Extracted" -Force
+
+
+$api = "$env:USERPROFILE\Downloads\EdgeAPI\Extracted\windows\admx"; $gui = "$env:USERPROFILE\Downloads\EdgeGUI\Extracted\windows\admx"; Get-ChildItem $api -Recurse -File | Where-Object { $_.Extension -eq ".admx" -or ($_.Extension -eq ".adml" -and $_.Directory.Name -eq "en-US") } | ForEach-Object { $relative = $_.FullName.Substring($api.Length + 1); $dest = Join-Path $gui $relative; [PSCustomObject]@{ File = $relative; APIDate = $_.LastWriteTime; GUIDate = if (Test-Path $dest) { (Get-Item $dest).LastWriteTime }; Status = if (!(Test-Path $dest)) { "Missing in GUI" } elseif ((Get-FileHash $_.FullName).Hash -eq (Get-FileHash $dest).Hash) { "Identical" } else { "Different" } } } | Format-Table -AutoSize
+
+
