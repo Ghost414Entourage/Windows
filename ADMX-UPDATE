@@ -104,6 +104,7 @@ $src = "$env:USERPROFILE\Downloads\EdgeADMX\Extracted\windows\admx"; $dest = "$e
 
 Get-ChildItem "$env:windir\PolicyDefinitions" -Filter "*edge*.admx" | Select-Object Name, LastWriteTime
 
+Get-ChildItem "$env:windir\PolicyDefinitions\en-US" -Filter "msedge*.adml" | Select-Object Name, LastWriteTime
 
 gpupdate /force
 
