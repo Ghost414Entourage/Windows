@@ -18,6 +18,9 @@ Get-CimInstance Win32_OperatingSystem | Select-Object Caption, Version, BuildNum
 C:\Windows\PolicyDefinitions
 
 
+Get-ChildItem "$env:windir\PolicyDefinitions" -Filter "*.admx" | Select-Object Name
+
+
 (Get-ChildItem "$env:windir\PolicyDefinitions" -Filter "*.admx").Count
 
 
