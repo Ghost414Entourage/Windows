@@ -139,4 +139,10 @@ ADML: Provides the readable policy names, descriptions, help text, and configura
 ([xml](Get-Content "$env:windir\PolicyDefinitions\msedge.admx" -Raw)).policyDefinitions.categories.category | Select-Object name, displayName, parentCategory | Format-Table -AutoSize
 
 
+$release = ((Invoke-RestMethod "https://edgeupdates.microsoft.com/api/products?view=enterprise") | Where-Object { $_.Product -eq "Policy" }).Releases | Sort-Object { [version]$_.ProductVersion } -Descending | Select-Object -First 1; Invoke-WebRequest -Uri $release.Artifacts[0].Location -OutFile "$env:USERPROFILE\Downloads\MicrosoftEdgePolicyTemplates.cab" -UseBasicParsing
 
+
+((Invoke-RestMethod "https://edgeupdates.microsoft.com/api/products?view=enterprise") | Where-Object { $_.Product -eq "Policy" }).Releases | Select-Object ProductVersion, Platform, Architecture
+
+
+Get-Item "$env:USERPROFILE\Downloads\MicrosoftEdgePolicyTemplates.cab" | Select-Object Name, Length, LastWriteTime
