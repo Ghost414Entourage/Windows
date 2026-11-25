@@ -173,3 +173,12 @@ Expand-Archive -LiteralPath ".\EdgeAPI\MicrosoftEdgePolicyTemplates.zip" -Destin
 $api = "$env:USERPROFILE\Downloads\EdgeAPI\Extracted\windows\admx"; $gui = "$env:USERPROFILE\Downloads\EdgeGUI\Extracted\windows\admx"; Get-ChildItem $api -Recurse -File | Where-Object { $_.Extension -eq ".admx" -or ($_.Extension -eq ".adml" -and $_.Directory.Name -eq "en-US") } | ForEach-Object { $relative = $_.FullName.Substring($api.Length + 1); $dest = Join-Path $gui $relative; [PSCustomObject]@{ File = $relative; APIDate = $_.LastWriteTime; GUIDate = if (Test-Path $dest) { (Get-Item $dest).LastWriteTime }; Status = if (!(Test-Path $dest)) { "Missing in GUI" } elseif ((Get-FileHash $_.FullName).Hash -eq (Get-FileHash $dest).Hash) { "Identical" } else { "Different" } } } | Format-Table -AutoSize
 
 
+((Invoke-RestMethod "https://edgeupdates.microsoft.com/api/products?view=enterprise") | Where-Object { $_.Product -eq "Policy" }).Releases | Sort-Object { [version]$_.ProductVersion } -Descending | Select-Object ProductVersion, Platform, Architecture
+
+
+Get-ChildItem $api -Filter "*.admx" | ForEach-Object { $file = $_.Name; $a = ([xml](Get-Content $_.FullName -Raw)).policyDefinitions.policies.policy.name; $g = ([xml](Get-Content (Join-Path $gui $file) -Raw)).policyDefinitions.policies.policy.name; $a | Where-Object { $_ -notin $g } | ForEach-Object { [PSCustomObject]@{ Template = $file; AdditionalPolicy = $_ } } } | Format-Table -AutoSize
+
+
+winget list --id Microsoft.Edge --exact
+
+
