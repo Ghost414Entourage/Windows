@@ -168,3 +168,51 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+9.2.3 Ensure 'Windows Firewall: Private: Settings: Display a notification' is set to 'No' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile:DisableNotifications 
+
+
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" -ValueName "DisableNotifications" -Data 1 -Type DWord -ErrorAction Stop
+
+
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" -ValueName "DisableNotifications"
+
+
+gpupdate /force
+
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" /v DisableNotifications
+
+
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile"; Start-Process regedit.exe
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" -ValueName "DisableNotifications" -Data 1 -Type DWord -ErrorAction Stop
+
+
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" -ValueName "DisableNotifications"
+
+
+gpupdate /force
+
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" /v DisableNotifications
+
+
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
