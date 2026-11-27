@@ -541,3 +541,143 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+9.3.4 Ensure 'Windows Firewall: Public: Logging: Name' is configured
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_SZ value of <path>\<filename>.log. Where <path> is the location and 
+<file> is the log name specified by the organization. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging:LogFilePath 
+
+
+ %SystemRoot%\System32\logfiles\firewall\publicfw.log.
+
+
+# 1. Configure Local Group Policy
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -ValueName "LogFilePath" -Data "%SystemRoot%\System32\logfiles\firewall\publicfw.log" -Type String -ErrorAction Stop
+
+
+# 2. Verify Local Group Policy (Registry.pol)
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -ValueName "LogFilePath"
+
+
+# 3. Apply all Group Policies
+gpupdate /force
+
+
+# 4. Verify the live registry
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" /v LogFilePath
+
+
+# 5. Open Registry Editor directly to the policy location
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+9.3.5 Ensure 'Windows Firewall: Public: Logging: Size limit (KB)' is set to '16,384 KB or greater' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 16384. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging:LogFileSize
+
+
+# 1. Configure Local Group Policy
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -ValueName "LogFileSize" -Data 16384 -Type DWord -ErrorAction Stop
+
+
+# 2. Verify Local Group Policy (Registry.pol)
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -ValueName "LogFileSize"
+
+
+# 3. Apply all Group Policies
+gpupdate /force
+
+
+# 4. Verify the live registry
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" /v LogFileSize
+
+
+# 5. Open Registry Editor directly to the policy location
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+9.3.6 Ensure 'Windows Firewall: Public: Logging: Log dropped packets' is set to 'Yes' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging:LogDroppedPackets
+
+
+# 1. Configure Local Group Policy
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -ValueName "LogDroppedPackets" -Data 1 -Type DWord -ErrorAction Stop
+
+
+# 2. Verify Local Group Policy (Registry.pol)
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -ValueName "LogDroppedPackets"
+
+
+# 3. Apply all Group Policies
+gpupdate /force
+
+
+# 4. Verify the live registry
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" /v LogDroppedPackets
+
+
+# 5. Open Registry Editor directly to the policy location
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+9.3.7 Ensure 'Windows Firewall: Public: Logging: Log successful connections' is set to 'Yes' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging:LogSuccessfulConnections
+
+
+# 1. Configure Local Group Policy
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -ValueName "LogSuccessfulConnections" -Data 1 -Type DWord -ErrorAction Stop
+
+
+# 2. Verify Local Group Policy (Registry.pol)
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" -ValueName "LogSuccessfulConnections"
+
+
+# 3. Apply all Group Policies
+gpupdate /force
+
+
+# 4. Verify the live registry
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging" /v LogSuccessfulConnections
+
+
+# 5. Open Registry Editor directly to the policy location
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
