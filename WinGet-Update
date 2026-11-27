@@ -248,6 +248,8 @@ reg export "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{22221111-1
 
 New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{22221111-1111-1111-1111-111111111111}.sdb' -Name 'DisplayVersion' -Value 'N/A' -PropertyType String -Force
 
+Set-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{22221111-1111-1111-1111-111111111111}.sdb' -Name 'DisplayVersion' -Value ''
+
 winget list --name "Microsoft Windows Application Compatibility Fix Database"
 
 Get-Item "C:\WINDOWS\AppPatch\CustomSDB\{22221111-1111-1111-1111-111111111111}.sdb" | Format-List Name,Length,CreationTime,LastWriteTime
