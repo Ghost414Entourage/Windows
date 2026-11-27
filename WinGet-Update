@@ -241,6 +241,31 @@ winget uninstall --id "ARP\Machine\X64\{22221111-1111-1111-1111-111111111111}"
 
 
 
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+reg export "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{22221111-1111-1111-1111-111111111111}.sdb" "$env:USERPROFILE\AppCompat-Backup.reg" /y
+
+New-ItemProperty -Path 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{22221111-1111-1111-1111-111111111111}.sdb' -Name 'DisplayVersion' -Value 'N/A' -PropertyType String -Force
+
+winget list --name "Microsoft Windows Application Compatibility Fix Database"
+
+Get-Item "C:\WINDOWS\AppPatch\CustomSDB\{22221111-1111-1111-1111-111111111111}.sdb" | Format-List Name,Length,CreationTime,LastWriteTime
+
+Get-FileHash "C:\WINDOWS\AppPatch\CustomSDB\{22221111-1111-1111-1111-111111111111}.sdb" -Algorithm SHA256
+
+Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\Custom' | Get-ItemProperty | Format-List *
+
+Test-Path "C:\WINDOWS\AppPatch\CustomSDB\{22221111-1111-1111-1111-111111111111}.sdb"
+
+Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{22221111-1111-1111-1111-111111111111}.sdb' | Format-List *
+
+Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB' | Get-ItemProperty | Format-List *
+
+
+
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
