@@ -7,7 +7,6 @@ C:\Windows\System32\GroupPolicy\Machine\Registry.pol
 Test-Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol"
 
 
-
 User Configuration:
 
 
@@ -15,6 +14,9 @@ C:\Windows\System32\GroupPolicy\User\Registry.pol
 
 
 Test-Path "$env:SystemRoot\System32\GroupPolicy\User\Registry.pol"
+
+
+Get-CimInstance Win32_ComputerSystem | Select-Object Name, Domain, PartOfDomain
 
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
