@@ -262,6 +262,11 @@ Get-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall\{222
 
 Get-ChildItem 'HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\AppCompatFlags\InstalledSDB' | Get-ItemProperty | Format-List *
 
+winget list --details
+
+explorer.exe /select,"C:\WINDOWS\AppPatch\CustomSDB\{22221111-1111-1111-1111-111111111111}.sdb"
+
+
 
 
 
