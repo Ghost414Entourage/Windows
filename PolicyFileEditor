@@ -1,0 +1,41 @@
+Computer Configuration:
+
+
+C:\Windows\System32\GroupPolicy\Machine\Registry.pol
+
+
+Test-Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol"
+
+
+
+User Configuration:
+
+
+C:\Windows\System32\GroupPolicy\User\Registry.pol
+
+
+Test-Path "$env:SystemRoot\System32\GroupPolicy\User\Registry.pol"
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Get-ChildItem "$env:SystemRoot\System32\GroupPolicy" -Recurse -Force
+
+
+Test-Path "$env:SystemRoot\System32\GroupPolicy"
+Test-Path "$env:SystemRoot\System32\GroupPolicy\Machine"
+Test-Path "$env:SystemRoot\System32\GroupPolicy\User"
+
+
+Get-Content "$env:SystemRoot\System32\GroupPolicy\gpt.ini"
+
+
+[Environment]::Is64BitProcess
+
+
+Install-Module -Name PolicyFileEditor -Scope AllUsers
+
+
+
+
