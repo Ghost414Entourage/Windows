@@ -269,7 +269,8 @@ winget list --details
 explorer.exe /select,"C:\WINDOWS\AppPatch\CustomSDB\{22221111-1111-1111-1111-111111111111}.sdb"
 
 
-
+DISM.exe /Online /Cleanup-Image /RestoreHealth
+sfc.exe /scannow
 
 
 
