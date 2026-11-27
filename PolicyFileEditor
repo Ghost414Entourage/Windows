@@ -112,4 +112,49 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+9.2.2 Ensure 'Windows Firewall: Private: Inbound connections' is set to 'Block (default)' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile:DefaultInboundAction 
+
+
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" -ValueName "DefaultInboundAction" -Data 1 -Type DWord -ErrorAction Stop
+
+
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" -ValueName "DefaultInboundAction"
+
+
+gpupdate /force
+
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" /v DefaultInboundAction
+
+
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile"; Start-Process regedit.exe
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" -ValueName "DefaultInboundAction" -Data 1 -Type DWord -ErrorAction Stop
+
+
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" -ValueName "DefaultInboundAction"
+
+
+gpupdate /force
+
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" /v DefaultInboundAction
+
+
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
