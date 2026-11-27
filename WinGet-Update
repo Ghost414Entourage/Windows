@@ -278,7 +278,7 @@ Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery
 
 Repair-WinGetPackageManager -Force -Latest
 
-
+winget --version
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
