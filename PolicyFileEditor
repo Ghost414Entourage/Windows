@@ -472,3 +472,72 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\
 
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+9.3.2 Ensure 'Windows Firewall: Public: Inbound connections' is set to 'Block (default)'
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile:DefaultInboundAction 
+
+
+# 1. Configure Local Group Policy
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" -ValueName "DefaultInboundAction" -Data 1 -Type DWord -ErrorAction Stop
+
+
+# 2. Verify Local Group Policy (Registry.pol)
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" -ValueName "DefaultInboundAction"
+
+
+# 3. Apply all Group Policies
+gpupdate /force
+
+
+# 4. Verify the live registry
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" /v DefaultInboundAction
+
+
+# 5. Open Registry Editor directly to the policy location
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+9.3.3 Ensure 'Windows Firewall: Public: Settings: Display a notification' is set to 'No' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile:DisableNotifications
+
+
+# 1. Configure Local Group Policy
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" -ValueName "DisableNotifications" -Data 1 -Type DWord -ErrorAction Stop
+
+
+# 2. Verify Local Group Policy (Registry.pol)
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" -ValueName "DisableNotifications"
+
+
+# 3. Apply all Group Policies
+gpupdate /force
+
+
+# 4. Verify the live registry
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" /v DisableNotifications
+
+
+# 5. Open Registry Editor directly to the policy location
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
