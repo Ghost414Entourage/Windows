@@ -65,6 +65,16 @@ Get-Command -Module PolicyFileEditor
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+Set-PolicyFileEntry — Configure Local Group Policy.
+Get-PolicyFileEntry — Verify the stored policy.
+gpupdate /force — Apply all Group Policies.
+reg query — Verify the live registry value.
+Open regedit.exe directly to the configured registry location.
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 9.2.1 Ensure 'Windows Firewall: Private: Firewall state' is set to 'On (recommended)' 
 
 
