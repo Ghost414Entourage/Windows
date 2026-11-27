@@ -37,5 +37,31 @@ Get-Content "$env:SystemRoot\System32\GroupPolicy\gpt.ini"
 Install-Module -Name PolicyFileEditor -Scope AllUsers
 
 
+Get-ChildItem "HKLM:\SOFTWARE\Policies" -Recurse
+Get-ChildItem "HKCU:\SOFTWARE\Policies" -Recurse
+
+
+Test-Path $PolPath
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+Install-Module -Name PolicyFileEditor -Scope AllUsers
+
+
+Get-ExecutionPolicy -List
+
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy RemoteSigned -Force
+
+
+Import-Module PolicyFileEditor
+
+
+Get-Command -Module PolicyFileEditor
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
