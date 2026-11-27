@@ -9,3 +9,83 @@ control panel
 computer management 
 
 optional features -- server manager
+
+
+---------------------------------------------------------------------------------------------------------------
+
+(Displays a window with the Windows version information, such as Windows 10/11, version number, and build.)
+
+Winver
+
+---------------------------------------------------------------------------------------------------------------
+
+(Displays detailed information about the computer and system, such as the Windows version, installation date, manufacturer, RAM, installed updates, and domain/workgroup.)
+
+systeminfo
+
+---------------------------------------------------------------------------------------------------------------
+
+(PowerShell. Shows only selected Windows information)
+
+Get-ComputerInfo | Select-Object WindowsProductName, WindowsVersion, OsBuildNumber
+
+---------------------------------------------------------------------------------------------------------------
+
+(PowerShell. Shows the status of Microsoft Defender, such as whether the antivirus is running, whether real-time protection is enabled, and when the definitions were last updated.)
+
+Get-MpComputerStatus
+
+---------------------------------------------------------------------------------------------------------------
+
+(Shows the Windows Firewall status for firewall profiles)
+
+Get-NetFirewallProfile | Format-Table Name, Enabled, DefaultInboundAction, DefaultOutboundAction
+
+---------------------------------------------------------------------------------------------------------------
+
+(Shows which groups the currently logged-in user belongs to, such as whether they are an administrator, a domain user, etc. Useful for checking permissions.)
+
+whoami /groups
+
+---------------------------------------------------------------------------------------------------------------
+
+(Opens the "System Protection" window, where you can enable restore points and manually create a restore point)
+
+SystemPropertiesProtection.exe
+
+---------------------------------------------------------------------------------------------------------------
+
+(Creates a system restore point using PowerShell. Description: "before".)
+
+Checkpoint-Computer -Description "before" -RestorePointType "MODIFY_SETTINGS"
+
+---------------------------------------------------------------------------------------------------------------
+
+Creates the C:\backup directory if it does not already exist.
+
+New-Item -ItemType Directory -Path C:\backup -Force
+
+---------------------------------------------------------------------------------------------------------------
+
+(Exports Windows Defender settings/policies from the registry to a backup file)
+
+reg export "HKLM\SOFTWARE\Policies\Microsoft\Windows Defender" C:\backup\wd_policy.reg /y
+
+---------------------------------------------------------------------------------------------------------------
+
+(Exports the current Windows Firewall settings to a file)
+
+netsh advfirewall export "C:\backup\firewall.wfw"
+
+---------------------------------------------------------------------------------------------------------------
+
+(Saves a list of Windows services and their status to a CSV file)
+
+Get-Service | Export-Csv C:\backup\services_before.csv -NoTypeInformation
+
+---------------------------------------------------------------------------------------------------------------
+
+
+
+
+
