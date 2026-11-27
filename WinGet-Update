@@ -272,6 +272,12 @@ explorer.exe /select,"C:\WINDOWS\AppPatch\CustomSDB\{22221111-1111-1111-1111-111
 DISM.exe /Online /Cleanup-Image /RestoreHealth
 sfc.exe /scannow
 
+Install-PackageProvider -Name NuGet -Force
+
+Install-Module -Name Microsoft.WinGet.Client -Force -Repository PSGallery
+
+Repair-WinGetPackageManager -Force -Latest
+
 
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
