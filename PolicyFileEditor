@@ -439,3 +439,36 @@ Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\
 -------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+9.3.1 Ensure 'Windows Firewall: Public: Firewall state' is set to 'On (recommended)' 
+
+
+Navigate to the UI Path articulated in the Remediation section and confirm it is set as 
+prescribed. This group policy setting is backed by the following registry location with a 
+REG_DWORD value of 1. 
+
+
+HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile:EnableFirewall 
+
+
+# 1. Configure Local Group Policy
+Set-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" -ValueName "EnableFirewall" -Data 1 -Type DWord -ErrorAction Stop
+
+
+# 2. Verify Local Group Policy (Registry.pol)
+Get-PolicyFileEntry -Path "$env:SystemRoot\System32\GroupPolicy\Machine\Registry.pol" -Key "SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" -ValueName "EnableFirewall"
+
+
+# 3. Apply all Group Policies
+gpupdate /force
+
+
+# 4. Verify the live registry
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" /v EnableFirewall
+
+
+# 5. Open Registry Editor directly to the policy location
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile"; Start-Process regedit.exe
+
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------
+
