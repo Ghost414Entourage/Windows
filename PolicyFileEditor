@@ -691,8 +691,6 @@ Get-DscResource -Module GPRegistryPolicyDsc
 
 Get-Module -ListAvailable -Name PSDesiredStateConfiguration | Select-Object Name, Version, Path
 
-Install-Module -Name PSDesiredStateConfiguration -RequiredVersion 1.1 -Scope AllUsers
-
 Find-Module -Name PSDesiredStateConfiguration -AllVersions | Select-Object Name, Version, PublishedDate
 
 Find-Module -Name PSDesiredStateConfiguration | Select-Object Name, Version, PublishedDate
