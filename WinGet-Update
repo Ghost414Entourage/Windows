@@ -280,6 +280,25 @@ Repair-WinGetPackageManager -Force -Latest
 
 winget --version
 
+winget show --id Microsoft.AppInstaller --exact --versions
+
+# List all versions, including prereleases
+(Invoke-RestMethod 'https://api.github.com/repos/microsoft/winget-cli/releases?per_page=100') | Select-Object @{Name='Version';Expression={$_.tag_name}},prerelease,published_at | Format-Table -AutoSize
+
+# List the 10 most recent versions
+(Invoke-RestMethod 'https://api.github.com/repos/microsoft/winget-cli/releases?per_page=10') | Select-Object tag_name,prerelease,published_at | Format-Table -AutoSize
+
+# List stable versions only
+(Invoke-RestMethod 'https://api.github.com/repos/microsoft/winget-cli/releases?per_page=100') | Where-Object { -not $_.prerelease } | Select-Object tag_name,published_at | Format-Table -AutoSize
+
+# List prerelease versions only
+(Invoke-RestMethod 'https://api.github.com/repos/microsoft/winget-cli/releases?per_page=100') | Where-Object prerelease | Select-Object tag_name,published_at | Format-Table -AutoSize
+
+
+
+
+
+
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
