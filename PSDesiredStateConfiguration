@@ -1,0 +1,31 @@
+Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers
+
+
+Get-DscResource -Module GPRegistryPolicyDsc
+
+
+winget install --id Microsoft.PowerShell --source winget
+
+Get-Module -ListAvailable -Name PSDesiredStateConfiguration | Select-Object Name, Version, Path
+Find-Module -Name PSDesiredStateConfiguration -AllVersions | Select-Object Name, Version, PublishedDate
+Find-Module -Name PSDesiredStateConfiguration | Select-Object Name, Version, PublishedDate
+Install-Module -Name PSDesiredStateConfiguration -RequiredVersion 2.0.8 -Scope AllUsers
+Get-Module -ListAvailable PSDesiredStateConfiguration | Select-Object Name, Version, Path
+
+
+Find-Module -Name GPRegistryPolicyDsc -AllVersions | Select-Object Name, Version, PublishedDate
+Find-Module -Name GPRegistryPolicyDsc | Select-Object Name, Version, PublishedDate
+Get-Module -ListAvailable -Name GPRegistryPolicyDsc | Select-Object Name, Version, Path
+Find-Module -Name GPRegistryPolicyDsc -AllVersions -AllowPrerelease | Select-Object Name, Version, PublishedDate
+Find-Module -Name GPRegistryPolicyDsc | Select-Object -ExpandProperty Dependencies
+Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers
+Get-DscResource -Module GPRegistryPolicyDsc
+
+
+Get-Command -Module PSDesiredStateConfiguration
+Get-DscResource -Module GPRegistryPolicyDsc
+
+Import-Module PSDesiredStateConfiguration
+Import-Module GPRegistryPolicyDsc
+Get-Module PSDesiredStateConfiguration, GPRegistryPolicyDsc
+Get-DscResource -Module GPRegistryPolicyDsc
