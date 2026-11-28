@@ -6,9 +6,8 @@ Test-NetConnection objects.githubusercontent.com -Port 443
 Test-NetConnection raw.githubusercontent.com -Port 443
 Resolve-DnsName github.com
 
+Test-NetConnection storeedgefd.dsx.mp.microsoft.com -Port 443
 Test-NetConnection cdn.winget.microsoft.com -Port 443
-
-winget show --id Microsoft.PowerShell --exact --source winget
 
 
 -----------------------------------------------------------------------------------------------------------------------------------------
