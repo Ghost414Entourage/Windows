@@ -1,0 +1,12 @@
+
+
+cd "$env:USERPROFILE\Downloads"
+
+
+Get-AuthenticodeSignature .\MediaCreationTool.exe | Format-List
+
+
+Get-FileHash .\MediaCreationTool.exe -Algorithm SHA256
+
+
+Get-AuthenticodeSignature .\MediaCreationTool.exe | Format-List Status, StatusMessage, SignerCertificate
