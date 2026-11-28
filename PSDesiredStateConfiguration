@@ -32,8 +32,6 @@ Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers
 Get-DscResource -Module GPRegistryPolicyDsc
 
 
-winget install --id Microsoft.PowerShell --source winget
-
 Get-Module -ListAvailable -Name PSDesiredStateConfiguration | Select-Object Name, Version, Path
 Find-Module -Name PSDesiredStateConfiguration -AllVersions | Select-Object Name, Version, PublishedDate
 Find-Module -Name PSDesiredStateConfiguration | Select-Object Name, Version, PublishedDate
