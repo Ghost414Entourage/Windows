@@ -32,27 +32,141 @@ RefreshRegistryPolicy	- DSC resource	Refreshes Group Policy
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-
+# List locally installed versions and paths
 Get-Module -ListAvailable -Name PSDesiredStateConfiguration | Select-Object Name, Version, Path
+
+# List all published stable versions
 Find-Module -Name PSDesiredStateConfiguration -AllVersions | Select-Object Name, Version, PublishedDate
+
+# Find the latest stable version
 Find-Module -Name PSDesiredStateConfiguration | Select-Object Name, Version, PublishedDate
+
+# List all versions, including prerelease versions
+Find-Module -Name PSDesiredStateConfiguration -AllVersions -AllowPrerelease | Select-Object Name, Version, PublishedDate
+
+# Check module dependencies
+Find-Module -Name PSDesiredStateConfiguration | Select-Object -ExpandProperty Dependencies
+
+# Install the latest stable version for all users
+Install-Module -Name PSDesiredStateConfiguration -Scope AllUsers
+
+# Install a specific module version for all users
 Install-Module -Name PSDesiredStateConfiguration -RequiredVersion 2.0.8 -Scope AllUsers
-Get-Module -ListAvailable PSDesiredStateConfiguration | Select-Object Name, Version, Path
+
+# Install a specific prerelease version
+Install-Module -Name PSDesiredStateConfiguration -RequiredVersion '<PrereleaseVersion>' -AllowPrerelease -Scope AllUsers
+
+# Verify locally installed versions and paths
+Get-Module -ListAvailable -Name PSDesiredStateConfiguration | Select-Object Name, Version, Path
+
+# Import a specific module version
+Import-Module -Name PSDesiredStateConfiguration -RequiredVersion 2.0.8
+
+# Verify the currently loaded module version
+Get-Module -Name PSDesiredStateConfiguration | Select-Object Name, Version, Path
+
+# Discover available DSC resources
+Get-DscResource
 
 
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+# List all published stable versions
 Find-Module -Name GPRegistryPolicyDsc -AllVersions | Select-Object Name, Version, PublishedDate
+
+# Find the latest stable version
 Find-Module -Name GPRegistryPolicyDsc | Select-Object Name, Version, PublishedDate
+
+# List locally installed versions and paths
 Get-Module -ListAvailable -Name GPRegistryPolicyDsc | Select-Object Name, Version, Path
+
+# List all versions, including prerelease versions
 Find-Module -Name GPRegistryPolicyDsc -AllVersions -AllowPrerelease | Select-Object Name, Version, PublishedDate
+
+# Check module dependencies
 Find-Module -Name GPRegistryPolicyDsc | Select-Object -ExpandProperty Dependencies
+
+# Install the module for all users
 Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers
+
+# Discover available DSC resources
+Get-DscResource -Module GPRegistryPolicyDsc
+
+# Install a specific module version for all users
+Install-Module -Name GPRegistryPolicyDsc -RequiredVersion 1.3.1 -Scope AllUsers
+
+# Install a specific prerelease version
+Install-Module -Name GPRegistryPolicyDsc -RequiredVersion <PrereleaseVersion> -AllowPrerelease -Scope AllUsers
+
+# Verify locally installed versions and paths
+Get-Module -ListAvailable -Name GPRegistryPolicyDsc | Select-Object Name, Version, Path
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Import the latest locally installed version
+Import-Module -Name GPRegistryPolicyDsc
+
+# Import a specific module version
+Import-Module -Name GPRegistryPolicyDsc -RequiredVersion 1.3.1
+
+# Force import a specific module version
+Import-Module -Name GPRegistryPolicyDsc -RequiredVersion 1.3.1 -Force
+
+# Verify the currently loaded module version and path
+Get-Module -Name GPRegistryPolicyDsc | Select-Object Name, Version, Path
+
+# Remove the currently loaded module from the session
+Remove-Module -Name GPRegistryPolicyDsc
+
+# Discover available DSC resources
 Get-DscResource -Module GPRegistryPolicyDsc
 
 
-Get-Command -Module PSDesiredStateConfiguration
-Get-DscResource -Module GPRegistryPolicyDsc
+-----------------------------------------------------------------------------------------------------------------------------------------
 
-Import-Module PSDesiredStateConfiguration
-Import-Module GPRegistryPolicyDsc
-Get-Module PSDesiredStateConfiguration, GPRegistryPolicyDsc
-Get-DscResource -Module GPRegistryPolicyDsc
+
+# Import the latest locally installed version
+Import-Module -Name PSDesiredStateConfiguration
+
+# Import a specific module version
+Import-Module -Name PSDesiredStateConfiguration -RequiredVersion 2.0.8
+
+# Force import a specific module version
+Import-Module -Name PSDesiredStateConfiguration -RequiredVersion 2.0.8 -Force
+
+# Import the built-in Windows PowerShell DSC version
+Import-Module -Name PSDesiredStateConfiguration -RequiredVersion 1.1
+
+# Verify the currently loaded module version and path
+Get-Module -Name PSDesiredStateConfiguration | Select-Object Name, Version, Path
+
+# Remove the currently loaded module from the session
+Remove-Module -Name PSDesiredStateConfiguration
+
+# Discover available DSC resources
+Get-DscResource
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Load PSDesiredStateConfiguration
+Import-Module -Name PSDesiredStateConfiguration -RequiredVersion 2.0.8
+
+# Load GPRegistryPolicyDsc
+Import-Module -Name GPRegistryPolicyDsc -RequiredVersion 1.3.1
+
+# Verify both currently loaded modules
+Get-Module -Name PSDesiredStateConfiguration, GPRegistryPolicyDsc | Select-Object Name, Version, Path
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
