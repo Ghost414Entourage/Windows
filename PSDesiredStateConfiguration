@@ -166,6 +166,32 @@ Get-Module -Name PSDesiredStateConfiguration, GPRegistryPolicyDsc | Select-Objec
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 
+# Check the current effective execution policy
+Get-ExecutionPolicy
+
+# List execution policies for all scopes
+Get-ExecutionPolicy -List
+
+# Set execution policy for the current PowerShell session only
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope Process -Force
+
+# Bypass execution policy for the current PowerShell session only
+Set-ExecutionPolicy -ExecutionPolicy Bypass -Scope Process -Force
+
+# Set execution policy permanently for the current user
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser -Force
+
+# Set execution policy permanently for all users
+Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope LocalMachine -Force
+
+# Verify the effective execution policy
+Get-ExecutionPolicy
+
+# Reset the current session execution policy
+Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope Process -Force
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
 
 
 
