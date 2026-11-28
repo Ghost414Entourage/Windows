@@ -197,5 +197,212 @@ Set-ExecutionPolicy -ExecutionPolicy Undefined -Scope Process -Force
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 
+# Test an existing firewall policy
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'; ValueName='EnableFirewall'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test the DSC Set method
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'; ValueName='EnableFirewall'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+gpupdate /force
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+Private Profile
+
+
+# Enable Firewall
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile'; ValueName='EnableFirewall'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Inbound Connections - Block
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile'; ValueName='DefaultInboundAction'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Disable Notifications
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile'; ValueName='DisableNotifications'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Configure Log File Path
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging'; ValueName='LogFilePath'; ValueData=@('%SystemRoot%\System32\logfiles\firewall\privatefw.log'); ValueType='String'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Configure Log File Size - 16384 KB
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging'; ValueName='LogFileSize'; ValueData=@('16384'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Log Dropped Packets
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging'; ValueName='LogDroppedPackets'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Log Successful Connections
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging'; ValueName='LogSuccessfulConnections'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Apply All Group Policies
+gpupdate /force
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+Domain Profile
+
+
+# Enable Firewall
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile'; ValueName='EnableFirewall'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Inbound Connections - Block
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile'; ValueName='DefaultInboundAction'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Disable Notifications
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile'; ValueName='DisableNotifications'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Configure Log File Path
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging'; ValueName='LogFilePath'; ValueData=@('%SystemRoot%\System32\logfiles\firewall\domainfw.log'); ValueType='String'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Configure Log File Size - 16384 KB
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging'; ValueName='LogFileSize'; ValueData=@('16384'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Log Dropped Packets
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging'; ValueName='LogDroppedPackets'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Log Successful Connections
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging'; ValueName='LogSuccessfulConnections'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Apply All Group Policies
+gpupdate /force
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" /s
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" /s
+
+Get-NetFirewallProfile -PolicyStore ActiveStore -Name Private,Domain | Select-Object Name, Enabled, DefaultInboundAction, NotifyOnListen, LogFileName, LogMaxSizeKilobytes, LogBlocked, LogAllowed | Format-List
+
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall"; Start-Process regedit.exe
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+Public Profile
+
+
+# Enable Firewall
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'; ValueName='EnableFirewall'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Inbound Connections - Block
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'; ValueName='DefaultInboundAction'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Disable Notifications
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'; ValueName='DisableNotifications'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Configure Log File Path
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging'; ValueName='LogFilePath'; ValueData=@('%SystemRoot%\System32\logfiles\firewall\publicfw.log'); ValueType='String'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Configure Log File Size - 16384 KB
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging'; ValueName='LogFileSize'; ValueData=@('16384'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Log Dropped Packets
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging'; ValueName='LogDroppedPackets'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Log Successful Connections
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Set -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging'; ValueName='LogSuccessfulConnections'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Apply All Group Policies
+gpupdate /force
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Test Enable Firewall
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'; ValueName='EnableFirewall'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Inbound Connections
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'; ValueName='DefaultInboundAction'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Disable Notifications
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile'; ValueName='DisableNotifications'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log File Path
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging'; ValueName='LogFilePath'; ValueData=@('%SystemRoot%\System32\logfiles\firewall\publicfw.log'); ValueType='String'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log File Size
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging'; ValueName='LogFileSize'; ValueData=@('16384'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log Dropped Packets
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging'; ValueName='LogDroppedPackets'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log Successful Connections
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile\Logging'; ValueName='LogSuccessfulConnections'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+
+Set-ItemProperty -Path "HKCU:\Software\Microsoft\Windows\CurrentVersion\Applets\Regedit" -Name LastKey -Value "Computer\HKEY_LOCAL_MACHINE\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile"; Start-Process regedit.exe
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Test Enable Firewall
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile'; ValueName='EnableFirewall'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Inbound Connections - Block
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile'; ValueName='DefaultInboundAction'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Disable Notifications
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile'; ValueName='DisableNotifications'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log File Path
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging'; ValueName='LogFilePath'; ValueData=@('%SystemRoot%\System32\logfiles\firewall\privatefw.log'); ValueType='String'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log File Size - 16384 KB
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging'; ValueName='LogFileSize'; ValueData=@('16384'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log Dropped Packets
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging'; ValueName='LogDroppedPackets'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log Successful Connections
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile\Logging'; ValueName='LogSuccessfulConnections'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+# Test Enable Firewall
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile'; ValueName='EnableFirewall'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Inbound Connections - Block
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile'; ValueName='DefaultInboundAction'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Disable Notifications
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile'; ValueName='DisableNotifications'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log File Path
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging'; ValueName='LogFilePath'; ValueData=@('%SystemRoot%\System32\logfiles\firewall\domainfw.log'); ValueType='String'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log File Size - 16384 KB
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging'; ValueName='LogFileSize'; ValueData=@('16384'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log Dropped Packets
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging'; ValueName='LogDroppedPackets'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+# Test Log Successful Connections
+Invoke-DscResource -Name RegistryPolicyFile -ModuleName GPRegistryPolicyDsc -Method Test -Property @{Key='SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile\Logging'; ValueName='LogSuccessfulConnections'; ValueData=@('1'); ValueType='Dword'; TargetType='ComputerConfiguration'; Ensure='Present'}
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PublicProfile" /s
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\PrivateProfile" /s
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsFirewall\DomainProfile" /s
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
+Get-NetFirewallProfile -PolicyStore ActiveStore -Name Private,Domain | Select-Object Name, Enabled, DefaultInboundAction, NotifyOnListen, LogFileName, LogMaxSizeKilobytes, LogBlocked, LogAllowed | Format-List
+
+Get-NetFirewallProfile -PolicyStore ActiveStore -Name Public | Select-Object Name, Enabled, DefaultInboundAction, NotifyOnListen, LogFileName, LogMaxSizeKilobytes, LogBlocked, LogAllowed | Format-List
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
 
 
