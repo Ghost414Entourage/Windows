@@ -1,3 +1,17 @@
+
+
+PSDesiredStateConfiguration -	Core module	Provides the DSC engine and commands
+Get-DscResource	- Cmdlet Discovers DSC resources
+Invoke-DscResource	- Cmdlet Executes DSC resources
+GPRegistryPolicyDsc	- Resource module	Provides Group Policy management resources
+RegistryPolicyFile	- DSC resource	Reads and modifies Registry.pol
+RefreshRegistryPolicy	- DSC resource	Refreshes Group Policy
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+
 Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers
 
 
