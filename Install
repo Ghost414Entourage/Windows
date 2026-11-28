@@ -19,4 +19,10 @@ Get-AuthenticodeSignature .\MediaCreationTool.exe | Format-List Status, StatusMe
 
 Get-AuthenticodeSignature .\MediaCreationTool.exe | Format-List TimeStamperCertificate
 
+(Get-CimInstance -ClassName SoftwareLicensingService).OA3xOriginalProductKey
+
+slmgr /xpr
+
+DISM /Online /Get-CurrentEdition
+
 
