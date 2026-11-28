@@ -15,3 +15,8 @@ Get-FileHash .\MediaCreationTool.exe -Algorithm SHA256
 
 
 Get-AuthenticodeSignature .\MediaCreationTool.exe | Format-List Status, StatusMessage, SignerCertificate
+
+
+Get-AuthenticodeSignature .\MediaCreationTool.exe | Format-List TimeStamperCertificate
+
+
