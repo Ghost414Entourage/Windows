@@ -1,5 +1,10 @@
 
 
+https://support.microsoft.com/en-us/servicing/os/windows/docs/2026/09/verify-the-authenticity-of-a-windows-11-enterprise-evaluation-iso-file
+
+
+----------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 cd "$env:USERPROFILE\Downloads"
 
 
