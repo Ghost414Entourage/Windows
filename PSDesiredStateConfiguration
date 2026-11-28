@@ -1,4 +1,19 @@
 
+Test-NetConnection github.com -Port 443
+Test-NetConnection api.github.com -Port 443
+Test-NetConnection release-assets.githubusercontent.com -Port 443
+Test-NetConnection objects.githubusercontent.com -Port 443
+Test-NetConnection raw.githubusercontent.com -Port 443
+Resolve-DnsName github.com
+
+Test-NetConnection cdn.winget.microsoft.com -Port 443
+
+winget show --id Microsoft.PowerShell --exact --source winget
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+
+winget install --id Microsoft.PowerShell --exact --source winget --force
 
 PSDesiredStateConfiguration -	Core module	Provides the DSC engine and commands
 Get-DscResource	- Cmdlet Discovers DSC resources
