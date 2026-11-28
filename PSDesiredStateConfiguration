@@ -162,6 +162,9 @@ Import-Module -Name GPRegistryPolicyDsc -RequiredVersion 1.3.1
 # Verify both currently loaded modules
 Get-Module -Name PSDesiredStateConfiguration, GPRegistryPolicyDsc | Select-Object Name, Version, Path
 
+# Verify that DSC 2.0.8 can discover the Group Policy resources 
+Get-DscResource -Module GPRegistryPolicyDsc
+
 
 -----------------------------------------------------------------------------------------------------------------------------------------
 
