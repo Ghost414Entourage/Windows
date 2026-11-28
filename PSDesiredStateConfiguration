@@ -32,11 +32,6 @@ RefreshRegistryPolicy	- DSC resource	Refreshes Group Policy
 -----------------------------------------------------------------------------------------------------------------------------------------
 
 
-Install-Module -Name GPRegistryPolicyDsc -Scope AllUsers
-
-
-Get-DscResource -Module GPRegistryPolicyDsc
-
 
 Get-Module -ListAvailable -Name PSDesiredStateConfiguration | Select-Object Name, Version, Path
 Find-Module -Name PSDesiredStateConfiguration -AllVersions | Select-Object Name, Version, PublishedDate
